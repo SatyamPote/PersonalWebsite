@@ -10,6 +10,8 @@ const firebaseConfig = {
   measurementId: "G-4NKKPYYXYH"
 };
 
+const backendUrl = 'https://personal-dashboard-backend-dxrt.onrender.com';
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();

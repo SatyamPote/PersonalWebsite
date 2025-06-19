@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'login.html';
         return;
     }
-    const backendUrl = 'http://127.0.0.1:8000';
+    const backendUrl = 'https://personal-dashboard-backend-dxrt.onrender.com';
 
     // --- 2. ELEMENT SELECTORS ---
     const logoutButton = document.getElementById('logout-button');
