@@ -1,16 +1,13 @@
-// --- YOUR FIREBASE CONFIGURATION IS NOW CORRECTLY PLACED BELOW ---
-// I have taken the information you provided and put it here.
+// --- YOUR FIREBASE CONFIGURATION ---
 const firebaseConfig = {
   apiKey: "AIzaSyA1VJDq-lrXvCt8Szhoifa1gORsonBKbR4",
   authDomain: "personalwebside-9999.firebaseapp.com",
   projectId: "personalwebside-9999",
-  storageBucket: "personalwebside-9999.appspot.com", // Note: I corrected this to the standard format.
+  storageBucket: "personalwebside-9999.appspot.com",
   messagingSenderId: "691247567855",
   appId: "1:691247567855:web:5759757fdef1db9d8e9c1a",
   measurementId: "G-4NKKPYYXYH"
 };
-
-const backendUrl = 'https://personal-dashboard-backend-dxrt.onrender.com';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -26,23 +23,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const toggleModeLink = document.getElementById('toggle-mode-link');
     const errorMessageDiv = document.getElementById('error-message');
 
+    // ==================================================================
+    // === THIS IS THE IMPORTANT CHANGE FOR YOUR LIVE WEBSITE ===
+    // ==================================================================
+    const backendUrl = 'https://personal-dashboard-backend-dxrt.onrender.com';
+
     let isLoginMode = true; // By default, the form is in "Login" mode
 
     // --- Function to handle form submission ---
     authForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent the form from reloading the page
-        
+        e.preventDefault();
         const email = emailInput.value;
         const password = passwordInput.value;
-        errorMessageDiv.innerText = ''; // Clear any old errors
+        errorMessageDiv.innerText = '';
 
         if (isLoginMode) {
-            // --- LOGIN LOGIC ---
             auth.signInWithEmailAndPassword(email, password)
                 .then(handleAuthSuccess)
                 .catch(handleAuthError);
         } else {
-            // --- SIGN UP LOGIC ---
             auth.createUserWithEmailAndPassword(email, password)
                 .then(handleAuthSuccess)
                 .catch(handleAuthError);
@@ -52,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Function to toggle between Login and Sign Up modes ---
     toggleModeLink.addEventListener('click', (e) => {
         e.preventDefault();
-        isLoginMode = !isLoginMode; // Flip the mode
-
+        isLoginMode = !isLoginMode;
         if (isLoginMode) {
             formTitle.innerText = 'Admin Panel Login';
             submitButton.innerText = 'Login';
@@ -67,10 +65,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Function to run after a successful login or sign up ---
     function handleAuthSuccess(authResult) {
-        console.log("Authentication successful:", authResult);
-        // Get the ID token to send to our backend
+        console.log("Authentication successful, calling backend...");
         authResult.user.getIdToken().then(idToken => {
-            fetch('http://127.0.0.1:8000/api/auth/login', {
+            // We now use the live backendUrl variable
+            fetch(`${backendUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id_token: idToken }),
@@ -80,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                // Store token and user info, then go to the dashboard
                 localStorage.setItem('firebaseIdToken', idToken);
                 localStorage.setItem('userInfo', JSON.stringify(data.user));
                 window.location.href = 'dashboard.html';
