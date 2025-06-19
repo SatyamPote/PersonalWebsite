@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <!-- Main Container -->
+    <div class="flex flex-col lg:flex-row min-h-screen">
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <aside class="w-full lg:w-1/3 lg:min-w-[450px] bg-gray-800 p-8 flex flex-col gap-8">
+            
+            <!-- Profile Section -->
+            <div>
+                <!-- I've used a placeholder SVG for your photo. You can replace the 'src' with a link to your GitHub photo. -->
+                <img class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-gray-700" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5MDk4YjAiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXVzZXItcm91bmQiPjxwYXRoIGQ9Ik0xOCAyMHYtMWMwLTIuMi0xLjgtNC00LTRoLTRjLTIuMiAwLTQgMS44LTQgNHYxIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI3IiByPSI0Ii8+PC9zdmc+" alt="Profile Picture">
+                <h1 class="text-3xl font-bold text-center mt-4 text-white">Satyam Pote</h1>
+                <p class="text-center text-gray-400 mt-2">A passionate developer building a personal AI dashboard to streamline notes, media, and knowledge management.</p>
+                <div class="mt-4 flex justify-center items-center gap-2 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <span>satyampote9999@gmail.com</span>
+                </div>
+            </div>
+
+            <!-- AI Assistant (IFrame) Section -->
+            <div class="bg-gray-900 rounded-lg shadow-inner flex-grow flex flex-col">
+                <h2 class="text-2xl font-bold p-4 border-b border-gray-700 text-white">AI Assistant</h2>
+                <div class="flex-grow p-1">
+                    <iframe
+                        src="https://www.chatbase.co/chatbot-iframe/Hp-cjHJqVnFkUQDjR4ULJ"
+                        width="100%"
+                        style="height: 100%; min-height: 600px; border-radius: 0.5rem;"
+                        frameborder="0"
+                    ></iframe>
+                </div>
+            </div>
+             <button id="logout-button" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Logout
+            </button>
+        </aside>
+
+        <!-- ===== RIGHT CONTENT AREA ===== -->
+        <main class="w-full lg:w-2/3 p-8 overflow-y-auto">
+            <div class="space-y-12">
+                <!-- Notes Section -->
+                <section id="notes-manager">
+                    <h2 class="text-3xl font-bold mb-6 text-white border-b-2 border-blue-500 pb-2">Notes Manager</h2>
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6"><h3 class="text-xl font-bold mb-4">Create a New Note</h3><form id="create-note-form"><div class="mb-4"><label for="note-title" class="block text-gray-300 mb-2">Title</label><input type="text" id="note-title" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3" required></div><div class="mb-4"><label for="note-content" class="block text-gray-300 mb-2">Content</label><textarea id="note-content" rows="4" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3"></textarea></div><button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Note</button></form></div>
+                    <div><h3 class="text-xl font-bold mb-4">Your Notes</h3><div id="notes-list" class="space-y-4"><p id="loading-notes-message">Loading...</p></div></div>
+                </section>
+
+                <!-- Media Section -->
+                <section id="media-manager">
+                    <h2 class="text-3xl font-bold mb-6 text-white border-b-2 border-green-500 pb-2">Media Manager</h2>
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6"><h3 class="text-xl font-bold mb-4">Upload New Media</h3><form id="upload-media-form"><div class="mb-4"><label for="media-file" class="block text-gray-300 mb-2">Select a file</label><input type="file" id="media-file" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required></div><button type="submit" id="upload-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Upload File</button><p id="upload-status" class="mt-4 text-sm"></p></form></div>
+                    <div><h3 class="text-xl font-bold mb-4">Your Uploaded Media</h3><div id="media-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"><p id="loading-media-message" class="col-span-full">Loading...</p></div></div>
+                </section>
+
+                <!-- Links Section -->
+                <section id="links-manager">
+                    <h2 class="text-3xl font-bold mb-6 text-white border-b-2 border-purple-500 pb-2">Links Manager</h2>
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg"><h3 class="text-xl font-bold mb-4">Save a New Link</h3><form id="create-link-form"><div class="mb-4"><label for="link-url" class="block text-gray-300 mb-2">URL</label><input type="url" id="link-url" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3" required></div><div class="mb-4"><label for="link-title" class="block text-gray-300 mb-2">Title</label><input type="text" id="link-title" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3" required></div><div class="mb-4"><label for="link-description" class="block text-gray-300 mb-2">Description</label><textarea id="link-description" rows="3" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3"></textarea></div><div class="mb-4"><label for="link-category" class="block text-gray-300 mb-2">Category</label><input type="text" id="link-category" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3"></div><button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded w-full">Save Link</button></form></div>
+                    <div class="mt-6"><h3 class="text-xl font-bold mb-4">Your Saved Links</h3><div id="links-list" class="space-y-4"><p id="loading-links-message">Loading...</p></div></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- The only script needed is the one for our data managers -->
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
