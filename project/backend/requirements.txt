@@ -15,3 +15,4 @@ pydantic
 langchain
 sentence-transformers
 faiss-cpu
+psycopg[binary]
