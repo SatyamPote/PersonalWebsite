@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, auth
 import base64
 import json
-from ..core.config import settings
+from core.config import settings
 
 def initialize_firebase():
     """

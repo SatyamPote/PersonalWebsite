@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .core.config import settings
-from .services.firebase_auth import initialize_firebase
-from .api import auth as auth_router
-from .api import notes as notes_router
-from .api import media as media_router
-from .api import links as links_router
+from core.config import settings
+from services.firebase_auth import initialize_firebase
+from api import auth as auth_router
+from api import notes as notes_router
+from api import media as media_router
+from api import links as links_router
 # We have removed the import for the AI router
-from .db.session import engine, Base
+from db.session import engine, Base
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)

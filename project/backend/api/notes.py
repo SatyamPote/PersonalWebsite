@@ -1,11 +1,11 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
-from .. import crud
-from ..schemas import note as note_schema
-from ..db import models
-from ..dependencies import get_db, get_current_user
+from crud import crud
+from schemas import note as note_schema
+from db import models
+from dependencies import get_db, get_current_user
+import crud
 
 router = APIRouter()
 

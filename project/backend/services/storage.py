@@ -1,7 +1,7 @@
 import cloudinary
 import cloudinary.uploader
 from fastapi import UploadFile
-from ..core.config import settings
+from core.config import settings
 
 # Configure Cloudinary using the settings from our .env file
 cloudinary.config(

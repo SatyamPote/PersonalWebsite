@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
-from .db import models
-from .schemas import note as note_schema
-from .schemas import link as link_schema
+from db import models
+from schemas import note as note_schema
+from schemas import link as link_schema
+import crud
 
 # --- User CRUD ---
 def get_user_by_firebase_uid(db: Session, firebase_uid: str):

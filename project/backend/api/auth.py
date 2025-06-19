@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer
 
-from ..services.firebase_auth import verify_id_token
+from services.firebase_auth import verify_id_token
 
 # This creates a new "router" object. We'll add all auth-related endpoints to it.
 router = APIRouter()

@@ -2,11 +2,11 @@ from typing import List
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from sqlalchemy.orm import Session
 
-from .. import crud
-from ..schemas import media as media_schema
-from ..db import models
-from ..dependencies import get_db, get_current_user  # Correct import
-from ..services.storage import upload_file_to_cloudinary
+import crud
+from schemas import media as media_schema
+from db import models
+from dependencies import get_db, get_current_user  # Correct import
+from services.storage import upload_file_to_cloudinary
 
 router = APIRouter()
 

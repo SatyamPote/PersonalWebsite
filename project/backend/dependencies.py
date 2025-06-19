@@ -2,9 +2,9 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-from . import crud
-from .db.session import SessionLocal
-from .services.firebase_auth import verify_id_token
+from crud import crud
+from db.session import SessionLocal
+from services.firebase_auth import verify_id_token
 
 # This tells FastAPI that the token should be sent as a Bearer token in the Authorization header.
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
