@@ -3,39 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Personal AI Dashboard</title>
+    <title>Terminal Access | Hacker Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-</head>
-<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
-
-    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 id="form-title" class="text-3xl font-bold text-center mb-6">Admin Panel Login</h1>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
         
-        <form id="auth-form">
-            <div class="mb-4">
-                <label for="email" class="block text-gray-300 mb-2">Email</label>
-                <input type="email" id="email" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3 focus:outline-none focus:border-blue-500" required>
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block text-gray-300 mb-2">Password</label>
-                <input type="password" id="password" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3 focus:outline-none focus:border-blue-500" required>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            z-index: -2;
+        }
+        
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .terminal-glow {
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+        }
+        
+        .terminal-border {
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+        
+        .terminal-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+        
+        .terminal-input:focus {
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            border-color: #00ff00;
+            outline: none;
+        }
+        
+        .terminal-button {
+            background: linear-gradient(45deg, #001100, #003300);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        
+        .terminal-button:hover {
+            background: linear-gradient(45deg, #003300, #005500);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .typing-effect::after {
+            content: '_';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            40% { transform: translateX(2px); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .scan-line {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scan-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            animation: scan 3s infinite;
+        }
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .terminal-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .terminal-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-green-400 flex items-center justify-center min-h-screen">
+    <div class="matrix-bg"></div>
+    <canvas class="matrix-rain" id="matrix-canvas"></canvas>
+
+    <div class="terminal-border terminal-container bg-black/90 backdrop-blur-sm p-8 rounded-lg shadow-2xl w-full max-w-md mx-4 scan-line">
+        <div class="text-center mb-8">
+            <h1 id="form-title" class="terminal-title text-3xl md:text-4xl font-bold terminal-glow mb-2 typing-effect">TERMINAL ACCESS</h1>
+            <p class="text-green-300 text-sm opacity-80">/// AUTHORIZED PERSONNEL ONLY ///</p>
+        </div>
+        
+        <form id="auth-form" class="space-y-6">
+            <div>
+                <label for="email" class="block text-green-300 mb-2 text-sm font-mono">EMAIL_ADDRESS:</label>
+                <input type="email" id="email" class="terminal-input w-full py-3 px-4 rounded font-mono text-sm" placeholder="user@terminal.hack" required>
             </div>
             
-            <button id="submit-button" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Login
+            <div>
+                <label for="password" class="block text-green-300 mb-2 text-sm font-mono">ACCESS_CODE:</label>
+                <input type="password" id="password" class="terminal-input w-full py-3 px-4 rounded font-mono text-sm" placeholder="••••••••" required>
+            </div>
+            
+            <button id="submit-button" type="submit" class="terminal-button w-full font-bold py-3 px-4 rounded font-mono text-sm hover:glitch">
+                > INITIALIZE CONNECTION
             </button>
         </form>
 
-        <div id="error-message" class="text-center mt-4 text-red-400"></div>
+        <div id="error-message" class="text-center mt-4 text-red-400 font-mono text-sm"></div>
         
-        <p class="text-center mt-6 text-gray-400">
-            <a href="#" id="toggle-mode-link" class="hover:text-white">Don't have an account? Sign Up</a>
-        </p>
+        <div class="text-center mt-8 pt-4 border-t border-green-900">
+            <p class="text-green-600 text-xs font-mono mb-2">SYSTEM STATUS: ONLINE</p>
+            <a href="#" id="toggle-mode-link" class="text-green-400 hover:text-green-300 transition-colors text-sm font-mono hover:terminal-glow">
+                > REQUEST_ACCESS_CREDENTIALS
+            </a>
+        </div>
     </div>
 
-    <script src="assets/js/auth.js"></script>
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
 
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+        const matrixArray = matrix.split("");
+
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff00';
+            ctx.font = fontSize + 'px JetBrains Mono';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 35);
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Auth form handling
+        let isLoginMode = true;
+        const formTitle = document.getElementById('form-title');
+        const submitButton = document.getElementById('submit-button');
+        const toggleLink = document.getElementById('toggle-mode-link');
+        const errorMessage = document.getElementById('error-message');
+
+        toggleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+            
+            if (isLoginMode) {
+                formTitle.textContent = 'TERMINAL ACCESS';
+                submitButton.textContent = '> INITIALIZE CONNECTION';
+                toggleLink.textContent = '> REQUEST_ACCESS_CREDENTIALS';
+            } else {
+                formTitle.textContent = 'CREATE ACCESS';
+                submitButton.textContent = '> REGISTER_NEW_USER';
+                toggleLink.textContent = '> RETURN_TO_LOGIN';
+            }
+        });
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulate authentication
+            if (email && password) {
+                errorMessage.innerHTML = '<span class="text-green-400">ACCESS GRANTED... REDIRECTING</span>';
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                errorMessage.innerHTML = '<span class="text-red-400">ACCESS DENIED - INVALID CREDENTIALS</span>';
+            }
+        });
+
+        // Typing effect for title
+        const title = document.getElementById('form-title');
+        const originalText = title.textContent;
+        title.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < originalText.length) {
+                title.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        setTimeout(typeWriter, 500);
+    </script>
 </body>
 </html>
