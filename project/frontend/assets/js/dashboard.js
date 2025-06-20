@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     logoutButton.addEventListener('click', () => {
         localStorage.clear();
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     });
 
     if (createNoteForm) createNoteForm.addEventListener('submit', handleCreateNote);
