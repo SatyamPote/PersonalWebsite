@@ -1,13 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .core.config import settings
-from .services.firebase_auth import initialize_firebase
-from .api import auth as auth_router
-from .api import notes as notes_router
-from .api import media as media_router
-from .api import links as links_router
-from .db.session import engine, Base
+# --- THIS IS THE FIX ---
+# All imports are now "absolute" from the perspective of the 'backend' folder.
+# We have removed the leading dots from the import paths.
+from core.config import settings
+from services.firebase_auth import initialize_firebase
+from api import auth as auth_router
+from api import notes as notes_router
+from api import media as media_router
+from api import links as links_router
+from db.session import engine, Base
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
@@ -18,13 +21,13 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# --- Add CORS Middleware (THE FIX IS HERE) ---
-# We are adding your live frontend URL to the list of allowed origins.
+# --- Add CORS Middleware ---
+# This list is correct and includes your live frontend URL.
 origins = [
     "http://localhost",
     "http://127.0.0.1",
-    "null", # Allows requests from local files
-    "https://personal-dashboard-h4t1.onrender.com"  # <-- THIS IS THE IMPORTANT NEW LINE
+    "null",
+    "https://personal-dashboard-h4t1.onrender.com"
 ]
 
 app.add_middleware(
