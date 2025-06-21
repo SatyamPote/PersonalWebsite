@@ -3,39 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Personal AI Dashboard</title>
+    <title>Terminal Access</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-</head>
-<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
-
-    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 id="form-title" class="text-3xl font-bold text-center mb-6">Admin Panel Login</h1>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
         
-        <form id="auth-form">
-            <div class="mb-4">
-                <label for="email" class="block text-gray-300 mb-2">Email</label>
-                <input type="email" id="email" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3 focus:outline-none focus:border-blue-500" required>
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block text-gray-300 mb-2">Password</label>
-                <input type="password" id="password" class="w-full bg-gray-700 text-white border border-gray-600 rounded py-2 px-3 focus:outline-none focus:border-blue-500" required>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000000;
+            overflow: hidden;
+        }
+        
+        .terminal-glow {
+            text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+        }
+        
+        .terminal-border {
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .terminal-input:focus {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            border-color: #ffffff;
+            outline: none;
+        }
+        
+        .terminal-button {
+            background: #000000;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .terminal-button:hover {
+            background: #333333;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .typing-effect::after {
+            content: '_';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .scan-line {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scan-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: scan 3s infinite;
+        }
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .terminal-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .terminal-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white flex items-center justify-center min-h-screen">
+    <div class="terminal-border terminal-container bg-black/90 backdrop-blur-sm p-8 rounded-lg shadow-2xl w-full max-w-md mx-4 scan-line">
+        <div class="text-center mb-8">
+            <h1 id="form-title" class="terminal-title text-3xl md:text-4xl font-bold terminal-glow mb-2 typing-effect">TERMINAL ACCESS</h1>
+            <p class="text-gray-300 text-sm opacity-80">AUTHORIZED PERSONNEL ONLY</p>
+        </div>
+        
+        <form id="auth-form" class="space-y-6">
+            <div>
+                <label for="email" class="block text-gray-300 mb-2 text-sm font-mono">EMAIL ADDRESS:</label>
+                <input type="email" id="email" class="terminal-input w-full py-3 px-4 rounded font-mono text-sm" placeholder="user@terminal.com" required>
             </div>
             
-            <button id="submit-button" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Login
+            <div>
+                <label for="password" class="block text-gray-300 mb-2 text-sm font-mono">ACCESS CODE:</label>
+                <input type="password" id="password" class="terminal-input w-full py-3 px-4 rounded font-mono text-sm" placeholder="••••••••" required>
+            </div>
+            
+            <button id="submit-button" type="submit" class="terminal-button w-full font-bold py-3 px-4 rounded font-mono text-sm">
+                > INITIALIZE CONNECTION
             </button>
         </form>
 
-        <div id="error-message" class="text-center mt-4 text-red-400"></div>
+        <div id="error-message" class="text-center mt-4 font-mono text-sm"></div>
         
-        <p class="text-center mt-6 text-gray-400">
-            <a href="#" id="toggle-mode-link" class="hover:text-white">Don't have an account? Sign Up</a>
-        </p>
+        <div class="text-center mt-8 pt-4 border-t border-gray-600">
+            <p class="text-gray-500 text-xs font-mono mb-2">SYSTEM STATUS: ONLINE</p>
+            <button id="toggle-mode-link" class="text-white hover:text-gray-300 transition-colors text-sm font-mono underline hover:no-underline">
+                > REQUEST ACCESS CREDENTIALS
+            </button>
+        </div>
     </div>
 
-    <script src="assets/js/auth.js"></script>
+    <script>
+        // Auth form handling
+        let isLoginMode = true;
+        const formTitle = document.getElementById('form-title');
+        const submitButton = document.getElementById('submit-button');
+        const toggleLink = document.getElementById('toggle-mode-link');
+        const errorMessage = document.getElementById('error-message');
 
+        toggleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+            
+            if (isLoginMode) {
+                formTitle.textContent = 'TERMINAL ACCESS';
+                submitButton.textContent = '> INITIALIZE CONNECTION';
+                toggleLink.textContent = '> REQUEST ACCESS CREDENTIALS';
+            } else {
+                formTitle.textContent = 'CREATE ACCESS';
+                submitButton.textContent = '> REGISTER NEW USER';
+                toggleLink.textContent = '> RETURN TO LOGIN';
+            }
+        });
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulate authentication
+            if (email && password) {
+                errorMessage.innerHTML = '<span class="text-white">ACCESS GRANTED... REDIRECTING</span>';
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                errorMessage.innerHTML = '<span class="text-red-400">ACCESS DENIED - INVALID CREDENTIALS</span>';
+            }
+        });
+
+        // Typing effect for title
+        const title = document.getElementById('form-title');
+        const originalText = title.textContent;
+        title.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < originalText.length) {
+                title.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        setTimeout(typeWriter, 500);
+    </script>
 </body>
 </html>
