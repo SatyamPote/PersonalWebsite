@@ -3,62 +3,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
     const BASE_URL = 'https://personal-dashboard-backend-dxrt.onrender.com';
 
-    // --- NEW: Helper function to build the correct image URL ---
     function getFullImageUrl(url) {
-        if (!url) {
-            return ''; // Return empty if the URL is null or undefined
-        }
-        // If the URL already starts with http, it's a full URL from Cloudinary. Use it directly.
-        if (url.startsWith('http')) {
-            return url;
-        }
-        // Otherwise, it's a local media file. Prepend the BASE_URL.
+        if (!url) return '';
+        if (url.startsWith('http')) return url;
         return `${BASE_URL}${url}`;
     }
 
     // --- Element Selectors ---
+    const headerContainer = document.getElementById('header-container'); // NEW: Select the container, not individual elements
     const profilePhotoEl = document.getElementById('profile-photo');
-    const fullNameEl = document.getElementById('full-name');
-    const subtitleEl = document.getElementById('subtitle');
-    // ... (rest of selectors are the same)
-    const socialLinksContainer = document.getElementById('social-links-container');
     const aboutMeContentEl = document.getElementById('about-me-content');
-    const locationEl = document.getElementById('location');
-    const languagesEl = document.getElementById('languages');
-    const myGoalsEl = document.getElementById('my-goals');
+    const detailsContentEl = document.getElementById('details-content'); // NEW: Select the container
     const skillsContainer = document.getElementById('skills-container');
     const projectGrid = document.getElementById('project-grid');
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
-    // --- Renderer Functions ---
+    // --- Renderer Functions (Now more robust) ---
 
     function renderPersonalInfo(info) {
-        document.title = `${info.full_name} - Portfolio`;
-        fullNameEl.textContent = info.full_name;
-        subtitleEl.textContent = info.subtitle;
-        aboutMeContentEl.textContent = info.about_me;
-        locationEl.textContent = info.location;
-        languagesEl.textContent = info.languages_spoken;
-        myGoalsEl.textContent = info.my_goals;
-        footerNameEl.textContent = info.full_name;
+        // If no personal info object exists at all, do nothing.
+        if (!info || Object.keys(info).length === 0) {
+            headerContainer.innerHTML = '<h1>Portfolio</h1><p class="subtitle">Content coming soon.</p>';
+            return;
+        }
 
-        // UPDATED: Use the new helper function
+        document.title = `${info.full_name || 'Portfolio'}`;
+        
+        // Update header content
         const photoUrl = getFullImageUrl(info.profile_photo_url);
         if (photoUrl) {
             profilePhotoEl.src = photoUrl;
             profilePhotoEl.classList.remove('hidden');
         }
+        headerContainer.querySelector('h1').textContent = info.full_name || 'Name not set';
+        headerContainer.querySelector('p').textContent = info.subtitle || '';
+        
+        // Update main content
+        aboutMeContentEl.textContent = info.about_me || 'No about me information provided.';
+        detailsContentEl.innerHTML = `
+            <p><strong>Location:</strong> <span id="location">${info.location || 'N/A'}</span></p>
+            <p><strong>Languages:</strong> <span id="languages">${info.languages_spoken || 'N/A'}</span></p>
+            <p><strong>My Goals:</strong> <span id="my-goals">${info.my_goals || 'N/A'}</span></p>
+        `;
+        footerNameEl.textContent = info.full_name || '';
     }
 
     function renderSocialLinks(links) {
-        socialLinksContainer.innerHTML = '';
-        links.forEach(link => { /* ... (no changes in this function) */
+        const container = document.getElementById('social-links-container');
+        container.innerHTML = '';
+        if (!links || links.length === 0) return;
+
+        links.forEach(link => {
             const linkEl = document.createElement('a');
             linkEl.href = link.url;
             linkEl.textContent = link.name;
             linkEl.target = '_blank';
-            socialLinksContainer.appendChild(linkEl);
+            container.appendChild(linkEl);
         });
     }
 
@@ -73,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             skillBadge.className = 'skill-badge';
             
             let iconHtml = '';
-            // UPDATED: Use the helper function for skill images
             const imageUrl = getFullImageUrl(skill.image_url);
             if (imageUrl) {
                 iconHtml = `<img src="${imageUrl}" alt="${skill.name}">`;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderProjects(projects) {
         projectGrid.innerHTML = '';
-        if (projects.length === 0) { /* ... (no changes in this function) */
+        if (!projects || projects.length === 0) {
             projectGrid.innerHTML = '<p>No projects added yet.</p>';
             return;
         }
@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
                     allPhotos.push({
-                        // UPDATED: Use the helper function here too
                         url: getFullImageUrl(photoUrl),
                         title: memory.title,
                         date: memory.date_of_memory
@@ -118,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-        if (allPhotos.length === णाम) {
+        if (allPhotos.length === 0) {
             memoriesContainer.innerHTML = '<p>No memory photos have been uploaded yet.</p>';
             return;
         }
@@ -128,14 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index === 0) slide.classList.add('active');
             
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-            // The imageUrl is now already the full, correct URL
             slide.innerHTML = `<img src="${photo.url}" alt="${photo.title}"><h3>${photo.title}</h3><p class="memory-date">${memoryDate}</p>`;
             memoriesContainer.appendChild(slide);
         });
         initializeCarousel();
     }
     
-    function initializeCarousel() { /* ... (no changes in this function) */
+    function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
         let currentIndex = 0;
@@ -143,22 +141,45 @@ document.addEventListener('DOMContentLoaded', () => {
             if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
             if (slides[currentIndex]) slides[currentIndex].classList.add('active');
-        }, 2000);
+        }, 3000); // Changed to 3 seconds for better viewing
     }
 
     // --- Main Fetch Logic ---
     fetch(API_URL)
-        .then(response => { if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`); return response.json(); })
-        .then(data => { /* ... (no changes in this function) */
-            renderPersonalInfo(data.personal_info || {});
-            renderSocialLinks(data.social_links || []);
-            renderSkills(data.skills || []);
-            renderProjects(data.projects || []);
-            renderMemoryCarousel(data.memories || []);
+        .then(response => {
+            if (!response.ok) {
+                // Throw an error with status to debug better
+                throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // This 'try...catch' block prevents the entire page from showing "Error"
+            // if just one part of the rendering fails.
+            try {
+                // Hide the main error message if the fetch was successful
+                const errorHeader = document.querySelector('h1.glow-text');
+                const errorSubtitle = document.querySelector('p.subtitle');
+                if (errorHeader.textContent === 'Error') {
+                    // We only clear the error if it was there before.
+                    // This is more complex than it needs to be, a full rewrite of the header is better.
+                    // Let's do that instead.
+                }
+
+                renderPersonalInfo(data.personal_info || {});
+                renderSocialLinks(data.social_links || []);
+                renderSkills(data.skills || []);
+                renderProjects(data.projects || []);
+                renderMemoryCarousel(data.memories || []);
+            } catch (renderError) {
+                console.error("Error rendering data:", renderError);
+                // Optionally show a more subtle error message here
+            }
         })
         .catch(error => {
-            console.error('Error fetching portfolio data:', error);
-            fullNameEl.textContent = 'Error';
-            subtitleEl.textContent = 'Could not load portfolio data. Is the backend server running?';
+            console.error('Failed to fetch portfolio data:', error);
+            // This is the big error message. We keep it for total API failure.
+            const header = document.getElementById('header-container');
+            header.innerHTML = `<h1 class="glow-text">Error</h1><p class="subtitle">Could not load portfolio data. The backend server may be restarting.</p>`;
         });
 });
