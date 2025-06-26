@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Portfolio...</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+</head>
+<body>
+    <div class="container">
+
+        <header id="header-container">
+            <img id="profile-photo" src="" alt="Profile Photo" class="profile-photo hidden">
+            <h1 id="full-name" class="glow-text">Loading...</h1>
+            <p id="subtitle" class="subtitle">Please wait.</p>
+            <div id="social-links-container" class="social-links"></div>
+        </header>
+
+        <main>
+            <div class="grid-2-col">
+                <section id="about">
+                    <h2>About Me</h2>
+                    <p id="about-me-content">Loading...</p>
+                </section>
+                <section id="details">
+                    <h2>Details</h2>
+                    <div id="details-content">
+                        <p><strong>Location:</strong> <span id="location">...</span></p>
+                        <p><strong>Languages:</strong> <span id="languages">...</span></p>
+                        <p><strong>My Goals:</strong> <span id="my-goals">...</span></p>
+                    </div>
+                </section>
+            </div>
+
+            <section id="skills">
+                <h2 class="glow-text">Skills</h2>
+                <div id="skills-container" class="skills-container"><p>Loading skills...</p></div>
+            </section>
+            
+            <!-- MEMORIES SLIDER SECTION -->
+            <section id="memories">
+                <h2>Memories</h2>
+                <!-- This container will hold all the sliding images -->
+                <div id="memories-slider-container" class="memory-slider-container">
+                    <!-- Slides will be injected here by JS -->
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>My Projects</h2>
+                <div id="project-grid" class="project-grid"><p>Loading projects...</p></div>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>© 2024 <span id="footer-name"></span>. Built with passion.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

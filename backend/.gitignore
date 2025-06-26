@@ -1,0 +1,12 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+
+# Virtual Environment
+backend/venv/
+
+# Database
+backend/db.sqlite3
+
+# Secrets
+.env
