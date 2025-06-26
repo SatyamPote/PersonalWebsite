@@ -5,7 +5,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- Environment Configuration ---
-SECRET_KEY = os.environ.get('SECRET_KEY', 'default-local-secret-key-that-is-safe-to-commit')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'a-safe-default-key-for-local-development-is-fine')
+# The 'RENDER' env var is automatically set by Render. DEBUG will be True locally.
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
@@ -13,6 +14,7 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 else:
+    # For local development
     ALLOWED_HOSTS.append('127.0.0.1')
 
 # --- Application Definition ---
@@ -49,21 +51,26 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
-# --- THE FIX: Simplified Database Configuration for Render ---
-# This uses SQLite, which works on Render's free tier by default.
+# --- THE FINAL FIX: Database Configuration for Render's Persistent Disk ---
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        # Render provides a persistent disk at this location for free tiers
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # On Render's free tier, a persistent disk is mounted at '/var/data'.
+        # We will store our database there so it's not deleted on deploys.
+        'NAME': os.path.join(os.environ.get('RENDER_DISK_PATH', BASE_DIR), 'db.sqlite3'),
     }
 }
 
 # --- Password Validation ---
-AUTH_PASSWORD_VALIDATORS = [ {'NAME': '...'}, ] # Unchanged
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+]
 
 # --- Internationalization ---
-LANGUAGE_CODE = 'en-us'; TIME_ZONE = 'UTC'; USE_I18N = True; USE_TZ = True # Unchanged
+LANGUAGE_CODE = 'en-us'; TIME_ZONE = 'UTC'; USE_I18N = True; USE_TZ = True
 
 # --- Static Files ---
 STATIC_URL = '/static/'
