@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Change these two lines to your LIVE Render backend URL
-const API_URL = 'https://satyam-portfolio-backend.onrender.com/api/data/';
-const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
-
-// ... (the rest of the script.js file remains exactly the same) ...
+    // THIS IS THE MOST LIKELY PLACE FOR AN ERROR
+    // Ensure this URL is EXACTLY your live backend URL from the Render dashboard.
+    const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
+    const BASE_URL = 'https://personal-dashboard-backend-dxrt.onrender.com';
 
     // --- Element Selectors ---
     const profilePhotoEl = document.getElementById('profile-photo');
@@ -49,7 +48,6 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
         });
     }
 
-    // UPDATED AND MORE ROBUST RENDER SKILLS FUNCTION
     function renderSkills(skills) {
         skillsContainer.innerHTML = '';
         if (!skills || skills.length === 0) {
@@ -61,14 +59,11 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
             skillBadge.className = 'skill-badge';
             
             let iconHtml = '';
-            // New Logic: Prioritize image, but if it's empty, fall back to icon class.
             if (skill.image_url) {
                 iconHtml = `<img src="${BASE_URL}${skill.image_url}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
             }
-
-            // This ensures the name is always displayed, even if there's no icon.
             skillBadge.innerHTML = `${iconHtml}<span>${skill.name}</span>`;
             skillsContainer.appendChild(skillBadge);
         });
@@ -92,14 +87,12 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
         });
     }
 
-    // FIXED AND CORRECTED MEMORY CAROUSEL RENDERER
     function renderMemoryCarousel(memories) {
         memoriesContainer.innerHTML = '';
         if (!memories || memories.length === 0) {
             memoriesContainer.innerHTML = '<p>No memories added yet.</p>';
             return;
         }
-
         let allPhotos = [];
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
@@ -112,55 +105,39 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
                 });
             }
         });
-
         if (allPhotos.length === 0) {
             memoriesContainer.innerHTML = '<p>No memory photos have been uploaded yet.</p>';
             return;
         }
-
         allPhotos.forEach((photo, index) => {
             const slide = document.createElement('div');
             slide.className = 'memory-slide';
-            if (index === 0) {
-                slide.classList.add('active');
-            }
-            
-            // This was the bug: The photo URL was wrong. It should be BASE_URL + the url from the API.
+            if (index === 0) slide.classList.add('active');
             const imageUrl = `${BASE_URL}${photo.url}`;
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long'
-            });
-
+            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
             slide.innerHTML = `
                 <img src="${imageUrl}" alt="${photo.title}">
                 <h3>${photo.title}</h3>
-                <p class="memory-date">${memoryDate}</p>
-            `;
+                <p class="memory-date">${memoryDate}</p>`;
             memoriesContainer.appendChild(slide);
         });
-
         initializeCarousel();
     }
     
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
-
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.remove('active');
-            }
+            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.add('active');
-            }
-        }, 2000); // Cycle every 2 seconds
+            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+        }, 2000);
     }
 
     // --- Main Fetch Logic ---
     fetch(API_URL)
-        .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
+        .then(response => { if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`); return response.json(); })
         .then(data => {
             renderPersonalInfo(data.personal_info || {});
             renderSocialLinks(data.social_links || []);
