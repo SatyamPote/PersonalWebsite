@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-# exit on error
+# This script will exit immediately if any command fails
 set -o errexit
 
-# This line installs all your packages, including Django
+# Step 1: Upgrade pip and install all packages from requirements.txt
+# This is the MOST IMPORTANT step. It installs Django, Gunicorn, etc.
+pip install --upgrade pip
 pip install -r requirements.txt
 
-# This line collects static files for the admin panel
-python manage.py collectstatic --no-input
-
-# This line applies database migrations
+# Step 2: Run database migrations
+# This prepares your database schema.
 python manage.py migrate
+
+# Step 3: Run collectstatic
+# This gathers all static files (for the admin panel) into one folder.
+python manage.py collectstatic --no-input
