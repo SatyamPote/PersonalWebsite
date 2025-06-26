@@ -1,14 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // THIS IS THE MOST LIKELY PLACE FOR AN ERROR
-    // Ensure this URL is EXACTLY your live backend URL from the Render dashboard.
     const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
     const BASE_URL = 'https://personal-dashboard-backend-dxrt.onrender.com';
+
+    // --- NEW: Helper function to build the correct image URL ---
+    function getFullImageUrl(url) {
+        if (!url) {
+            return ''; // Return empty if the URL is null or undefined
+        }
+        // If the URL already starts with http, it's a full URL from Cloudinary. Use it directly.
+        if (url.startsWith('http')) {
+            return url;
+        }
+        // Otherwise, it's a local media file. Prepend the BASE_URL.
+        return `${BASE_URL}${url}`;
+    }
 
     // --- Element Selectors ---
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
+    // ... (rest of selectors are the same)
     const socialLinksContainer = document.getElementById('social-links-container');
     const aboutMeContentEl = document.getElementById('about-me-content');
     const locationEl = document.getElementById('location');
@@ -31,15 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url) {
-            profilePhotoEl.src = `${BASE_URL}${info.profile_photo_url}`;
+        // UPDATED: Use the new helper function
+        const photoUrl = getFullImageUrl(info.profile_photo_url);
+        if (photoUrl) {
+            profilePhotoEl.src = photoUrl;
             profilePhotoEl.classList.remove('hidden');
         }
     }
 
     function renderSocialLinks(links) {
         socialLinksContainer.innerHTML = '';
-        links.forEach(link => {
+        links.forEach(link => { /* ... (no changes in this function) */
             const linkEl = document.createElement('a');
             linkEl.href = link.url;
             linkEl.textContent = link.name;
@@ -59,8 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
             skillBadge.className = 'skill-badge';
             
             let iconHtml = '';
-            if (skill.image_url) {
-                iconHtml = `<img src="${BASE_URL}${skill.image_url}" alt="${skill.name}">`;
+            // UPDATED: Use the helper function for skill images
+            const imageUrl = getFullImageUrl(skill.image_url);
+            if (imageUrl) {
+                iconHtml = `<img src="${imageUrl}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
             }
@@ -71,22 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderProjects(projects) {
         projectGrid.innerHTML = '';
-        if (projects.length === 0) {
+        if (projects.length === 0) { /* ... (no changes in this function) */
             projectGrid.innerHTML = '<p>No projects added yet.</p>';
             return;
         }
         projects.forEach(project => {
             const card = document.createElement('div');
             card.className = 'project-card';
-            card.innerHTML = `
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
-                ${project.project_url ? `<a href="${project.project_url}" class="visit-button" target="_blank">Visit</a>` : ''}
-            `;
+            card.innerHTML = `<h3>${project.title}</h3><p>${project.description}</p>${project.project_url ? `<a href="${project.project_url}" class="visit-button" target="_blank">Visit</a>` : ''}`;
             projectGrid.appendChild(card);
         });
     }
-
+    
     function renderMemoryCarousel(memories) {
         memoriesContainer.innerHTML = '';
         if (!memories || memories.length === 0) {
@@ -98,14 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
                     allPhotos.push({
-                        url: photoUrl,
+                        // UPDATED: Use the helper function here too
+                        url: getFullImageUrl(photoUrl),
                         title: memory.title,
                         date: memory.date_of_memory
                     });
                 });
             }
         });
-        if (allPhotos.length === 0) {
+        if (allPhotos.length === णाम) {
             memoriesContainer.innerHTML = '<p>No memory photos have been uploaded yet.</p>';
             return;
         }
@@ -113,18 +126,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const slide = document.createElement('div');
             slide.className = 'memory-slide';
             if (index === 0) slide.classList.add('active');
-            const imageUrl = `${BASE_URL}${photo.url}`;
+            
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-            slide.innerHTML = `
-                <img src="${imageUrl}" alt="${photo.title}">
-                <h3>${photo.title}</h3>
-                <p class="memory-date">${memoryDate}</p>`;
+            // The imageUrl is now already the full, correct URL
+            slide.innerHTML = `<img src="${photo.url}" alt="${photo.title}"><h3>${photo.title}</h3><p class="memory-date">${memoryDate}</p>`;
             memoriesContainer.appendChild(slide);
         });
         initializeCarousel();
     }
     
-    function initializeCarousel() {
+    function initializeCarousel() { /* ... (no changes in this function) */
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
         let currentIndex = 0;
@@ -138,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Main Fetch Logic ---
     fetch(API_URL)
         .then(response => { if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`); return response.json(); })
-        .then(data => {
+        .then(data => { /* ... (no changes in this function) */
             renderPersonalInfo(data.personal_info || {});
             renderSocialLinks(data.social_links || []);
             renderSkills(data.skills || []);
