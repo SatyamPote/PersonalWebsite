@@ -3,34 +3,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
     const BASE_URL = 'https://personal-dashboard-backend-dxrt.onrender.com';
 
+    // --- NEW AND IMPROVED HELPER FUNCTION ---
     function getFullImageUrl(url) {
-        if (!url) return '';
-        if (url.startsWith('http')) return url;
+        if (!url) {
+            return ''; // Return empty if the URL is null or undefined
+        }
+        // This is the key fix: Check if the URL is absolute (starts with http or https)
+        // If it is, it's from Cloudinary, so use it directly.
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return url;
+        }
+        // Otherwise, it's a local media file. Prepend the BASE_URL.
         return `${BASE_URL}${url}`;
     }
 
     // --- Element Selectors ---
-    const headerContainer = document.getElementById('header-container'); // NEW: Select the container, not individual elements
+    const headerContainer = document.getElementById('header-container');
     const profilePhotoEl = document.getElementById('profile-photo');
     const aboutMeContentEl = document.getElementById('about-me-content');
-    const detailsContentEl = document.getElementById('details-content'); // NEW: Select the container
+    const detailsContentEl = document.getElementById('details-content');
     const skillsContainer = document.getElementById('skills-container');
     const projectGrid = document.getElementById('project-grid');
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
-    // --- Renderer Functions (Now more robust) ---
+    // --- Renderer Functions ---
 
     function renderPersonalInfo(info) {
-        // If no personal info object exists at all, do nothing.
         if (!info || Object.keys(info).length === 0) {
             headerContainer.innerHTML = '<h1>Portfolio</h1><p class="subtitle">Content coming soon.</p>';
             return;
         }
-
         document.title = `${info.full_name || 'Portfolio'}`;
         
-        // Update header content
+        // Use the new helper function
         const photoUrl = getFullImageUrl(info.profile_photo_url);
         if (photoUrl) {
             profilePhotoEl.src = photoUrl;
@@ -39,21 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
         headerContainer.querySelector('h1').textContent = info.full_name || 'Name not set';
         headerContainer.querySelector('p').textContent = info.subtitle || '';
         
-        // Update main content
         aboutMeContentEl.textContent = info.about_me || 'No about me information provided.';
-        detailsContentEl.innerHTML = `
-            <p><strong>Location:</strong> <span id="location">${info.location || 'N/A'}</span></p>
-            <p><strong>Languages:</strong> <span id="languages">${info.languages_spoken || 'N/A'}</span></p>
-            <p><strong>My Goals:</strong> <span id="my-goals">${info.my_goals || 'N/A'}</span></p>
-        `;
+        detailsContentEl.innerHTML = `<p><strong>Location:</strong> <span>${info.location || 'N/A'}</span></p><p><strong>Languages:</strong> <span>${info.languages_spoken || 'N/A'}</span></p><p><strong>My Goals:</strong> <span>${info.my_goals || 'N/A'}</span></p>`;
         footerNameEl.textContent = info.full_name || '';
     }
-
+    
     function renderSocialLinks(links) {
         const container = document.getElementById('social-links-container');
         container.innerHTML = '';
         if (!links || links.length === 0) return;
-
         links.forEach(link => {
             const linkEl = document.createElement('a');
             linkEl.href = link.url;
@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'project-card';
             card.innerHTML = `<h3>${project.title}</h3><p>${project.description}</p>${project.project_url ? `<a href="${project.project_url}" class="visit-button" target="_blank">Visit</a>` : ''}`;
             projectGrid.appendChild(card);
-        });
+});
     }
-    
+
     function renderMemoryCarousel(memories) {
         memoriesContainer.innerHTML = '';
         if (!memories || memories.length === 0) {
@@ -109,11 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({
-                        url: getFullImageUrl(photoUrl),
-                        title: memory.title,
-                        date: memory.date_of_memory
-                    });
+                    allPhotos.push({ url: getFullImageUrl(photoUrl), title: memory.title, date: memory.date_of_memory });
                 });
             }
         });
@@ -141,31 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
             if (slides[currentIndex]) slides[currentIndex].classList.add('active');
-        }, 3000); // Changed to 3 seconds for better viewing
+        }, 3000);
     }
 
     // --- Main Fetch Logic ---
     fetch(API_URL)
-        .then(response => {
-            if (!response.ok) {
-                // Throw an error with status to debug better
-                throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-            }
-            return response.json();
-        })
+        .then(response => { if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`); return response.json(); })
         .then(data => {
-            // This 'try...catch' block prevents the entire page from showing "Error"
-            // if just one part of the rendering fails.
             try {
-                // Hide the main error message if the fetch was successful
-                const errorHeader = document.querySelector('h1.glow-text');
-                const errorSubtitle = document.querySelector('p.subtitle');
-                if (errorHeader.textContent === 'Error') {
-                    // We only clear the error if it was there before.
-                    // This is more complex than it needs to be, a full rewrite of the header is better.
-                    // Let's do that instead.
-                }
-
                 renderPersonalInfo(data.personal_info || {});
                 renderSocialLinks(data.social_links || []);
                 renderSkills(data.skills || []);
@@ -173,12 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderMemoryCarousel(data.memories || []);
             } catch (renderError) {
                 console.error("Error rendering data:", renderError);
-                // Optionally show a more subtle error message here
             }
         })
         .catch(error => {
             console.error('Failed to fetch portfolio data:', error);
-            // This is the big error message. We keep it for total API failure.
             const header = document.getElementById('header-container');
             header.innerHTML = `<h1 class="glow-text">Error</h1><p class="subtitle">Could not load portfolio data. The backend server may be restarting.</p>`;
         });
