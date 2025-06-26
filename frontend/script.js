@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // The API URL for your live backend.
-    const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
+    // Change these two lines to your LIVE Render backend URL
+const API_URL = 'https://satyam-portfolio-backend.onrender.com/api/data/';
+const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
+
+// ... (the rest of the script.js file remains exactly the same) ...
 
     // --- Element Selectors ---
     const profilePhotoEl = document.getElementById('profile-photo');
@@ -16,31 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectGrid = document.getElementById('project-grid');
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
-    
+
     // --- Renderer Functions ---
 
     function renderPersonalInfo(info) {
-        if (!info) return;
-        document.title = info.full_name ? `${info.full_name} - Portfolio` : 'Portfolio';
-        fullNameEl.textContent = info.full_name || 'Your Name';
-        subtitleEl.textContent = info.subtitle || 'A Developer';
-        
-        // Use the image URL from the API directly.
+        document.title = `${info.full_name} - Portfolio`;
+        fullNameEl.textContent = info.full_name;
+        subtitleEl.textContent = info.subtitle;
+        aboutMeContentEl.textContent = info.about_me;
+        locationEl.textContent = info.location;
+        languagesEl.textContent = info.languages_spoken;
+        myGoalsEl.textContent = info.my_goals;
+        footerNameEl.textContent = info.full_name;
+
         if (info.profile_photo_url) {
-            profilePhotoEl.src = info.profile_photo_url;
+            profilePhotoEl.src = `${BASE_URL}${info.profile_photo_url}`;
             profilePhotoEl.classList.remove('hidden');
         }
-        
-        aboutMeContentEl.textContent = info.about_me || 'Information coming soon.';
-        locationEl.textContent = info.location || 'N/A';
-        languagesEl.textContent = info.languages_spoken || 'N/A';
-        myGoalsEl.textContent = info.my_goals || 'N/A';
-        footerNameEl.textContent = info.full_name || '';
     }
 
     function renderSocialLinks(links) {
         socialLinksContainer.innerHTML = '';
-        if (!links || links.length === 0) return;
         links.forEach(link => {
             const linkEl = document.createElement('a');
             linkEl.href = link.url;
@@ -50,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // UPDATED AND MORE ROBUST RENDER SKILLS FUNCTION
     function renderSkills(skills) {
         skillsContainer.innerHTML = '';
         if (!skills || skills.length === 0) {
@@ -59,14 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
         skills.forEach(skill => {
             const skillBadge = document.createElement('div');
             skillBadge.className = 'skill-badge';
+            
             let iconHtml = '';
-            
-            // Use the image URL from the API directly.
+            // New Logic: Prioritize image, but if it's empty, fall back to icon class.
             if (skill.image_url) {
-                iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
+                iconHtml = `<img src="${BASE_URL}${skill.image_url}" alt="${skill.name}">`;
+            } else if (skill.icon_class) {
+                iconHtml = `<i class="${skill.icon_class}"></i>`;
             }
-            // Note: The icon_class logic is removed as we are simplifying to only use image URLs.
-            
+
+            // This ensures the name is always displayed, even if there's no icon.
             skillBadge.innerHTML = `${iconHtml}<span>${skill.name}</span>`;
             skillsContainer.appendChild(skillBadge);
         });
@@ -74,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderProjects(projects) {
         projectGrid.innerHTML = '';
-        if (!projects || projects.length === 0) {
+        if (projects.length === 0) {
             projectGrid.innerHTML = '<p>No projects added yet.</p>';
             return;
         }
@@ -89,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
             projectGrid.appendChild(card);
         });
     }
-    
+
+    // FIXED AND CORRECTED MEMORY CAROUSEL RENDERER
     function renderMemoryCarousel(memories) {
         memoriesContainer.innerHTML = '';
         if (!memories || memories.length === 0) {
@@ -102,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
                     allPhotos.push({
-                        url: photoUrl, // The URL is already a full, direct link.
+                        url: photoUrl,
                         title: memory.title,
                         date: memory.date_of_memory
                     });
@@ -111,47 +114,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (allPhotos.length === 0) {
-            memoriesContainer.innerHTML = '<p>No memory photos have been added yet.</p>';
+            memoriesContainer.innerHTML = '<p>No memory photos have been uploaded yet.</p>';
             return;
         }
 
         allPhotos.forEach((photo, index) => {
             const slide = document.createElement('div');
             slide.className = 'memory-slide';
-            if (index === 0) slide.classList.add('active');
+            if (index === 0) {
+                slide.classList.add('active');
+            }
             
+            // This was the bug: The photo URL was wrong. It should be BASE_URL + the url from the API.
+            const imageUrl = `${BASE_URL}${photo.url}`;
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
                 year: 'numeric', month: 'long'
             });
 
-            slide.innerHTML = `<img src="${photo.url}" alt="${photo.title}"><h3>${photo.title}</h3><p class="memory-date">${memoryDate}</p>`;
+            slide.innerHTML = `
+                <img src="${imageUrl}" alt="${photo.title}">
+                <h3>${photo.title}</h3>
+                <p class="memory-date">${memoryDate}</p>
+            `;
             memoriesContainer.appendChild(slide);
         });
-        
+
         initializeCarousel();
     }
     
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
+
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
+            if (slides[currentIndex]) {
+                slides[currentIndex].classList.remove('active');
+            }
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
-        }, 3000); // Cycle every 3 seconds
+            if (slides[currentIndex]) {
+                slides[currentIndex].classList.add('active');
+            }
+        }, 2000); // Cycle every 2 seconds
     }
 
     // --- Main Fetch Logic ---
     fetch(API_URL)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.status}`);
-            }
-            return response.json();
-        })
+        .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
         .then(data => {
-            // Render each section with the data received, or an empty object/array if null
             renderPersonalInfo(data.personal_info || {});
             renderSocialLinks(data.social_links || []);
             renderSkills(data.skills || []);
@@ -159,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
             renderMemoryCarousel(data.memories || []);
         })
         .catch(error => {
-            console.error('Failed to fetch portfolio data:', error);
-            const header = document.getElementById('header-container');
-            header.innerHTML = `<h1 class="glow-text">Error</h1><p class="subtitle">Could not load portfolio data. The backend may be spinning up.</p>`;
+            console.error('Error fetching portfolio data:', error);
+            fullNameEl.textContent = 'Error';
+            subtitleEl.textContent = 'Could not load portfolio data. Is the backend server running?';
         });
 });
