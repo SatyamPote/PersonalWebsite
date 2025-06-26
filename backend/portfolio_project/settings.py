@@ -1,25 +1,19 @@
-"""
-Django settings for portfolio_project project.
-Configured for local development and production deployment on Render.
-"""
-
 from pathlib import Path
 import os
 import dj_database_url
 
-# --- Base Directory ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- Production / Development Environment Configuration ---
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-secret-key-for-local-dev')
-# The 'RENDER' env var is set by Render. DEBUG will be True locally.
+# --- Environment Configuration ---
+SECRET_KEY = os.environ.get('SECRET_KEY', 'a_strong_default_secret_key_for_local_use')
+# DEBUG is False if the RENDER env var is present, otherwise it's True for local dev.
 DEBUG = 'RENDER' not in os.environ
+
 ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 else:
-    # For local development
     ALLOWED_HOSTS.append('127.0.0.1')
 
 # --- Application Definition ---
@@ -29,19 +23,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic', # For serving static files in production
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    
-    # Your apps and third-party apps
     'content',
     'corsheaders',
-    'cloudinary_storage', # For media file hosting
+    'cloudinary_storage', # Cloudinary storage app
     'cloudinary',         # Cloudinary library
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # WhiteNoise middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,76 +44,39 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'portfolio_project.urls'
-TEMPLATES = [
+TEMPLATES = [ # ... (This section remains unchanged) ...
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+        'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [], 'APP_DIRS': True,
+        'OPTIONS': { 'context_processors': [ 'django.template.context_processors.debug', 'django.template.context_processors.request', 'django.contrib.auth.context_processors.auth', 'django.contrib.messages.context_processors.messages', ], },
     },
 ]
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
 # --- Database Configuration ---
+# Always use PostgreSQL on Render. Use SQLite locally.
 if 'RENDER' in os.environ:
-    # Production database on Render (PostgreSQL)
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
-    }
+    DATABASES = {'default': dj_database_url.config(conn_max_age=600, ssl_require=True)}
 else:
-    # Local development database (SQLite)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+    DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
 
-# --- Password Validation ---
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
-]
-
-# --- Internationalization ---
-LANGUAGE_CODE = 'en-us'; TIME_ZONE = 'UTC'; USE_I18N = True; USE_TZ = True
-
-# --- Static Files (CSS, JS from your project) ---
+# --- Static & Media Files ---
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' # Directory where 'collectstatic' will place files
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# --- Media Files (User-Uploaded Images) ---
-# When in production (on Render), use Cloudinary. Otherwise, use local storage.
-if 'RENDER' in os.environ:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-        'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-    }
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+# --- THE CRITICAL FIX ---
+# We force Cloudinary storage for media files directly.
+# This removes any ambiguity from the if/else logic.
+MEDIA_URL = '/media/' # This is just a placeholder, Cloudinary generates full URLs
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# --- Default primary key field type ---
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# --- Other Settings ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# --- CORS (Cross-Origin Resource Sharing) Settings ---
-CORS_ALLOWED_ORIGINS = [
-    "https://satyampote.tech",   # Your live frontend domain
-    "http://127.0.0.1:5500",     # For local testing
-    "http://localhost:5500",      # For local testing
-]
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://\w+\.onrender\.com$", # Allows Render's preview URLs
-]
+CORS_ALLOWED_ORIGINS = ["https://satyampote.tech", "http://127.0.0.1:5500", "http://localhost:5500"]
+CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://\w+\.onrender\.com$"]
