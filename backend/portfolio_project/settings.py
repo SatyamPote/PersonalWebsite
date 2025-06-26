@@ -1,13 +1,13 @@
 from pathlib import Path
 import os
-import dj_database_url
 
 # --- Base Directory ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- Environment Configuration ---
-SECRET_KEY = os.environ.get('SECRET_KEY', 'a_strong_default_secret_key_for_local_use')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'default-local-secret-key-that-is-safe-to-commit')
 DEBUG = 'RENDER' not in os.environ
+
 ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -49,19 +49,15 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
-# --- THE FIX: Database Configuration ---
-# This is the robust way to configure the database for Render.
+# --- THE FIX: Simplified Database Configuration for Render ---
+# This uses SQLite, which works on Render's free tier by default.
 DATABASES = {
-    'default': dj_database_url.config(
-        # Get the database URL from the 'DATABASE_URL' environment variable.
-        # This is crucial for the build process on Render.
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        # Enable SSL only when on Render, not for local SQLite.
-        ssl_require='RENDER' in os.environ 
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        # Render provides a persistent disk at this location for free tiers
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-
 
 # --- Password Validation ---
 AUTH_PASSWORD_VALIDATORS = [ {'NAME': '...'}, ] # Unchanged
@@ -73,8 +69,6 @@ LANGUAGE_CODE = 'en-us'; TIME_ZONE = 'UTC'; USE_I18N = True; USE_TZ = True # Unc
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# --- Media Files (Using URLFields now, so no special settings needed) ---
 
 # --- Other Settings ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

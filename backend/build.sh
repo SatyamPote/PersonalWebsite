@@ -5,4 +5,4 @@ set -o errexit
 pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
-# The 'migrate' command has been removed from here.
+python manage.py migrate
