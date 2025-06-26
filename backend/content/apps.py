@@ -1,42 +1,52 @@
 from django.apps import AppConfig
-import os
-import sys
+
+# We move the logic outside the class to avoid certain startup issues.
+def create_superuser_on_startup():
+    """
+    Checks if a superuser needs to be created and does so without
+    crashing if the database isn't ready.
+    """
+    from django.contrib.auth import get_user_model
+    from django.db import utils
+    import os
+
+    User = get_user_model()
+    
+    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'localpassword')
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
+
+    try:
+        # Check if the user already exists.
+        if not User.objects.filter(username=ADMIN_USERNAME).exists():
+            print(f"--- Superuser '{ADMIN_USERNAME}' not found. Creating... ---")
+            User.objects.create_superuser(
+                username=ADMIN_USERNAME,
+                password=ADMIN_PASSWORD,
+                email=ADMIN_EMAIL
+            )
+            print(f"--- Superuser '{ADMIN_USERNAME}' created successfully! ---")
+        else:
+            print(f"--- Superuser '{ADMIN_USERNAME}' already exists. Skipping. ---")
+    except utils.OperationalError as e:
+        # This can happen if the database isn't fully migrated yet.
+        print(f"--- DB not ready, skipping superuser creation: {e} ---")
+    except Exception as e:
+        print(f"--- An unexpected error occurred during superuser creation: {e} ---")
+
 
 class ContentConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'content'
 
-    # This 'ready' method is a hook that runs once when the Django app starts.
-    # We will use it to create your admin user on the live server.
     def ready(self):
-        # We need to check if the server is actually running.
-        # This prevents the code from executing during other commands like 'makemigrations'.
-        # 'gunicorn' is the command Render uses to run your live server.
-        is_running_server = 'gunicorn' in sys.argv
-
-        if is_running_server:
-            # We must import the User model inside this method.
-            from django.contrib.auth import get_user_model
-            User = get_user_model()
-            
-            # These lines read your credentials from the secure Environment Variables on Render.
-            # If the variables aren't found, it uses default values (for local testing).
-            ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
-            ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'localpassword')
-            ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
-
-            # This logic checks if a user table is empty.
-            if not User.objects.exists():
-                print("--- No users found in the database. Creating superuser... ---")
-                try:
-                    User.objects.create_superuser(
-                        username=ADMIN_USERNAME,
-                        password=ADMIN_PASSWORD,
-                        email=ADMIN_EMAIL
-                    )
-                    print(f"--- Superuser '{ADMIN_USERNAME}' created successfully! ---")
-                except Exception as e:
-                    print(f"--- CRITICAL ERROR: Could not create superuser: {e} ---")
-            else:
-                # On subsequent deploys, this message will show, which is correct.
-                print("--- Users already exist. Skipping superuser creation. ---")
+        # We only run this logic if the 'createsuperuser' command is NOT being run,
+        # and we are on a production-like server.
+        import sys
+        is_gunicorn = "gunicorn" in sys.argv[0]
+        
+        # This check is crucial to prevent the logic from running during migrations
+        is_migrating = 'migrate' in sys.argv
+        
+        if is_gunicorn and not is_migrating:
+            create_superuser_on_startup()
