@@ -138,11 +138,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # This is the most important part for connecting the frontend.
 # It tells Django which frontend addresses are allowed to make requests.
 
-ALLOWED_HOSTS = ['http://satyampote.tech', 'www.yourdomain.com']
-
+ALLOWED_HOSTS = [
+    'satyampote.tech', 
+    'www.satyampote.tech', 
+    'satyam-portfolio-backend.onrender.com' # Your Render service URL
+]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500",  # For VS Code Live Server
-    "http://localhost:5500",   # Also for VS Code Live Server
-    "http://satyampote.tech",                  # For opening the file directly (file:///)
-]   
+    "http://127.0.0.1:5500",      # For local development
+    "http://localhost:5500",       # For local development
+    "https://satyampote.tech",     # Your LIVE frontend URL
+]

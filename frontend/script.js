@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Change these two lines to your LIVE Render backend URL
-const API_URL = 'https://satyam-portfolio-backend.onrender.com/api/data/';
-const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
+    // IMPORTANT: We only need the API_URL now. The BASE_URL is no longer needed
+    // because the API will provide full, direct URLs for images.
+    const API_URL = 'https://satyam-portfolio-backend.onrender.com/api/data/';
 
-// ... (the rest of the script.js file remains exactly the same) ...
-
-    // --- Element Selectors ---
+    // --- Element Selectors (No changes here) ---
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -33,7 +31,8 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
         footerNameEl.textContent = info.full_name;
 
         if (info.profile_photo_url) {
-            profilePhotoEl.src = `${BASE_URL}${info.profile_photo_url}`;
+            // --- CHANGED: Removed BASE_URL. Use the URL directly from the API. ---
+            profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
         }
     }
@@ -49,7 +48,6 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
         });
     }
 
-    // UPDATED AND MORE ROBUST RENDER SKILLS FUNCTION
     function renderSkills(skills) {
         skillsContainer.innerHTML = '';
         if (!skills || skills.length === 0) {
@@ -61,14 +59,13 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
             skillBadge.className = 'skill-badge';
             
             let iconHtml = '';
-            // New Logic: Prioritize image, but if it's empty, fall back to icon class.
             if (skill.image_url) {
-                iconHtml = `<img src="${BASE_URL}${skill.image_url}" alt="${skill.name}">`;
+                // --- CHANGED: Removed BASE_URL. Use the URL directly from the API. ---
+                iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
             }
 
-            // This ensures the name is always displayed, even if there's no icon.
             skillBadge.innerHTML = `${iconHtml}<span>${skill.name}</span>`;
             skillsContainer.appendChild(skillBadge);
         });
@@ -92,7 +89,6 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
         });
     }
 
-    // FIXED AND CORRECTED MEMORY CAROUSEL RENDERER
     function renderMemoryCarousel(memories) {
         memoriesContainer.innerHTML = '';
         if (!memories || memories.length === 0) {
@@ -125,8 +121,8 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
                 slide.classList.add('active');
             }
             
-            // This was the bug: The photo URL was wrong. It should be BASE_URL + the url from the API.
-            const imageUrl = `${BASE_URL}${photo.url}`;
+            // --- CHANGED: This was the main bug. Use the photo URL directly. ---
+            const imageUrl = photo.url;
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
                 year: 'numeric', month: 'long'
             });
@@ -155,10 +151,10 @@ const BASE_URL = 'https://satyam-portfolio-backend.onrender.com';
             if (slides[currentIndex]) {
                 slides[currentIndex].classList.add('active');
             }
-        }, 2000); // Cycle every 2 seconds
+        }, 3000); // Changed to 3 seconds for a better feel
     }
 
-    // --- Main Fetch Logic ---
+    // --- Main Fetch Logic (No changes here) ---
     fetch(API_URL)
         .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
         .then(data => {
