@@ -3,6 +3,11 @@
 from django.db import models
 from django.utils import timezone
 
+# This is the new, detailed help text explaining the Google Photos workaround.
+GOOGLE_PHOTOS_HELP_TEXT = """
+For Google Photos: 1. Open the photo. 2. Click Share -> Create Link. 3. Open the new link in a new tab. 4. Right-click the image and select 'Copy Image Address'. Paste that link here. It should start with 'lh3.googleusercontent.com'.
+"""
+
 class Skill(models.Model):
     name = models.CharField(max_length=50)
     icon_class = models.CharField(
@@ -11,12 +16,11 @@ class Skill(models.Model):
         null=True,
         help_text="Optional. Find class at devicon.dev. E.g., 'devicon-python-plain'"
     )
-    # --- CHANGED HELP TEXT ---
     image = models.URLField(
         max_length=500, 
         blank=True, 
         null=True,
-        help_text="Optional. Use if you don't have an icon class. Upload to postimage.me and paste the 'Direct' link here."
+        help_text=f"Optional. Paste a direct image URL. {GOOGLE_PHOTOS_HELP_TEXT}"
     )
 
     def __str__(self):
@@ -24,10 +28,9 @@ class Skill(models.Model):
 
 class MemoryPhoto(models.Model):
     memory = models.ForeignKey('Memory', on_delete=models.CASCADE, related_name='photos')
-    # --- CHANGED HELP TEXT ---
     image = models.URLField(
         max_length=500,
-        help_text="Upload photo to postimage.me and paste the 'Direct' link here."
+        help_text=f"Paste the direct URL of the memory photo. {GOOGLE_PHOTOS_HELP_TEXT}"
     )
 
     def __str__(self):
@@ -65,13 +68,12 @@ class Project(models.Model):
 class PersonalInfo(models.Model):
     full_name = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=200)
-    # --- CHANGED HELP TEXT ---
     profile_photo = models.URLField(
         "Profile Photo URL",
         max_length=500, 
         blank=True, 
         null=True,
-        help_text="Upload your profile photo to postimage.me and paste the 'Direct' link here."
+        help_text=f"Paste the direct URL to your profile photo. {GOOGLE_PHOTOS_HELP_TEXT}"
     )
     about_me = models.TextField()
     location = models.CharField(max_length=100, blank=True)

@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- CRITICAL: Set this to your LIVE Render backend API endpoint ---
-    // This must match the URL of your deployed Django application.
     const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
 
-    // --- Element Selectors (No changes here) ---
+    // --- Element Selectors ---
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -30,10 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url) {
-            // FIX: Use the full URL from the API directly.
+        // --- THIS IS THE CRUCIAL, UPDATED LOGIC ---
+        // Check if the profile_photo_url exists and is not an empty string
+        if (info.profile_photo_url && info.profile_photo_url.trim() !== '') {
+            // If it's valid, set the source and remove the 'hidden' class to show it
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
+        } else {
+            // If it's not valid (null or empty), ensure the image stays hidden.
+            profilePhotoEl.classList.add('hidden');
         }
     }
 
@@ -60,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let iconHtml = '';
             if (skill.image_url) {
-                // FIX: Use the full image URL from the API directly.
                 iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
@@ -100,11 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({
-                        url: photoUrl, // This URL is now the complete, direct link
-                        title: memory.title,
-                        date: memory.date_of_memory
-                    });
+                    allPhotos.push({ url: photoUrl, title: memory.title, date: memory.date_of_memory });
                 });
             }
         });
@@ -121,11 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 slide.classList.add('active');
             }
             
-            // FIX: The URL from the photo object is the full, direct URL.
             const imageUrl = photo.url;
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long'
-            });
+            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
             slide.innerHTML = `
                 <img src="${imageUrl}" alt="${photo.title}">
@@ -141,28 +136,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
-
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.remove('active');
-            }
+            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.add('active');
-            }
-        }, 3000); // Cycle every 3 seconds
+            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+        }, 3000);
     }
 
-    // --- Main Fetch Logic (No changes needed) ---
+    // --- Main Fetch Logic ---
     fetch(API_URL)
         .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
         .then(data => {
-            renderPersonalInfo(data.personal_info || {});
-            renderSocialLinks(data.social_links || []);
-            renderSkills(data.skills || []);
-            renderProjects(data.projects || []);
-            renderMemoryCarousel(data.memories || []);
+            if (data.personal_info) renderPersonalInfo(data.personal_info);
+            if (data.social_links) renderSocialLinks(data.social_links);
+            if (data.skills) renderSkills(data.skills);
+            if (data.projects) renderProjects(data.projects);
+            if (data.memories) renderMemoryCarousel(data.memories);
         })
         .catch(error => {
             console.error('Error fetching portfolio data:', error);
