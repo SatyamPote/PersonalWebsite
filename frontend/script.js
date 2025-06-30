@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // IMPORTANT: We only need the API_URL now. The BASE_URL is no longer needed
-    // because the API will provide full, direct URLs for images.
-    const API_URL = 'https://satyam-portfolio-backend.onrender.com/api/data/';
+    // --- CRITICAL: Set this to your LIVE Render backend API endpoint ---
+    // This must match the URL of your deployed Django application.
+    const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
 
     // --- Element Selectors (No changes here) ---
     const profilePhotoEl = document.getElementById('profile-photo');
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         footerNameEl.textContent = info.full_name;
 
         if (info.profile_photo_url) {
-            // --- CHANGED: Removed BASE_URL. Use the URL directly from the API. ---
+            // FIX: Use the full URL from the API directly.
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
         }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let iconHtml = '';
             if (skill.image_url) {
-                // --- CHANGED: Removed BASE_URL. Use the URL directly from the API. ---
+                // FIX: Use the full image URL from the API directly.
                 iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
                     allPhotos.push({
-                        url: photoUrl,
+                        url: photoUrl, // This URL is now the complete, direct link
                         title: memory.title,
                         date: memory.date_of_memory
                     });
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (allPhotos.length === 0) {
-            memoriesContainer.innerHTML = '<p>No memory photos have been uploaded yet.</p>';
+            memoriesContainer.innerHTML = '<p>No memory photos have been added yet.</p>';
             return;
         }
 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 slide.classList.add('active');
             }
             
-            // --- CHANGED: This was the main bug. Use the photo URL directly. ---
+            // FIX: The URL from the photo object is the full, direct URL.
             const imageUrl = photo.url;
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
                 year: 'numeric', month: 'long'
@@ -151,10 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (slides[currentIndex]) {
                 slides[currentIndex].classList.add('active');
             }
-        }, 3000); // Changed to 3 seconds for a better feel
+        }, 3000); // Cycle every 3 seconds
     }
 
-    // --- Main Fetch Logic (No changes here) ---
+    // --- Main Fetch Logic (No changes needed) ---
     fetch(API_URL)
         .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
         .then(data => {

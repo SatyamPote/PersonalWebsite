@@ -139,13 +139,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # It tells Django which frontend addresses are allowed to make requests.
 
 ALLOWED_HOSTS = [
-    'satyampote.tech', 
-    'www.satyampote.tech', 
-    'satyam-portfolio-backend.onrender.com' # Your Render service URL
+    'satyampote.tech',                      # Your frontend domain
+    'www.satyampote.tech',                  # Your frontend domain with www
+    'personal-dashboard-backend-dxrt.onrender.com', # Your LIVE backend domain
+    'satyam-portfolio-backend.onrender.com' # Adding this one too, just in case
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500",      # For local development
-    "http://localhost:5500",       # For local development
-    "https://satyampote.tech",     # Your LIVE frontend URL
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://satyampote.tech", # Your live frontend URL (using https)
 ]
