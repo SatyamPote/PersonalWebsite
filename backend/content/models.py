@@ -1,3 +1,5 @@
+# content/models.py
+
 from django.db import models
 from django.utils import timezone
 
@@ -14,7 +16,7 @@ class Skill(models.Model):
         max_length=500, 
         blank=True, 
         null=True,
-        help_text="Optional. Paste the direct image URL here (e.g., from a Google Drive direct link)."
+        help_text="Optional. Use if you don't have an icon class. Upload to postimage.me and paste the 'Direct' link here."
     )
 
     def __str__(self):
@@ -25,7 +27,7 @@ class MemoryPhoto(models.Model):
     # --- CHANGED HELP TEXT ---
     image = models.URLField(
         max_length=500,
-        help_text="Paste the direct URL of the memory photo. For Google Drive, use the 'direct download' link."
+        help_text="Upload photo to postimage.me and paste the 'Direct' link here."
     )
 
     def __str__(self):
@@ -65,11 +67,11 @@ class PersonalInfo(models.Model):
     subtitle = models.CharField(max_length=200)
     # --- CHANGED HELP TEXT ---
     profile_photo = models.URLField(
-        "Profile Photo URL", # This sets the field's label in the admin panel
+        "Profile Photo URL",
         max_length=500, 
         blank=True, 
         null=True,
-        help_text="Paste the direct URL to your profile photo. For Google Drive, use the 'direct download' link."
+        help_text="Upload your profile photo to postimage.me and paste the 'Direct' link here."
     )
     about_me = models.TextField()
     location = models.CharField(max_length=100, blank=True)
