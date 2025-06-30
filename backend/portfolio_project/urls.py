@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from content.views import portfolio_data_api
 
-# NEW: Import these for serving media files
+# --- ADD THESE TWO IMPORTS ---
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/data/', portfolio_data_api, name='api-data'),
 ]
 
-# NEW: Add this line to serve media files in development
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# --- ADD THIS LINE AT THE END ---
+# This is required to serve files from MEDIA_ROOT in development and production
+# when using Render Disks.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

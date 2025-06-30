@@ -12,8 +12,8 @@ def portfolio_data_api(request):
         personal_info_data = {
             "full_name": info.full_name,
             "subtitle": info.subtitle,
-            # --- CHANGED: Removed .url ---
-            "profile_photo_url": info.profile_photo if info.profile_photo else None,
+            # --- REVERTED: Use .url to get the image path ---
+            "profile_photo_url": info.profile_photo.url if info.profile_photo else None,
             "about_me": info.about_me,
             "location": info.location,
             "languages_spoken": info.languages_spoken,
@@ -24,8 +24,8 @@ def portfolio_data_api(request):
             skills_data.append({
                 'name': skill.name,
                 'icon_class': skill.icon_class,
-                # --- CHANGED: Removed .url ---
-                'image_url': skill.image if skill.image else None
+                # --- REVERTED: Use .url to get the image path ---
+                'image_url': skill.image.url if skill.image else None
             })
 
         social_links_data = list(info.social_links.all().values('name', 'url'))
@@ -36,8 +36,8 @@ def portfolio_data_api(request):
     memories_queryset = Memory.objects.all().order_by('-date_of_memory')
     memories_data = []
     for memory in memories_queryset:
-        # --- CHANGED: Removed .url ---
-        photos_urls = [photo.image for photo in memory.photos.all()]
+        # --- REVERTED: Use .url to get the image path ---
+        photos_urls = [photo.image.url for photo in memory.photos.all()]
         memories_data.append({
             'title': memory.title,
             'description': memory.description,
