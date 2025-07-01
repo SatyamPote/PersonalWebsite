@@ -15,9 +15,14 @@ class MemoryAdmin(admin.ModelAdmin):
     inlines = [MemoryPhotoInline]
     list_display = ('title', 'date_of_memory')
 
+# --- ★ THIS IS THE UPDATED SECTION ★ ---
 # This customizes the admin page for the PersonalInfo model.
+# We are adding a list_display to make it cleaner.
 class PersonalInfoAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'subtitle') # Makes the main list view look nicer.
+    
     # This line is correct and creates the two-box selection widget.
+    # It allows you to link existing Skills and Social Links.
     filter_horizontal = ('skills', 'social_links')
 
 # This customizes the admin page for the Skill model.
@@ -34,10 +39,10 @@ class SkillAdmin(admin.ModelAdmin):
     )
 
 # --- Final Registration of all models ---
-# The registration lines below are correct and use the custom admin classes.
+# This ensures that all custom admin configurations are used.
 
 admin.site.register(Project)
-admin.site.register(PersonalInfo, PersonalInfoAdmin) # This correctly uses PersonalInfoAdmin
+admin.site.register(PersonalInfo, PersonalInfoAdmin) # Uses the custom PersonalInfoAdmin
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(SocialLink)
 admin.site.register(Memory, MemoryAdmin)
