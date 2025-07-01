@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Portfolio</title>
+  <title>Loading Portfolio...</title>
 
-  <!-- Load Spline Viewer -->
+  <!-- Load Spline Viewer for the 3D model -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.18/build/spline-viewer.js"></script>
 
   <!-- Fonts and Icons -->
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
-  <!-- Load CSS (FIXED PATH) -->
+  <!-- Link to your CSS file -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
@@ -24,6 +24,7 @@
 
   <div class="container">
     <header class="header">
+      <!-- The 'id' attributes are what your script.js uses to find these elements -->
       <img id="profile-photo" src="" alt="Profile Photo" class="profile-photo hidden" />
       <h1 id="full-name" class="title">Loading...</h1>
       <p id="subtitle" class="subtitle">Please wait.</p>
@@ -56,7 +57,7 @@
       <section id="memories">
         <h2>Memories</h2>
         <div id="memories-slider-container" class="memory-slider-container">
-          <!-- JS will inject slides -->
+          <!-- Your script.js will inject the memory slides here -->
         </div>
       </section>
 
@@ -72,6 +73,9 @@
       <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
   </div>
+  
+  <!-- The script.js file must be at the very end to work correctly -->
+  <script src="script.js"></script>
 
 </body>
 </html>
