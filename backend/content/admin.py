@@ -1,5 +1,3 @@
-# content/admin.py
-
 from django.contrib import admin
 from .models import Project, PersonalInfo, Skill, SocialLink, Memory, MemoryPhoto
 
@@ -8,26 +6,24 @@ class MemoryPhotoInline(admin.TabularInline):
     model = MemoryPhoto
     verbose_name = "Image URL"
     verbose_name_plural = "Image URLs"
-    extra = 1
+    extra = 1  # Show 1 extra empty slot by default
 
 # This customizes the admin page for the Memory model itself.
 class MemoryAdmin(admin.ModelAdmin):
+    # This adds the photo URL fields to the Memory page.
     inlines = [MemoryPhotoInline]
     list_display = ('title', 'date_of_memory')
 
-# --- ★ THIS IS THE UPDATED SECTION ★ ---
 # This customizes the admin page for the PersonalInfo model.
-# We are adding a list_display to make it cleaner.
 class PersonalInfoAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'subtitle') # Makes the main list view look nicer.
-    
-    # This line is correct and creates the two-box selection widget.
-    # It allows you to link existing Skills and Social Links.
+    # The filter_horizontal makes selecting many skills/links easier.
     filter_horizontal = ('skills', 'social_links')
 
-# This customizes the admin page for the Skill model.
+# --- NEW: Admin Configuration for Skills ---
+# We create this class to better organize the Skill creation form.
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name', 'icon_class', 'image')
+    # fieldsets organize the form into logical groups.
     fieldsets = (
         (None, {
             'fields': ('name',)
@@ -38,11 +34,11 @@ class SkillAdmin(admin.ModelAdmin):
         }),
     )
 
-# --- Final Registration of all  ---
-# This ensures that all custom admin configurations are used.
+# --- Final Registration of all models ---
+# We now use our custom admin classes for a better experience.
 
 admin.site.register(Project)
-admin.site.register(PersonalInfo, PersonalInfoAdmin) # Uses the custom PersonalInfoAdmin
-admin.site.register(Skill, SkillAdmin)
+admin.site.register(PersonalInfo, PersonalInfoAdmin)
+admin.site.register(Skill, SkillAdmin) # Use the new SkillAdmin
 admin.site.register(SocialLink)
 admin.site.register(Memory, MemoryAdmin)
