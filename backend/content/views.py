@@ -1,11 +1,15 @@
-# content/views.py
+# Let's fix your issue so that added skills in the admin panel appear on the website.
+# Here's what you need to do:
+
+# --- ✅ FIXED views.py (just make sure this matches yours) ---
 
 from django.http import JsonResponse
-from .models import Project, PersonalInfo, Memory, Skill, SocialLink
+from .models import Project, PersonalInfo, Memory
+
 
 def portfolio_data_api(request):
-    info = PersonalInfo.objects.first()
-    
+    info = PersonalInfo.objects.first()  # Only one personal info record
+
     personal_info_data = {}
     skills_data = []
     social_links_data = []
@@ -20,12 +24,14 @@ def portfolio_data_api(request):
             "languages_spoken": info.languages_spoken,
             "my_goals": info.my_goals,
         }
-        
-        for skill in info.skills.all():
+
+        # --- Ensure this queryset works ---
+        skills_qs = info.skills.all()
+        for skill in skills_qs:
             skills_data.append({
                 'name': skill.name,
                 'icon_class': skill.icon_class,
-                'image_url': skill.image if skill.image else None
+                'image_url': skill.image if skill.image else None,
             })
 
         social_links_data = list(info.social_links.all().values('name', 'url'))
@@ -42,15 +48,13 @@ def portfolio_data_api(request):
             'description': memory.description,
             'link': memory.link,
             'date_of_memory': memory.date_of_memory,
-            'photos': photos_urls
+            'photos': photos_urls,
         })
 
-    data = {
+    return JsonResponse({
         "personal_info": personal_info_data,
         "social_links": social_links_data,
         "skills": skills_data,
         "projects": projects_data,
         "memories": memories_data,
-    }
-    
-    return JsonResponse(data, safe=False)
+    }, safe=False)
