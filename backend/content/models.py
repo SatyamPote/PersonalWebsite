@@ -17,11 +17,10 @@ class Skill(models.Model):
         help_text="Optional. Find class at devicon.dev. E.g., 'devicon-python-plain'"
     )
     image = models.URLField(
-        "Image URL", # A more user-friendly name in the admin panel
         max_length=500, 
         blank=True, 
         null=True,
-        help_text=f"Optional. Paste a direct image URL. This will be used instead of the icon class if provided. {GOOGLE_PHOTOS_HELP_TEXT}"
+        help_text=f"Optional. Paste a direct image URL. {GOOGLE_PHOTOS_HELP_TEXT}"
     )
 
     def __str__(self):
@@ -29,8 +28,7 @@ class Skill(models.Model):
 
 class MemoryPhoto(models.Model):
     memory = models.ForeignKey('Memory', on_delete=models.CASCADE, related_name='photos')
-    image_url = models.URLField(
-        "Direct Image URL",
+    image = models.URLField(
         max_length=500,
         help_text=f"Paste the direct URL of the memory photo. {GOOGLE_PHOTOS_HELP_TEXT}"
     )
@@ -50,11 +48,6 @@ class Memory(models.Model):
 class SocialLink(models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField()
-    icon_class = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Optional. Font Awesome class, e.g., 'fab fa-github'"
-    )
 
     def __str__(self):
         return self.name
@@ -67,13 +60,12 @@ class Project(models.Model):
         null=True, 
         help_text="The main link for your project (e.g., Live Demo or GitHub)."
     )
-    date_created = models.DateField(default=timezone.now)
+    date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
 class PersonalInfo(models.Model):
-    # There should only be ONE of these in your database
     full_name = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=200)
     profile_photo = models.URLField(
@@ -87,15 +79,8 @@ class PersonalInfo(models.Model):
     location = models.CharField(max_length=100, blank=True)
     languages_spoken = models.CharField(max_length=200, blank=True)
     my_goals = models.TextField(blank=True)
-    
-    # Relationships
     skills = models.ManyToManyField(Skill, blank=True)
     social_links = models.ManyToManyField(SocialLink, blank=True)
-    projects = models.ManyToManyField(Project, blank=True)
-    memories = models.ManyToManyField(Memory, blank=True)
 
     def __str__(self):
         return self.full_name
-    
-    class Meta:
-        verbose_name_plural = "Personal Info"
