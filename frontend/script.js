@@ -1,4 +1,7 @@
+// script.js
+
 document.addEventListener('DOMContentLoaded', () => {
+
     const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
 
     const profilePhotoEl = document.getElementById('profile-photo');
@@ -24,11 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url && info.profile_photo_url.trim() !== '') {
+        if (info.profile_photo_url) {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
-        } else {
-            profilePhotoEl.classList.add('hidden');
         }
     }
 
@@ -94,7 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({ url: photoUrl, title: memory.title, date: memory.date_of_memory });
+                    allPhotos.push({
+                        url: photoUrl,
+                        title: memory.title,
+                        date: memory.date_of_memory
+                    });
                 });
             }
         });
@@ -112,7 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const imageUrl = photo.url;
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long'
+            });
 
             slide.innerHTML = `
                 <img src="${imageUrl}" alt="${photo.title}">
@@ -128,26 +135,31 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
+
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
+            if (slides[currentIndex]) {
+                slides[currentIndex].classList.remove('active');
+            }
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
-        }, 3000);
+            if (slides[currentIndex]) {
+                slides[currentIndex].classList.add('active');
+            }
+        }, 3000); 
     }
 
     fetch(API_URL)
-        .then(response => { if (!response.ok) throw new Error(`Network response error: ${response.statusText}`); return response.json(); })
+        .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
         .then(data => {
-            if (data.error) throw new Error(`API Error: ${data.error}`);
-            if (data.personal_info) renderPersonalInfo(data.personal_info);
-            if (data.social_links) renderSocialLinks(data.social_links);
-            if (data.skills) renderSkills(data.skills);
-            if (data.projects) renderProjects(data.projects);
-            if (data.memories) renderMemoryCarousel(data.memories);
+            renderPersonalInfo(data.personal_info || {});
+            renderSocialLinks(data.social_links || []);
+            renderSkills(data.skills || []);
+            renderProjects(data.projects || []);
+            renderMemoryCarousel(data.memories || []);
         })
         .catch(error => {
             console.error('Error fetching portfolio data:', error);
-            document.body.innerHTML = `<div style="text-align: center; color: red; padding: 40px;"><h1>Error</h1><p>${error.message}</p><p>Please check the browser console and ensure the backend server is running correctly.</p></div>`;
+            fullNameEl.textContent = 'Error';
+            subtitleEl.textContent = 'Could not load portfolio data. Is the backend server running?';
         });
 });

@@ -1,52 +1,50 @@
+# content/views.py
+
 from django.http import JsonResponse
-from .models import PersonalInfo
+from .models import Project, PersonalInfo, Memory, Skill, SocialLink
 
 def portfolio_data_api(request):
-    info = PersonalInfo.objects.prefetch_related(
-        'skills', 
-        'social_links', 
-        'projects', 
-        'memories__photos'
-    ).first()
+    info = PersonalInfo.objects.first()
+    
+    personal_info_data = {}
+    skills_data = []
+    social_links_data = []
 
-    if not info:
-        return JsonResponse({'error': 'Portfolio data not configured in admin.'}, status=404)
+    if info:
+        personal_info_data = {
+            "full_name": info.full_name,
+            "subtitle": info.subtitle,
+            "profile_photo_url": info.profile_photo if info.profile_photo else None,
+            "about_me": info.about_me,
+            "location": info.location,
+            "languages_spoken": info.languages_spoken,
+            "my_goals": info.my_goals,
+        }
+        
+        for skill in info.skills.all():
+            skills_data.append({
+                'name': skill.name,
+                'icon_class': skill.icon_class,
+                'image_url': skill.image if skill.image else None
+            })
 
-    personal_info_data = {
-        "full_name": info.full_name,
-        "subtitle": info.subtitle,
-        "profile_photo_url": info.profile_photo,
-        "about_me": info.about_me,
-        "location": info.location,
-        "languages_spoken": info.languages_spoken,
-        "my_goals": info.my_goals,
-    }
+        social_links_data = list(info.social_links.all().values('name', 'url'))
 
-    skills_data = [{
-        'name': skill.name,
-        'icon_class': skill.icon_class,
-        'image_url': skill.image
-    } for skill in info.skills.all()]
+    projects = Project.objects.all().order_by('-date_created')
+    projects_data = list(projects.values('title', 'description', 'project_url'))
 
-    social_links_data = list(info.social_links.all().values('name', 'url'))
-
-    projects_data = [{
-        'title': project.title,
-        'description': project.description,
-        'project_url': project.project_url
-    } for project in info.projects.all().order_by('-date_created')]
-
+    memories_queryset = Memory.objects.all().order_by('-date_of_memory')
     memories_data = []
-    for memory in info.memories.all().order_by('-date_of_memory'):
-        photos_urls = [photo.image_url for photo in memory.photos.all() if photo.image_url]
+    for memory in memories_queryset:
+        photos_urls = [photo.image for photo in memory.photos.all()]
         memories_data.append({
             'title': memory.title,
             'description': memory.description,
             'link': memory.link,
-            'date_of_memory': memory.date_of_memory.strftime('%Y-%m-%d'),
+            'date_of_memory': memory.date_of_memory,
             'photos': photos_urls
         })
-    
+
     data = {
         "personal_info": personal_info_data,
         "social_links": social_links_data,
@@ -55,4 +53,4 @@ def portfolio_data_api(request):
         "memories": memories_data,
     }
     
-    return JsonResponse(data)
+    return JsonResponse(data, safe=False)
