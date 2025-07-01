@@ -1,5 +1,3 @@
-# content/admin.py
-
 from django.contrib import admin
 from .models import Project, PersonalInfo, Skill, SocialLink, Memory, MemoryPhoto
 
@@ -12,6 +10,7 @@ class MemoryPhotoInline(admin.TabularInline):
 
 @admin.register(Memory)
 class MemoryAdmin(admin.ModelAdmin):
+    # This adds the photo URL fields to the Memory page.
     inlines = [MemoryPhotoInline]
     list_display = ('title', 'date_of_memory')
 
