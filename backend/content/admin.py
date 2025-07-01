@@ -38,7 +38,7 @@ class SkillAdmin(admin.ModelAdmin):
         }),
     )
 
-# --- Final Registration of all models ---
+# --- Final Registration of all  ---
 # This ensures that all custom admin configurations are used.
 
 admin.site.register(Project)
