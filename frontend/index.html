@@ -1,437 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio</title>
+  <title>Loading Portfolio...</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'JetBrains Mono', monospace;
-      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-      color: #ffffff;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    /* Enhanced Glass effect utilities */
-    .glass {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-
-    .glass-ultra {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 25px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-    }
-
-    /* Spline container */
-    #spline-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      z-index: 1;
-      transition: opacity 0.8s ease;
-    }
-
-    #spline-container.fade-out {
-      opacity: 0.3;
-      pointer-events: none;
-    }
-
-    spline-viewer {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Main content */
-    .container {
-      position: relative;
-      z-index: 2;
-      min-height: 200vh;
-      padding-top: 100vh;
-    }
-
-    /* Header */
-    #header-container {
-      text-align: center;
-      padding: 4rem 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .profile-photo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin: 0 auto 2rem;
-      display: block;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .profile-photo:hover {
-      border-color: rgba(255, 255, 255, 0.4);
-      transform: scale(1.05);
-    }
-
-    .glow-text {
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      font-weight: 700;
-    }
-
-    #full-name {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, #ffffff, #cccccc);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      opacity: 0.6;
-      margin-bottom: 2rem;
-    }
-
-    /* Social links */
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .social-link {
-      display: inline-block;
-      padding: 0.8rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
-      color: #ffffff;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .social-link:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-    }
-
-    /* Grid layout */
-    .grid-2-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin: 3rem 0;
-      padding: 0 2rem;
-    }
-
-    /* Sections */
-    section {
-      padding: 2rem;
-      margin: 2rem auto;
-      max-width: 1200px;
-    }
-
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      opacity: 0.9;
-    }
-
-    #about, #details {
-      padding: 2rem;
-      margin: 0;
-    }
-
-    .glass-section {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 25px;
-      padding: 2rem;
-      margin: 2rem 0;
-    }
-
-    /* Skills */
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .skill-item {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1rem;
-      border-radius: 15px;
-      text-align: center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .skill-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
-    }
-
-    .skill-item i {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      display: block;
-      opacity: 0.8;
-    }
-
-    /* Projects */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .project-card {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .project-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.08);
-    }
-
-    .project-card h3 {
-      margin-bottom: 1rem;
-      color: #ffffff;
-      opacity: 0.9;
-    }
-
-    .project-card p {
-      opacity: 0.6;
-      margin-bottom: 1rem;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .tech-tag {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      opacity: 0.8;
-    }
-
-    /* Memories slider */
-    .memory-slider-container {
-      position: relative;
-      max-width: 800px;
-      margin: 2rem auto;
-      overflow: hidden;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .memory-slide {
-      display: none;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .memory-slide.active {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      margin-top: 4rem;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(15px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    /* Scroll trigger animations */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .grid-2-col {
-        grid-template-columns: 1fr;
-      }
-
-      #full-name {
-        font-size: 2rem;
-      }
-
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      section {
-        padding: 1rem;
-      }
-
-      .glass-section {
-        margin: 1rem;
-        padding: 1.5rem;
-      }
-    }
-
-    /* Hidden class */
-    .hidden {
-      display: none;
-    }
-  </style>
 </head>
 <body>
-  <!-- Spline 3D Scene -->
-  <div id="spline-container">
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.18/build/spline-viewer.js"></script>
-    <spline-viewer url="https://prod.spline.design/aUPrZ4SfAMPsDxxs/scene.splinecode"></spline-viewer>
-  </div>
-
-  <!-- Main Portfolio Content -->
   <div class="container">
-    <header id="header-container" class="glass-section fade-in">
+
+    <header id="header-container">
       <img id="profile-photo" src="" alt="Profile Photo" class="profile-photo hidden" />
-      <h1 id="full-name" class="glow-text"></h1>
-      <p id="subtitle" class="subtitle"></p>
-      <div id="social-links-container" class="social-links">
-        <!-- Social links will be populated by Django -->
-      </div>
+      <h1 id="full-name" class="glow-text terminal-cursor">Loading...</h1>
+      <p id="subtitle" class="subtitle">Please wait.</p>
+      <div id="social-links-container" class="social-links"></div>
     </header>
 
     <main>
       <div class="grid-2-col">
-        <section id="about" class="glass-section fade-in">
+        <section id="about">
           <h2>About Me</h2>
-          <p id="about-me-content">
-            <!-- Content will be populated by Django -->
-          </p>
+          <p id="about-me-content">Loading...</p>
         </section>
-        <section id="details" class="glass-section fade-in">
+        <section id="details">
           <h2>Details</h2>
           <div id="details-content">
-            <p><strong>Location:</strong> <span id="location"></span></p>
-            <p><strong>Languages:</strong> <span id="languages"></span></p>
-            <p><strong>My Goals:</strong> <span id="my-goals"></span></p>
+            <p><strong>Location</strong> <span id="location">Loading...</span></p>
+            <p><strong>Languages</strong> <span id="languages">Loading...</span></p>
+            <p><strong>My Goals</strong> <span id="my-goals">Loading...</span></p>
           </div>
         </section>
       </div>
 
-      <section id="skills" class="glass-section fade-in">
+      <section id="skills">
         <h2 class="glow-text">Skills</h2>
         <div id="skills-container" class="skills-container">
-          <!-- Skills will be populated by Django -->
+          <p>Loading skills...</p>
         </div>
       </section>
 
-      <section id="memories" class="glass-section fade-in">
+      <section id="memories">
         <h2>Memories</h2>
         <div id="memories-slider-container" class="memory-slider-container">
-          <!-- Memory slides will be populated by Django -->
+          <!-- Slides will be injected by JS -->
         </div>
       </section>
 
-      <section id="projects" class="glass-section fade-in">
+      <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- Projects will be populated by Django -->
+          <p>Loading projects...</p>
         </div>
       </section>
     </main>
 
-    <footer class="glass-section">
-      <p><span id="footer-name"></span>. Built with passion and cutting-edge technology.</p>
+    <footer>
+      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
+
   </div>
 
-  <script>
-    // Fade out Spline container on scroll
-    window.addEventListener('scroll', () => {
-      const splineContainer = document.getElementById('spline-container');
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      if (scrollPosition > windowHeight * 0.1) {
-        splineContainer.classList.add('fade-out');
-      } else {
-        splineContainer.classList.remove('fade-out');
-      }
-    });
-
-    // Fade in elements on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
