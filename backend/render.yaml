@@ -1,9 +1,11 @@
 services:
   - type: web
-    name: portfolio-api
+    name: your-app-name
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn portfolio_project.wsgi:application
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn your_project.wsgi:application"
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: portfolio_project.settings
+        value: your_project.settings
+      - key: DEBUG
+        value: "False"
