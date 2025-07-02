@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-<<<<<<< HEAD
-=======
-    const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
+    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
->>>>>>> parent of 0bbc509 (Refactor portfolio backend and frontend integration)
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -17,9 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
-    // This is your Django backend API endpoint on Render
-    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
-
     fetch(API_URL)
         .then(res => {
             if (!res.ok) {
@@ -28,21 +22,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return res.json();
         })
         .then(data => {
+            if (data.error) throw new Error(`API Error: ${data.error}`);
             renderAll(data);
         })
         .catch(error => {
             console.error("Failed to load data:", error);
-            // Display an error message on the page for the user
             const container = document.querySelector('.container');
-            container.innerHTML = `<h1>Error</h1><p>Sorry, the portfolio data could not be loaded. Please try again later.</p><p><small>Error details: ${error.message}</small></p>`;
+            container.innerHTML = `
+                <h1>Error</h1>
+                <p>Sorry, the portfolio data could not be loaded. Please try again later.</p>
+                <p><small>Error details: ${error.message}</small></p>
+            `;
         });
 
     function renderAll(data) {
-        renderPersonalInfo(data.personal_info);
-        renderSocialLinks(data.social_links);
-        renderSkills(data.skills);
-        renderProjects(data.projects);
-        renderMemoryCarousel(data.memories);
+        if (data.personal_info) renderPersonalInfo(data.personal_info);
+        if (data.social_links) renderSocialLinks(data.social_links);
+        if (data.skills) renderSkills(data.skills);
+        if (data.projects) renderProjects(data.projects);
+        if (data.memories) renderMemoryCarousel(data.memories);
     }
 
     function renderPersonalInfo(info) {
@@ -83,14 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
         skills.forEach(skill => {
             const skillBadge = document.createElement('div');
             skillBadge.className = 'skill-badge';
-
             let iconHtml = '';
             if (skill.image_url) {
                 iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
             }
-
             skillBadge.innerHTML = `${iconHtml}<span>${skill.name}</span>`;
             skillsContainer.appendChild(skillBadge);
         });
@@ -125,7 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({ url: photoUrl, title: memory.title, date: memory.date_of_memory });
+                    allPhotos.push({
+                        url: photoUrl,
+                        title: memory.title,
+                        date: memory.date_of_memory
+                    });
                 });
             }
         });
@@ -138,19 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
         allPhotos.forEach((photo, index) => {
             const slide = document.createElement('div');
             slide.className = 'memory-slide';
-            if (index === 0) {
-                slide.classList.add('active');
-            }
-<<<<<<< HEAD
+            if (index === 0) slide.classList.add('active');
 
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long'
+                year: 'numeric',
+                month: 'long'
             });
-=======
-            
-            const imageUrl = photo.url;
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
->>>>>>> parent of 0bbc509 (Refactor portfolio backend and frontend integration)
 
             slide.innerHTML = `
                 <img src="${photo.url}" alt="${photo.title}">
@@ -166,34 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
+
         let currentIndex = 0;
         setInterval(() => {
-<<<<<<< HEAD
-            slides[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % slides.length;
-            slides[currentIndex].classList.add('active');
-        }, 3000);
-    }
-=======
             if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
             if (slides[currentIndex]) slides[currentIndex].classList.add('active');
         }, 3000);
     }
-
-    fetch(API_URL)
-        .then(response => { if (!response.ok) throw new Error(`Network response error: ${response.statusText}`); return response.json(); })
-        .then(data => {
-            if (data.error) throw new Error(`API Error: ${data.error}`);
-            if (data.personal_info) renderPersonalInfo(data.personal_info);
-            if (data.social_links) renderSocialLinks(data.social_links);
-            if (data.skills) renderSkills(data.skills);
-            if (data.projects) renderProjects(data.projects);
-            if (data.memories) renderMemoryCarousel(data.memories);
-        })
-        .catch(error => {
-            console.error('Error fetching portfolio data:', error);
-            document.body.innerHTML = `<div style="text-align: center; color: red; padding: 40px;"><h1>Error</h1><p>${error.message}</p><p>Please check the browser console and ensure the backend server is running correctly.</p></div>`;
-        });
->>>>>>> parent of 0bbc509 (Refactor portfolio backend and frontend integration)
 });
