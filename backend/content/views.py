@@ -1,8 +1,15 @@
 from django.http import JsonResponse, HttpResponse
+from django.conf import settings
+
 from .models import PersonalInfo
 
 def index(request):
     return HttpResponse("Welcome to the Portfolio API!")
+
+def build_absolute_uri(request, relative_path):
+    if not relative_path:
+        return ''
+    return request.build_absolute_uri(settings.MEDIA_URL + str(relative_path))
 
 def user_data(request):
     try:
@@ -21,7 +28,7 @@ def user_data(request):
                 "location": info.location,
                 "languages_spoken": info.languages_spoken,
                 "my_goals": info.my_goals,
-                "profile_photo_url": info.profile_photo or "",
+                "profile_photo_url": build_absolute_uri(request, info.profile_photo),
             },
             "social_links": [
                 {"name": link.name, "url": link.url}
@@ -31,7 +38,7 @@ def user_data(request):
                 {
                     "name": skill.name,
                     "icon_class": skill.icon_class,
-                    "image_url": skill.image or ""
+                    "image_url": build_absolute_uri(request, skill.image)
                 }
                 for skill in info.skills.all()
             ],
@@ -47,7 +54,7 @@ def user_data(request):
                 {
                     "title": memory.title,
                     "date_of_memory": memory.date_of_memory.isoformat(),
-                    "photos": [photo.image_url for photo in memory.photos.all()]
+                    "photos": [build_absolute_uri(request, photo.image_url) for photo in memory.photos.all()]
                 }
                 for memory in info.memories.all()
             ]
