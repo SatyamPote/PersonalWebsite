@@ -1,9 +1,8 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
 
+    // --- Element Selectors ---
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -17,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
+    // --- Renderer Functions ---
+
     function renderPersonalInfo(info) {
         document.title = `${info.full_name} - Portfolio`;
         fullNameEl.textContent = info.full_name;
@@ -27,9 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url) {
+        // --- THIS IS THE CRUCIAL, UPDATED LOGIC ---
+        // Check if the profile_photo_url exists and is not an empty string
+        if (info.profile_photo_url && info.profile_photo_url.trim() !== '') {
+            // If it's valid, set the source and remove the 'hidden' class to show it
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
+        } else {
+            // If it's not valid (null or empty), ensure the image stays hidden.
+            profilePhotoEl.classList.add('hidden');
         }
     }
 
@@ -95,11 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({
-                        url: photoUrl,
-                        title: memory.title,
-                        date: memory.date_of_memory
-                    });
+                    allPhotos.push({ url: photoUrl, title: memory.title, date: memory.date_of_memory });
                 });
             }
         });
@@ -117,9 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const imageUrl = photo.url;
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long'
-            });
+            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
             slide.innerHTML = `
                 <img src="${imageUrl}" alt="${photo.title}">
@@ -135,27 +136,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
-
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.remove('active');
-            }
+            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.add('active');
-            }
-        }, 3000); 
+            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+        }, 3000);
     }
 
+    // --- Main Fetch Logic ---
     fetch(API_URL)
         .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
         .then(data => {
-            renderPersonalInfo(data.personal_info || {});
-            renderSocialLinks(data.social_links || []);
-            renderSkills(data.skills || []);
-            renderProjects(data.projects || []);
-            renderMemoryCarousel(data.memories || []);
+            if (data.personal_info) renderPersonalInfo(data.personal_info);
+            if (data.social_links) renderSocialLinks(data.social_links);
+            if (data.skills) renderSkills(data.skills);
+            if (data.projects) renderProjects(data.projects);
+            if (data.memories) renderMemoryCarousel(data.memories);
         })
         .catch(error => {
             console.error('Error fetching portfolio data:', error);
