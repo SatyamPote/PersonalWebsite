@@ -14,57 +14,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
-    const data = {
-        personal_info: {
-            full_name: "Satyam Pote",
-            subtitle: "A DEVELOPER",
-            profile_photo_url: "profile_photos/team-1.jpg.jpg",
-            about_me: "Hello my-self Satyam ,I have successfully completed a diploma in Mechatronic engineering...",
-            location: "bengaluru karnataka",
-            languages_spoken: "English * Hindi * Kannada * Marathi",
-            my_goals: "To become a successful person"
-        },
-        social_links: [],
-        skills: [
-            {
-                name: "Css",
-                icon_class: "devicon-css3-plain-wordmark colored",
-                image_url: "skill_icons/62b2220b038aad4d3ed7ca2f.png"
-            },
-            {
-                name: "html",
-                icon_class: null,
-                image_url: null
+    // 🔥 Replace this with the correct endpoint from your Django backend
+    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
+
+    fetch(API_URL)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Server responded with ${res.status}`);
             }
-        ],
-        projects: [
-            {
-                title: "Movies-Series---Rating",
-                description: "This project is a Django-based web application...",
-                project_url: "https://satyampote.pythonanywhere.com/"
-            }
-        ],
-        memories: [
-            {
-                title: "TIE-GLOBAL-SIMIT",
-                description: "The event was an incredible opportunity...",
-                link: "https://www.linkedin.com/posts/...",
-                date_of_memory: "2024-12-04",
-                photos: [
-                    "memories/IMG-20241213-WA0063_qqAYuhB.jpg",
-                    "memories/IMG-20241213-WA0065_4ChOwze.jpg",
-                    "memories/IMG-20241213-WA0081_D7aSlXL.jpg"
-                ]
-            },
-            {
-                title: "Aventus DSCE.",
-                description: "Stepping into our first 24-hour hackathon...",
-                link: "https://www.linkedin.com/posts/...",
-                date_of_memory: "2024-06-05",
-                photos: ["memories/IMG-20240519-WA0022.jpg"]
-            }
-        ]
-    };
+            return res.json();
+        })
+        .then(data => {
+            renderAll(data);
+        })
+        .catch(error => {
+            console.error("Failed to load data:", error);
+            aboutMeContentEl.textContent = "Sorry, failed to load portfolio data.";
+        });
+
+    function renderAll(data) {
+        renderPersonalInfo(data.personal_info);
+        renderSocialLinks(data.social_links);
+        renderSkills(data.skills);
+        renderProjects(data.projects);
+        renderMemoryCarousel(data.memories);
+    }
 
     function renderPersonalInfo(info) {
         document.title = `${info.full_name} - Portfolio`;
@@ -191,11 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[currentIndex].classList.add('active');
         }, 3000);
     }
-
-    // Render all sections using the dummy data
-    renderPersonalInfo(data.personal_info);
-    renderSocialLinks(data.social_links);
-    renderSkills(data.skills);
-    renderProjects(data.projects);
-    renderMemoryCarousel(data.memories);
 });
