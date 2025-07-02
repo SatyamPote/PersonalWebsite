@@ -1,3 +1,5 @@
+# settings.py
+
 from pathlib import Path
 import os
 import dj_database_url
@@ -27,7 +29,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Added for static file serving
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Crucial for serving static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -42,7 +44,7 @@ ROOT_URLCONF = 'portfolio_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # <-- Point to your templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,9 +80,16 @@ USE_TZ = True
 
 # ✅ Static files (CSS, JS, Images)
 STATIC_URL = '/static/'
+# STATIC_ROOT is where collectstatic gathers ALL static files from various locations.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# ✅ WhiteNoise static file storage with compression and versioning
+# ✅ Add your frontend directory to STATICFILES_DIRS
+# This tells Django to also look for static files inside the 'frontend' folder.
+STATICFILES_DIRS = [
+    BASE_DIR / 'frontend',
+]
+
+# ✅ WhiteNoise configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ✅ Media files (optional)
