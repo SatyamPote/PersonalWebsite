@@ -1,6 +1,9 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', () => {
+<<<<<<< HEAD
+=======
+    const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
+
+>>>>>>> parent of 0bbc509 (Refactor portfolio backend and frontend integration)
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -52,9 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url) {
+        if (info.profile_photo_url && info.profile_photo_url.trim() !== '') {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
+        } else {
+            profilePhotoEl.classList.add('hidden');
         }
     }
 
@@ -120,11 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({
-                        url: photoUrl,
-                        title: memory.title,
-                        date: memory.date_of_memory
-                    });
+                    allPhotos.push({ url: photoUrl, title: memory.title, date: memory.date_of_memory });
                 });
             }
         });
@@ -140,10 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index === 0) {
                 slide.classList.add('active');
             }
+<<<<<<< HEAD
 
             const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
                 year: 'numeric', month: 'long'
             });
+=======
+            
+            const imageUrl = photo.url;
+            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+>>>>>>> parent of 0bbc509 (Refactor portfolio backend and frontend integration)
 
             slide.innerHTML = `
                 <img src="${photo.url}" alt="${photo.title}">
@@ -159,12 +166,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
-
         let currentIndex = 0;
         setInterval(() => {
+<<<<<<< HEAD
             slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
             slides[currentIndex].classList.add('active');
         }, 3000);
     }
+=======
+            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % slides.length;
+            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+        }, 3000);
+    }
+
+    fetch(API_URL)
+        .then(response => { if (!response.ok) throw new Error(`Network response error: ${response.statusText}`); return response.json(); })
+        .then(data => {
+            if (data.error) throw new Error(`API Error: ${data.error}`);
+            if (data.personal_info) renderPersonalInfo(data.personal_info);
+            if (data.social_links) renderSocialLinks(data.social_links);
+            if (data.skills) renderSkills(data.skills);
+            if (data.projects) renderProjects(data.projects);
+            if (data.memories) renderMemoryCarousel(data.memories);
+        })
+        .catch(error => {
+            console.error('Error fetching portfolio data:', error);
+            document.body.innerHTML = `<div style="text-align: center; color: red; padding: 40px;"><h1>Error</h1><p>${error.message}</p><p>Please check the browser console and ensure the backend server is running correctly.</p></div>`;
+        });
+>>>>>>> parent of 0bbc509 (Refactor portfolio backend and frontend integration)
 });
