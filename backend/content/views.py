@@ -1,14 +1,10 @@
-# Let's fix your issue so that added skills in the admin panel appear on the website.
-# Here's what you need to do:
-
-# --- ✅ FIXED views.py (just make sure this matches yours) ---
-
+# content/views.py
 from django.http import JsonResponse
 from .models import Project, PersonalInfo, Memory
 
-
 def portfolio_data_api(request):
-    info = PersonalInfo.objects.first()  # Only one personal info record
+    # Get the single PersonalInfo object, if it exists
+    info = PersonalInfo.objects.first()
 
     personal_info_data = {}
     skills_data = []
@@ -25,23 +21,26 @@ def portfolio_data_api(request):
             "my_goals": info.my_goals,
         }
 
-        # --- Ensure this queryset works ---
-        skills_qs = info.skills.all()
-        for skill in skills_qs:
+        # Get all skills associated with the PersonalInfo object
+        for skill in info.skills.all():
             skills_data.append({
                 'name': skill.name,
                 'icon_class': skill.icon_class,
                 'image_url': skill.image if skill.image else None,
             })
 
+        # Get all social links associated with the PersonalInfo object
         social_links_data = list(info.social_links.all().values('name', 'url'))
 
+    # Get all projects, ordered by most recent
     projects = Project.objects.all().order_by('-date_created')
     projects_data = list(projects.values('title', 'description', 'project_url'))
 
+    # Get all memories, ordered by most recent
     memories_queryset = Memory.objects.all().order_by('-date_of_memory')
     memories_data = []
     for memory in memories_queryset:
+        # Get all photo URLs for each memory
         photos_urls = [photo.image for photo in memory.photos.all()]
         memories_data.append({
             'title': memory.title,
@@ -51,6 +50,7 @@ def portfolio_data_api(request):
             'photos': photos_urls,
         })
 
+    # Combine all data into a single JSON response
     return JsonResponse({
         "personal_info": personal_info_data,
         "social_links": social_links_data,

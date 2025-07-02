@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
-    // 🔥 Replace this with the correct endpoint from your Django backend
+    // This is your Django backend API endpoint on Render
     const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
     fetch(API_URL)
@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error("Failed to load data:", error);
-            aboutMeContentEl.textContent = "Sorry, failed to load portfolio data.";
+            // Display an error message on the page for the user
+            const container = document.querySelector('.container');
+            container.innerHTML = `<h1>Error</h1><p>Sorry, the portfolio data could not be loaded. Please try again later.</p><p><small>Error details: ${error.message}</small></p>`;
         });
 
     function renderAll(data) {
@@ -91,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderProjects(projects) {
         projectGrid.innerHTML = '';
-        if (projects.length === 0) {
+        if (!projects || projects.length === 0) {
             projectGrid.innerHTML = '<p>No projects added yet.</p>';
             return;
         }

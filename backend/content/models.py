@@ -1,5 +1,4 @@
 # content/models.py
-
 from django.db import models
 from django.utils import timezone
 
@@ -9,14 +8,13 @@ class Skill(models.Model):
         max_length=100, 
         blank=True, 
         null=True,
-        help_text="Optional. Find class at devicon.dev. E.g., 'devicon-python-plain'"
+        help_text="Optional. E.g., 'devicon-python-plain'"
     )
-    # --- CHANGED HELP TEXT ---
     image = models.URLField(
         max_length=500, 
         blank=True, 
         null=True,
-        help_text="Optional. Use if you don't have an icon class. Upload to postimage.me and paste the 'Direct' link here."
+        help_text="Optional. Use if you don't have an icon class. Provide a direct image URL."
     )
 
     def __str__(self):
@@ -24,10 +22,9 @@ class Skill(models.Model):
 
 class MemoryPhoto(models.Model):
     memory = models.ForeignKey('Memory', on_delete=models.CASCADE, related_name='photos')
-    # --- CHANGED HELP TEXT ---
     image = models.URLField(
         max_length=500,
-        help_text="Upload photo to postimage.me and paste the 'Direct' link here."
+        help_text="Provide the direct URL to the photo."
     )
 
     def __str__(self):
@@ -65,13 +62,12 @@ class Project(models.Model):
 class PersonalInfo(models.Model):
     full_name = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=200)
-    # --- CHANGED HELP TEXT ---
     profile_photo = models.URLField(
         "Profile Photo URL",
         max_length=500, 
         blank=True, 
         null=True,
-        help_text="Upload your profile photo to postimage.me and paste the 'Direct' link here."
+        help_text="Provide the direct URL to your profile photo."
     )
     about_me = models.TextField()
     location = models.CharField(max_length=100, blank=True)
