@@ -1,8 +1,6 @@
+// script.js
+
 document.addEventListener('DOMContentLoaded', () => {
-
-    const API_URL = 'https://personal-dashboard-backend-dxrt.onrender.com/api/data/';
-
-    // --- Element Selectors ---
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -16,7 +14,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoriesContainer = document.getElementById('memories-slider-container');
     const footerNameEl = document.getElementById('footer-name');
 
-    // --- Renderer Functions ---
+    const data = {
+        personal_info: {
+            full_name: "Satyam Pote",
+            subtitle: "A DEVELOPER",
+            profile_photo_url: "profile_photos/team-1.jpg.jpg",
+            about_me: "Hello my-self Satyam ,I have successfully completed a diploma in Mechatronic engineering...",
+            location: "bengaluru karnataka",
+            languages_spoken: "English * Hindi * Kannada * Marathi",
+            my_goals: "To become a successful person"
+        },
+        social_links: [],
+        skills: [
+            {
+                name: "Css",
+                icon_class: "devicon-css3-plain-wordmark colored",
+                image_url: "skill_icons/62b2220b038aad4d3ed7ca2f.png"
+            },
+            {
+                name: "html",
+                icon_class: null,
+                image_url: null
+            }
+        ],
+        projects: [
+            {
+                title: "Movies-Series---Rating",
+                description: "This project is a Django-based web application...",
+                project_url: "https://satyampote.pythonanywhere.com/"
+            }
+        ],
+        memories: [
+            {
+                title: "TIE-GLOBAL-SIMIT",
+                description: "The event was an incredible opportunity...",
+                link: "https://www.linkedin.com/posts/...",
+                date_of_memory: "2024-12-04",
+                photos: [
+                    "memories/IMG-20241213-WA0063_qqAYuhB.jpg",
+                    "memories/IMG-20241213-WA0065_4ChOwze.jpg",
+                    "memories/IMG-20241213-WA0081_D7aSlXL.jpg"
+                ]
+            },
+            {
+                title: "Aventus DSCE.",
+                description: "Stepping into our first 24-hour hackathon...",
+                link: "https://www.linkedin.com/posts/...",
+                date_of_memory: "2024-06-05",
+                photos: ["memories/IMG-20240519-WA0022.jpg"]
+            }
+        ]
+    };
 
     function renderPersonalInfo(info) {
         document.title = `${info.full_name} - Portfolio`;
@@ -28,15 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        // --- THIS IS THE CRUCIAL, UPDATED LOGIC ---
-        // Check if the profile_photo_url exists and is not an empty string
-        if (info.profile_photo_url && info.profile_photo_url.trim() !== '') {
-            // If it's valid, set the source and remove the 'hidden' class to show it
+        if (info.profile_photo_url) {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
-        } else {
-            // If it's not valid (null or empty), ensure the image stays hidden.
-            profilePhotoEl.classList.add('hidden');
         }
     }
 
@@ -60,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         skills.forEach(skill => {
             const skillBadge = document.createElement('div');
             skillBadge.className = 'skill-badge';
-            
+
             let iconHtml = '';
             if (skill.image_url) {
                 iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
@@ -102,7 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({ url: photoUrl, title: memory.title, date: memory.date_of_memory });
+                    allPhotos.push({
+                        url: photoUrl,
+                        title: memory.title,
+                        date: memory.date_of_memory
+                    });
                 });
             }
         });
@@ -118,12 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index === 0) {
                 slide.classList.add('active');
             }
-            
-            const imageUrl = photo.url;
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+
+            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long'
+            });
 
             slide.innerHTML = `
-                <img src="${imageUrl}" alt="${photo.title}">
+                <img src="${photo.url}" alt="${photo.title}">
                 <h3>${photo.title}</h3>
                 <p class="memory-date">${memoryDate}</p>
             `;
@@ -132,31 +179,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         initializeCarousel();
     }
-    
+
     function initializeCarousel() {
         const slides = document.querySelectorAll('.memory-slide');
         if (slides.length <= 1) return;
+
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
+            slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+            slides[currentIndex].classList.add('active');
         }, 3000);
     }
 
-    // --- Main Fetch Logic ---
-    fetch(API_URL)
-        .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
-        .then(data => {
-            if (data.personal_info) renderPersonalInfo(data.personal_info);
-            if (data.social_links) renderSocialLinks(data.social_links);
-            if (data.skills) renderSkills(data.skills);
-            if (data.projects) renderProjects(data.projects);
-            if (data.memories) renderMemoryCarousel(data.memories);
-        })
-        .catch(error => {
-            console.error('Error fetching portfolio data:', error);
-            fullNameEl.textContent = 'Error';
-            subtitleEl.textContent = 'Could not load portfolio data. Is the backend server running?';
-        });
+    // Render all sections using the dummy data
+    renderPersonalInfo(data.personal_info);
+    renderSocialLinks(data.social_links);
+    renderSkills(data.skills);
+    renderProjects(data.projects);
+    renderMemoryCarousel(data.memories);
 });
