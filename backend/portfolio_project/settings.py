@@ -3,13 +3,16 @@ import os
 import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '253-l6vqf+mq4uhinb5pj^aq4(&*se@gxsbb@hlu6yc0h2^v3c'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
-'satyampote.tech',
-'www.satyampote.tech',
-'personal-dashboard-backend-dxrt.onrender.com',
-'satyam-portfolio-backend.onrender.com'
+    '127.0.0.1',       # ✅ Add this
+    'localhost',       # ✅ Add this
+    'satyampote.tech',
+    'www.satyampote.tech',
+    'personal-dashboard-backend-dxrt.onrender.com',
+    'satyam-portfolio-backend.onrender.com'
 ]
+
 INSTALLED_APPS = [
 'django.contrib.admin',
 'django.contrib.auth',

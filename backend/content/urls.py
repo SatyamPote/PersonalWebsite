@@ -1,8 +1,7 @@
-# content/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'), # This maps the root URL '/' to your index view
-    path('api/user-data/', views.portfolio_data_api, name='portfolio_data_api'),
+    path('', views.index, name='index'),  # Home route
+    path('user-data/', views.user_data, name='user-data'),  # ✅ FIXED this line
 ]

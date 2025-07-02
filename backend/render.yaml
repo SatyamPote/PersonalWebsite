@@ -1,5 +1,9 @@
-buildCommand: |
-  pip install -r requirements.txt
-  python manage.py collectstatic --noinput
-startCommand: gunicorn your_project_name.wsgi:application
-staticPublishPath: staticfiles
+services:
+  - type: web
+    name: portfolio-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn portfolio_project.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: portfolio_project.settings

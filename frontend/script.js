@@ -16,9 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetch(API_URL)
         .then(res => {
-            if (!res.ok) {
-                throw new Error(`Server responded with ${res.status}`);
-            }
+            if (!res.ok) throw new Error(`Server responded with ${res.status}`);
             return res.json();
         })
         .then(data => {
@@ -27,8 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error("Failed to load data:", error);
-            const container = document.querySelector('.container');
-            container.innerHTML = `
+            document.querySelector('.container').innerHTML = `
                 <h1>Error</h1>
                 <p>Sorry, the portfolio data could not be loaded. Please try again later.</p>
                 <p><small>Error details: ${error.message}</small></p>
@@ -53,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url && info.profile_photo_url.trim() !== '') {
+        if (info.profile_photo_url && info.profile_photo_url.startsWith('http')) {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
         } else {
@@ -78,15 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
             skillsContainer.innerHTML = '<p>No skills have been linked yet.</p>';
             return;
         }
+
         skills.forEach(skill => {
             const skillBadge = document.createElement('div');
             skillBadge.className = 'skill-badge';
+
             let iconHtml = '';
-            if (skill.image_url) {
+            if (skill.image_url && skill.image_url.startsWith('http')) {
                 iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
             } else if (skill.icon_class) {
                 iconHtml = `<i class="${skill.icon_class}"></i>`;
             }
+
             skillBadge.innerHTML = `${iconHtml}<span>${skill.name}</span>`;
             skillsContainer.appendChild(skillBadge);
         });
@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             projectGrid.innerHTML = '<p>No projects added yet.</p>';
             return;
         }
+
         projects.forEach(project => {
             const card = document.createElement('div');
             card.className = 'project-card';
@@ -121,17 +122,19 @@ document.addEventListener('DOMContentLoaded', () => {
         memories.forEach(memory => {
             if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
-                    allPhotos.push({
-                        url: photoUrl,
-                        title: memory.title,
-                        date: memory.date_of_memory
-                    });
+                    if (photoUrl.startsWith('http')) {
+                        allPhotos.push({
+                            url: photoUrl,
+                            title: memory.title,
+                            date: memory.date_of_memory
+                        });
+                    }
                 });
             }
         });
 
         if (allPhotos.length === 0) {
-            memoriesContainer.innerHTML = '<p>No memory photos have been added yet.</p>';
+            memoriesContainer.innerHTML = '<p>No valid memory photos available.</p>';
             return;
         }
 
@@ -162,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let currentIndex = 0;
         setInterval(() => {
-            if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
+            slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
-            if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+            slides[currentIndex].classList.add('active');
         }, 3000);
     }
 });
