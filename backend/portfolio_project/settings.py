@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
-BASE_DIR = Path(file).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '253-l6vqf+mq4uhinb5pj^aq4(&*se@gxsbb@hlu6yc0h2^v3c'
 DEBUG = False
 ALLOWED_HOSTS = [
