@@ -1,4 +1,4 @@
-/* Base reset and font */
+/* Reset & Font */
 body {
   margin: 0;
   padding: 0;
@@ -14,13 +14,11 @@ body {
   padding: 1rem;
 }
 
-/* Spline Viewer */
 .spline-3d {
   width: 100%;
   height: 400px;
   display: block;
   margin-bottom: 2rem;
-  /* border: 1px solid #fff; /* Optional: uncomment if you want a border */
 }
 
 /* Header */
@@ -55,34 +53,31 @@ body {
 .social-links {
   margin-top: 1rem;
 }
-.social-links a { 
-  color: #ccc; 
-  text-decoration: none; 
+.social-links a {
+  color: #ccc;
+  text-decoration: none;
   margin: 0 10px;
 }
 .social-links a:hover {
   color: white;
 }
 
-
-/* Grid for About & Details */
+/* Layout Grid */
 .grid {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   margin-bottom: 2rem;
 }
-
-#about,
-#details {
-  flex: 1 1 300px; /* This makes them share space and wrap on small screens */
+#about, #details {
+  flex: 1 1 300px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 1.5rem;
   border: 1px solid #333;
 }
 #details p strong {
-    color: #fff;
+  color: #fff;
 }
 
 h2 {
@@ -92,60 +87,33 @@ h2 {
   margin-bottom: 1rem;
 }
 
-/* Skills section */
-section {
-  margin-bottom: 2rem;
-}
-
+/* Skills */
 .skills-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
-/* Styles for skill badges (restored from old CSS) */
-.skill-badge { 
-  background-color: #222; 
-  color: #fff; 
-  padding: 8px 15px; 
-  border-radius: 6px; 
-  display: flex; 
-  align-items: center; 
-  gap: 10px; 
-  font-weight: 600; 
+.skill-badge {
+  background-color: #222;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
   border: 1px solid #444;
 }
 .skill-badge i { font-size: 1.5rem; }
 .skill-badge img { height: 24px; width: 24px; object-fit: contain; }
 
-
-/* Projects section */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.project-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-}
-.project-card h3 {
-  margin-top: 0;
-}
-.project-card p {
-  flex-grow: 1;
-}
-
-/* Memories Carousel (CRITICAL STYLES ADDED BACK) */
+/* Memories Slider */
 .memory-slider-container {
   overflow: hidden;
   position: relative;
   width: 100%;
-  min-height: 450px; /* Give it a minimum height to avoid collapse */
+  min-height: 450px;
   border-radius: 8px;
 }
 .memory-slide {
@@ -156,14 +124,14 @@ section {
   top: 0;
   left: 0;
   width: 100%;
-  opacity: 0; /* Slides are invisible by default */
+  opacity: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 .memory-slide.active {
-  opacity: 1; /* The active slide is visible */
+  opacity: 1;
   z-index: 1;
 }
 .memory-slide img {
@@ -184,6 +152,34 @@ section {
   font-style: italic;
 }
 
+/* Project Carousel */
+.project-carousel {
+  position: relative;
+  overflow: hidden;
+}
+.project-slide {
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.project-slide.active {
+  display: grid;
+}
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.project-card h3 {
+  margin-top: 0;
+}
+.project-card p {
+  flex-grow: 1;
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -193,17 +189,9 @@ footer {
   margin-top: 2rem;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .title {
-    font-size: 2rem;
-  }
-
-  .spline-3d {
-    height: 300px;
-  }
-
-  .grid {
-    flex-direction: column;
-  }
+  .title { font-size: 2rem; }
+  .spline-3d { height: 300px; }
+  .grid { flex-direction: column; }
 }

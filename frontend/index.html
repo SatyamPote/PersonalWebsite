@@ -3,28 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loading Portfolio...</title>
+  <title>Satyam Portfolio</title>
 
-  <!-- Load Spline Viewer for the 3D model -->
+  <!-- Spline Viewer -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.18/build/spline-viewer.js"></script>
 
-  <!-- Fonts and Icons -->
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
-  <!-- Link to your CSS file -->
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
-  <!-- Spline 3D Component -->
   <spline-viewer url="https://prod.spline.design/aUPrZ4SfAMPsDxxs/scene.splinecode" class="spline-3d"></spline-viewer>
 
   <div class="container">
     <header class="header">
-      <!-- The 'id' attributes are what your script.js uses to find these elements -->
       <img id="profile-photo" src="" alt="Profile Photo" class="profile-photo hidden" />
       <h1 id="full-name" class="title">Loading...</h1>
       <p id="subtitle" class="subtitle">Please wait.</p>
@@ -39,11 +37,9 @@
         </section>
         <section id="details">
           <h2>Details</h2>
-          <div id="details-content">
-            <p><strong>Location:</strong> <span id="location">Loading...</span></p>
-            <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
-            <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
-          </div>
+          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
+          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
+          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
         </section>
       </div>
 
@@ -57,14 +53,14 @@
       <section id="memories">
         <h2>Memories</h2>
         <div id="memories-slider-container" class="memory-slider-container">
-          <!-- Your script.js will inject the memory slides here -->
+          <!-- Slides injected here -->
         </div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
-        <div id="project-grid" class="project-grid">
-          <p>Loading projects...</p>
+        <div id="project-carousel" class="project-carousel">
+          <!-- JS will inject project slides here -->
         </div>
       </section>
     </main>
@@ -73,9 +69,7 @@
       <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
   </div>
-  
-  <!-- The script.js file must be at the very end to work correctly -->
-  <script src="script.js"></script>
 
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
