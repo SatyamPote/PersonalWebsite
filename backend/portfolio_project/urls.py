@@ -4,5 +4,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('content.urls')), # Include content app's URLs
+    path('', include('content.urls')), # Include content app's URLs at the root
 ]

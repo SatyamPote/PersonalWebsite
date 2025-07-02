@@ -52,7 +52,7 @@ def portfolio_data_api(request):
         "memories": memories_data,
     }, safe=False)
 
-# Add this new view to serve your index.html
+# This view renders your index.html
 def index(request):
-    # Django will now look for 'index.html' in the TEMPLATES DIRS (which includes your project's templates/ directory)
+    # Ensure 'index.html' is in the 'templates/' directory at the project root.
     return render(request, 'index.html')
