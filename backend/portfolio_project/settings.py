@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'content',
     'corsheaders',
+    'rest_framework',
+    'dashboard',
 ]
 
 # ✅ Middleware
