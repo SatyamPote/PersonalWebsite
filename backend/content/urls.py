@@ -10,5 +10,6 @@ def home_view(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),  # 👈 this handles GET /
-    path('api/', include('your_app.urls')),  # replace with your actual app name
+    path('api/', include('api.urls')),
+
 ]
