@@ -8,6 +8,7 @@ SECRET_KEY = '253-l6vqf+mq4uhinb5pj^aq4(&*se@gxsbb@hlu6yc0h2^v3c'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '*'
     '127.0.0.1',
     'localhost',
     'satyampote.tech',
@@ -27,8 +28,16 @@ INSTALLED_APPS = [
     'content',
     'corsheaders',
     'rest_framework',
-    'dashboard',
+    'portfolio_project',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
 
 # ✅ Middleware
 MIDDLEWARE = [
