@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ✅ Detect environment and set the correct API URL
-    const API_URL = location.hostname.includes("localhost") || location.hostname === "127.0.0.1"
-    ? "http://127.0.0.1:8000/api/user-data/"
-    : "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
-
-
-    console.log("Using API:", API_URL);
+    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
@@ -56,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url && info.profile_photo_url.startsWith('http')) {
+        if (info.profile_photo_url) {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
         } else {
@@ -78,23 +72,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSkills(skills) {
         skillsContainer.innerHTML = '';
         if (!skills || skills.length === 0) {
-            skillsContainer.innerHTML = '<p>No skills have been linked yet.</p>';
+            skillsContainer.innerHTML = '<p>No skills linked yet.</p>';
             return;
         }
 
         skills.forEach(skill => {
-            const skillBadge = document.createElement('div');
-            skillBadge.className = 'skill-badge';
+            const badge = document.createElement('div');
+            badge.className = 'skill-badge';
 
-            let iconHtml = '';
-            if (skill.image_url && skill.image_url.startsWith('http')) {
-                iconHtml = `<img src="${skill.image_url}" alt="${skill.name}">`;
-            } else if (skill.icon_class) {
-                iconHtml = `<i class="${skill.icon_class}"></i>`;
-            }
+            const icon = skill.image_url
+                ? `<img src="${skill.image_url}" alt="${skill.name}">`
+                : skill.icon_class
+                    ? `<i class="${skill.icon_class}"></i>`
+                    : '';
 
-            skillBadge.innerHTML = `${iconHtml}<span>${skill.name}</span>`;
-            skillsContainer.appendChild(skillBadge);
+            badge.innerHTML = `${icon}<span>${skill.name}</span>`;
+            skillsContainer.appendChild(badge);
         });
     }
 
@@ -111,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <h3>${project.title}</h3>
                 <p>${project.description}</p>
-                ${project.project_url ? `<a href="${project.project_url}" class="visit-button" target="_blank">Visit</a>` : ''}
+                ${project.project_url ? `<a href="${project.project_url}" target="_blank" class="visit-button">Visit</a>` : ''}
             `;
             projectGrid.appendChild(card);
         });
@@ -119,61 +112,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderMemoryCarousel(memories) {
         memoriesContainer.innerHTML = '';
-        if (!memories || memories.length === 0) {
-            memoriesContainer.innerHTML = '<p>No memories added yet.</p>';
-            return;
-        }
+        let photos = [];
 
-        let allPhotos = [];
         memories.forEach(memory => {
-            if (memory.photos && memory.photos.length > 0) {
-                memory.photos.forEach(photoUrl => {
-                    if (photoUrl.startsWith('http')) {
-                        allPhotos.push({
-                            url: photoUrl,
-                            title: memory.title,
-                            date: memory.date_of_memory
-                        });
-                    }
-                });
-            }
+            (memory.photos || []).forEach(url => {
+                if (url.startsWith("http")) {
+                    photos.push({ title: memory.title, date: memory.date_of_memory, url });
+                }
+            });
         });
 
-        if (allPhotos.length === 0) {
-            memoriesContainer.innerHTML = '<p>No valid memory photos available.</p>';
+        if (photos.length === 0) {
+            memoriesContainer.innerHTML = '<p>No memory photos added yet.</p>';
             return;
         }
 
-        allPhotos.forEach((photo, index) => {
+        photos.forEach((photo, idx) => {
             const slide = document.createElement('div');
             slide.className = 'memory-slide';
-            if (index === 0) slide.classList.add('active');
+            if (idx === 0) slide.classList.add('active');
 
-            const memoryDate = new Date(photo.date).toLocaleDateString('en-US', {
+            const date = new Date(photo.date).toLocaleDateString('en-US', {
                 year: 'numeric',
-                month: 'long'
+                month: 'long',
             });
 
             slide.innerHTML = `
                 <img src="${photo.url}" alt="${photo.title}">
                 <h3>${photo.title}</h3>
-                <p class="memory-date">${memoryDate}</p>
+                <p class="memory-date">${date}</p>
             `;
+
             memoriesContainer.appendChild(slide);
         });
 
-        initializeCarousel();
-    }
-
-    function initializeCarousel() {
+        // Auto-slide
         const slides = document.querySelectorAll('.memory-slide');
-        if (slides.length <= 1) return;
-
-        let currentIndex = 0;
-        setInterval(() => {
-            slides[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % slides.length;
-            slides[currentIndex].classList.add('active');
-        }, 3000);
+        if (slides.length > 1) {
+            let i = 0;
+            setInterval(() => {
+                slides[i].classList.remove('active');
+                i = (i + 1) % slides.length;
+                slides[i].classList.add('active');
+            }, 3000);
+        }
     }
 });
