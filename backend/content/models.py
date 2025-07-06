@@ -7,7 +7,8 @@ class PersonalInfo(models.Model):
     location = models.CharField(max_length=100)
     languages_spoken = models.CharField(max_length=200)
     my_goals = models.TextField()
-    profile_photo_url = models.URLField(blank=True, null=True)  # ✅ use URL, not ImageField
+    profile_photo_url = models.URLField(blank=True, null=True)  # ✅ use URLField now
+ # ✅ use URL, not ImageField
 
 class Skill(models.Model):
     personal_info = models.ForeignKey(PersonalInfo, related_name='skills', on_delete=models.CASCADE)
