@@ -9,8 +9,8 @@
 body {
   font-family: 'JetBrains Mono', monospace;
   line-height: 1.6;
-  color: #000;
-  background: #fff;
+  color: #fff;
+  background: #000;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -19,22 +19,22 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background: #fff;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: #000;
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
-  border: 2px solid #000;
+  border: 2px solid #fff;
 }
 
 /* Header Styles */
 .header {
   text-align: center;
   padding: 40px 0;
-  background: #000;
+  background: #fff;
   margin: -20px -20px 40px -20px;
   border-radius: 20px 20px 0 0;
-  color: #fff;
+  color: #000;
   position: relative;
   overflow: hidden;
 }
@@ -46,7 +46,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  background: linear-gradient(45deg, transparent 30%, rgba(0,0,0,0.1) 50%, transparent 70%);
   animation: shimmer 3s ease-in-out infinite;
 }
 
@@ -59,19 +59,18 @@ body {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 4px solid #fff;
+  border: 4px solid #000;
   margin-bottom: 20px;
   object-fit: cover;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   z-index: 2;
-  content: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face');
   filter: grayscale(100%);
 }
 
 .profile-photo:hover {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .title {
@@ -100,76 +99,22 @@ body {
 }
 
 .social-links a {
-  color: #fff;
+  color: #000;
   text-decoration: none;
   font-size: 1.5rem;
   padding: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: inline-block;
-  border: 2px solid #fff;
+  border: 2px solid #000;
 }
 
 .social-links a:hover {
-  background: #fff;
-  color: #000;
+  background: #000;
+  color: #fff;
   transform: translateY(-3px) scale(1.1);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-}
-
-/* Content Population via CSS */
-#full-name::after {
-  content: "Satyam Kumar";
-}
-
-#subtitle::after {
-  content: "Full Stack Developer & UI/UX Designer";
-}
-
-#about-me-content::after {
-  content: "I'm a passionate full-stack developer with expertise in modern web technologies. I love creating beautiful, functional websites and applications that provide excellent user experiences. With a strong background in both frontend and backend development, I enjoy tackling complex problems and turning ideas into reality.";
-}
-
-#location::after {
-  content: "India";
-}
-
-#languages::after {
-  content: "Hindi, English";
-}
-
-#my-goals::after {
-  content: "Building innovative web solutions";
-}
-
-#footer-name::after {
-  content: "Satyam Kumar";
-}
-
-/* Hide loading text */
-#full-name, #subtitle, #about-me-content, #location, #languages, #my-goals, #footer-name {
-  color: transparent;
-  position: relative;
-}
-
-#full-name::after, #subtitle::after, #about-me-content::after, #location::after, #languages::after, #my-goals::after, #footer-name::after {
-  color: inherit;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-
-/* Social Links via CSS */
-#social-links-container::after {
-  content: "📧 GitHub LinkedIn Twitter";
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 2;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Grid Layout */
@@ -182,14 +127,14 @@ body {
 
 /* Section Styles */
 section {
-  background: #fff;
+  background: #000;
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  border: 2px solid #000;
+  border: 2px solid #fff;
 }
 
 section::before {
@@ -199,7 +144,7 @@ section::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transition: left 0.5s ease;
 }
 
@@ -209,11 +154,11 @@ section:hover::before {
 
 section:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
 }
 
 section h2 {
-  color: #000;
+  color: #fff;
   margin-bottom: 20px;
   font-size: 1.8rem;
   font-weight: 600;
@@ -228,7 +173,7 @@ section h2::after {
   left: 0;
   width: 50px;
   height: 3px;
-  background: #000;
+  background: #fff;
   border-radius: 2px;
 }
 
@@ -240,36 +185,20 @@ section h2::after {
   margin-top: 20px;
 }
 
-/* Generate skills via CSS */
-#skills-container > p {
-  display: none;
-}
-
-#skills-container::after {
-  content: "⚡ JavaScript" "⚛️ React" "🟢 Node.js" "🐍 Python" "🔥 HTML5" "🎨 CSS3" "🍃 MongoDB" "📝 Git";
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 20px;
-  width: 100%;
-}
-
-/* Create skill items */
-.skill-item, 
-#skills-container::after {
+.skill-item {
   text-align: center;
   padding: 20px;
-  background: #fff;
+  background: #000;
   border-radius: 12px;
   transition: all 0.3s ease;
-  border: 2px solid #000;
+  border: 2px solid #fff;
   font-weight: 600;
-  color: #000;
+  color: #fff;
 }
 
-.skill-item:hover,
-#skills-container > div:hover {
-  background: #000;
-  color: #fff;
+.skill-item:hover {
+  background: #fff;
+  color: #000;
   transform: translateY(-5px);
 }
 
@@ -279,17 +208,17 @@ section h2::after {
   height: 300px;
   border-radius: 15px;
   overflow: hidden;
-  background: #000;
-  border: 2px solid #000;
+  background: #fff;
+  border: 2px solid #fff;
 }
 
 .memory-slider {
   display: flex;
   height: 100%;
-  animation: slideImages 16s infinite;
+  animation: slideMemories 16s infinite;
 }
 
-@keyframes slideImages {
+@keyframes slideMemories {
   0%, 20% { transform: translateX(0%); }
   25%, 45% { transform: translateX(-25%); }
   50%, 70% { transform: translateX(-50%); }
@@ -304,6 +233,7 @@ section h2::after {
   overflow: hidden;
   background-size: cover;
   background-position: center;
+  filter: grayscale(100%);
 }
 
 .memory-overlay {
@@ -318,33 +248,6 @@ section h2::after {
   font-weight: 600;
 }
 
-/* Create memory items via CSS with 4s timing */
-#memories-slider-container::after {
-  content: "";
-  display: flex;
-  height: 100%;
-  animation: slideImages 16s infinite;
-  background: 
-    url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=400&h=300&fit=crop') 0 0/25% 100% no-repeat,
-    url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop') 25% 0/25% 100% no-repeat,
-    url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=300&fit=crop') 50% 0/25% 100% no-repeat,
-    url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop') 75% 0/25% 100% no-repeat;
-  filter: grayscale(100%);
-}
-
-/* Memory slider with 4s change timing */
-@keyframes slideMemories {
-  0%, 20% { transform: translateX(0%); }
-  25%, 45% { transform: translateX(-25%); }
-  50%, 70% { transform: translateX(-50%); }
-  75%, 95% { transform: translateX(-75%); }
-  100% { transform: translateX(0%); }
-}
-
-#memories-slider-container::after {
-  animation: slideMemories 16s infinite; /* 4 images × 4s = 16s total */
-}
-
 /* Project Grid */
 .project-grid {
   display: grid;
@@ -354,16 +257,69 @@ section h2::after {
 }
 
 .project-card {
-  background: #fff;
+  background: #000;
   border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
+  border: 2px solid #fff;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+  background: #fff;
+  color: #000;
+}
+
+.project-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.project-card:hover h3 {
+  color: #000;
+}
+
+.project-card p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.tech-stack {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.project-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-link {
+  color: #000;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
+/* Project Animation */
+.project-card {
   opacity: 0;
-  animation: fadeInProjects 20s ease-in-out infinite; /* 4 projects × 5s = 20s total */
-  position: relative;
-  border: 2px solid #000;
-  min-height: 400px;
+  animation: fadeInProjects 20s ease-in-out infinite;
 }
 
 .project-card:nth-child(1) { animation-delay: 0s; }
@@ -377,70 +333,14 @@ section h2::after {
   100% { opacity: 0; transform: translateY(20px); }
 }
 
-.project-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  background: #000;
-  color: #fff;
-}
-
-/* Create project content via CSS */
-.project-card:nth-child(1)::before {
-  content: "E-Commerce Platform\A A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.\A \A React • Node.js • MongoDB\A \A 🔗 View Project";
-  white-space: pre-line;
-  padding: 25px;
-  display: block;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.project-card:nth-child(2)::before {
-  content: "Task Management App\A A comprehensive task management application with real-time updates, team collaboration features, and progress tracking.\A \A Vue.js • Firebase • Socket.io\A \A 🔗 View Project";
-  white-space: pre-line;
-  padding: 25px;
-  display: block;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.project-card:nth-child(3)::before {
-  content: "Weather Dashboard\A An interactive weather dashboard with location-based forecasts, charts, and weather alerts.\A \A JavaScript • API • Chart.js\A \A 🔗 View Project";
-  white-space: pre-line;
-  padding: 25px;
-  display: block;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.project-card:nth-child(4)::before {
-  content: "Portfolio Website\A A responsive portfolio website showcasing projects, skills, and professional experience.\A \A HTML • CSS • JavaScript\A \A 🔗 View Project";
-  white-space: pre-line;
-  padding: 25px;
-  display: block;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
 /* Footer */
 footer {
   text-align: center;
   padding: 30px 0;
   margin-top: 40px;
-  border-top: 2px solid #000;
-  color: #000;
+  border-top: 2px solid #fff;
+  color: #fff;
   font-weight: 500;
-}
-
-/* Hidden class for animations */
-.hidden {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.6s ease;
 }
 
 /* Responsive Design */
@@ -554,17 +454,17 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff;
-  border: 1px solid #000;
+  background: #000;
+  border: 1px solid #fff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000;
+  background: #fff;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: #ccc;
 }
 
 /* Accessibility */
@@ -578,6 +478,6 @@ html {
 
 /* Focus states for keyboard navigation */
 a:focus, button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
