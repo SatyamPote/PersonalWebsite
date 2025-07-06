@@ -4,20 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Satyam Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --black: #000;
-      --white: #fff;
-      --gray: #777;
-      --border: #333;
-    }
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Inline Black & White CSS -->
+  <style>
     body {
       margin: 0;
       font-family: 'JetBrains Mono', monospace;
-      background: var(--black);
-      color: var(--white);
+      background: #000;
+      color: #fff;
       line-height: 1.6;
     }
 
@@ -27,7 +24,7 @@
       padding: 2rem 1rem;
     }
 
-    header {
+    .header {
       text-align: center;
       margin-bottom: 2rem;
     }
@@ -37,7 +34,7 @@
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--white);
+      border: 2px solid white;
       margin-bottom: 1rem;
     }
 
@@ -47,20 +44,17 @@
 
     .title {
       font-size: 2.5rem;
+      font-weight: bold;
     }
 
     .subtitle {
-      color: var(--gray);
+      color: #aaa;
     }
 
     .social-links a {
-      color: var(--gray);
-      margin: 0 0.5rem;
+      color: #aaa;
       text-decoration: none;
-    }
-
-    .social-links a:hover {
-      color: var(--white);
+      margin: 0 0.5rem;
     }
 
     .grid {
@@ -72,18 +66,17 @@
 
     #about, #details {
       flex: 1 1 300px;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
+      padding: 1rem;
+      border: 1px solid #444;
     }
 
     h2 {
       font-size: 1.5rem;
-      border-bottom: 2px solid var(--white);
+      border-bottom: 2px solid white;
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
     }
 
-    /* Skills */
     .skills-container {
       display: flex;
       flex-wrap: wrap;
@@ -91,13 +84,12 @@
     }
 
     .skill-badge {
-      border: 1px solid var(--gray);
+      border: 1px solid #aaa;
       padding: 10px 15px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: bold;
       background: #111;
     }
 
@@ -106,12 +98,11 @@
       width: 24px;
     }
 
-    /* Memories */
+    /* Memories slider */
     .memory-slider-container {
       position: relative;
       height: 400px;
       overflow: hidden;
-      margin-bottom: 2rem;
     }
 
     .memory-slide {
@@ -119,9 +110,9 @@
       top: 0;
       left: 0;
       width: 100%;
-      text-align: center;
       opacity: 0;
-      transition: opacity 1s;
+      transition: opacity 0.7s;
+      text-align: center;
     }
 
     .memory-slide.active {
@@ -130,46 +121,39 @@
     }
 
     .memory-slide img {
-      width: 100%;
       max-height: 300px;
+      width: 100%;
       object-fit: cover;
-      border-radius: 6px;
       margin-bottom: 1rem;
-    }
-
-    .memory-slide h3 {
-      margin: 0;
     }
 
     /* Projects */
     .project-grid {
       display: flex;
-      overflow: hidden;
+      overflow-x: auto;
       gap: 1rem;
-      scroll-behavior: smooth;
     }
 
     .project-card {
-      min-width: 300px;
-      flex: 0 0 100%;
+      flex: 0 0 90%;
+      border: 1px solid #555;
       padding: 1rem;
-      border: 1px solid var(--border);
       background: #111;
     }
 
     .visit-button {
-      display: inline-block;
-      margin-top: 0.5rem;
-      color: var(--white);
+      color: #fff;
       text-decoration: underline;
+      margin-top: 0.5rem;
+      display: inline-block;
     }
 
     footer {
       text-align: center;
-      border-top: 1px solid var(--border);
-      padding: 1rem;
-      margin-top: 2rem;
-      color: var(--gray);
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid #444;
+      color: #999;
     }
 
     @media (min-width: 768px) {
@@ -191,7 +175,7 @@
     <header class="header">
       <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
       <h1 id="full-name" class="title">Loading...</h1>
-      <p id="subtitle" class="subtitle">Please wait.</p>
+      <p id="subtitle" class="subtitle">Please wait...</p>
       <div id="social-links-container" class="social-links"></div>
     </header>
 
@@ -232,61 +216,8 @@
     </footer>
   </div>
 
-  <script>
-    // Basic memory slider (auto-change)
-    let currentSlide = 0;
-    function autoSlideMemories() {
-      const slides = document.querySelectorAll(".memory-slide");
-      if (slides.length === 0) return;
-      slides.forEach((s, i) => s.classList.remove('active'));
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    setInterval(autoSlideMemories, 4000);
+  <!-- ✅ Your script handles API fetching -->
+  <script src="/assets/js/script.js"></script>
 
-    // Simulated fetch (replace with real API call in production)
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById("full-name").textContent = "Satyam Pote";
-      document.getElementById("subtitle").textContent = "Full Stack Developer";
-      document.getElementById("about-me-content").textContent = "I'm a developer passionate about building clean interfaces and scalable systems.";
-      document.getElementById("location").textContent = "Pune, India";
-      document.getElementById("languages").textContent = "English, Hindi, Marathi";
-      document.getElementById("my-goals").textContent = "Become a world-class software engineer.";
-      document.getElementById("footer-name").textContent = "Satyam Pote";
-      const photo = document.getElementById("profile-photo");
-      photo.src = "https://avatars.githubusercontent.com/u/000000?v=4";
-      photo.classList.remove("hidden");
-
-      document.getElementById("skills-container").innerHTML = `
-        <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"/>Python</div>
-        <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"/>JavaScript</div>
-      `;
-
-      const memContainer = document.getElementById("memories-slider-container");
-      memContainer.innerHTML = `
-        <div class="memory-slide active">
-          <img src="https://placehold.co/600x300/000000/FFFFFF?text=Memory+1" />
-          <h3>Graduation</h3>
-        </div>
-        <div class="memory-slide">
-          <img src="https://placehold.co/600x300/111111/FFFFFF?text=Memory+2" />
-          <h3>Hackathon Winner</h3>
-        </div>
-      `;
-
-      document.getElementById("project-grid").innerHTML = `
-        <div class="project-card">
-          <h3>Portfolio Website</h3>
-          <p>My personal portfolio site built with HTML, CSS, JS.</p>
-          <a href="#" class="visit-button">Visit</a>
-        </div>
-        <div class="project-card">
-          <h3>Blog CMS</h3>
-          <p>Blog system using Django and PostgreSQL.</p>
-          <a href="#" class="visit-button">Visit</a>
-        </div>
-      `;
-    });
-  </script>
 </body>
 </html>
