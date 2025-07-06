@@ -1,7 +1,10 @@
-console.log("Script loaded");
-
 document.addEventListener('DOMContentLoaded', () => {
-    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
+    // ✅ Detect environment and set the correct API URL
+    const API_URL = location.hostname.includes('localhost') || location.hostname === "127.0.0.1"
+        ? "http://127.0.0.1:8000/api/user-data/"
+        : "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
+
+    console.log("Using API:", API_URL);
 
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
@@ -23,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             if (data.error) throw new Error(`API Error: ${data.error}`);
-            console.log("API data received:", data); // ✅ Debug line
             renderAll(data);
         })
         .catch(error => {
@@ -121,9 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const allPhotos = [];
+        let allPhotos = [];
         memories.forEach(memory => {
-            if (memory.photos && Array.isArray(memory.photos)) {
+            if (memory.photos && memory.photos.length > 0) {
                 memory.photos.forEach(photoUrl => {
                     if (photoUrl.startsWith('http')) {
                         allPhotos.push({
