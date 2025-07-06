@@ -4,14 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Satyam Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
       font-family: 'JetBrains Mono', monospace;
       background-color: #000;
       color: #fff;
+      line-height: 1.6;
     }
 
     .container {
@@ -20,7 +21,7 @@
       padding: 2rem 1rem;
     }
 
-    /* HEADER */
+    /* Header */
     .header {
       text-align: center;
       margin-bottom: 2rem;
@@ -29,20 +30,16 @@
     .profile-photo {
       width: 120px;
       height: 120px;
-      object-fit: cover;
       border-radius: 50%;
+      object-fit: cover;
       border: 2px solid #fff;
       margin-bottom: 1rem;
     }
 
-    .title {
-      font-size: 2.2rem;
-      font-weight: bold;
-    }
+    .hidden { display: none; }
 
-    .subtitle {
-      color: #aaa;
-    }
+    .title { font-size: 2rem; font-weight: 600; }
+    .subtitle { color: #aaa; margin-bottom: 1rem; }
 
     .social-links a {
       color: #ccc;
@@ -51,7 +48,7 @@
       font-size: 1rem;
     }
 
-    /* ABOUT / DETAILS */
+    /* Grid Sections */
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -64,16 +61,17 @@
       padding: 1rem;
       border: 1px solid #444;
       border-radius: 6px;
+      background-color: #111;
     }
 
     h2 {
-      font-size: 1.5rem;
-      border-bottom: 2px solid #fff;
-      padding-bottom: 0.3rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid #fff;
       margin-bottom: 1rem;
+      padding-bottom: 0.3rem;
     }
 
-    /* SKILLS */
+    /* Skills */
     .skills-container {
       display: flex;
       flex-wrap: wrap;
@@ -81,23 +79,51 @@
     }
 
     .skill-badge {
-      display: flex;
-      align-items: center;
       background: #111;
       border: 1px solid #555;
-      padding: 10px 12px;
-      border-radius: 5px;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    .skill-badge img,
-    .skill-badge i {
+    .skill-badge img, .skill-badge i {
       width: 24px;
       height: 24px;
       object-fit: contain;
     }
 
-    /* PROJECTS */
+    /* Memories */
+    .memory-slider-container {
+      position: relative;
+      height: 350px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .memory-slide {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.7s ease-in-out;
+      text-align: center;
+    }
+
+    .memory-slide.active { opacity: 1; z-index: 1; }
+
+    .memory-slide img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .memory-slide h3 {
+      margin-top: 0.5rem;
+    }
+
+    /* Projects */
     .project-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -111,79 +137,39 @@
       border-radius: 8px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
 
     .project-card h3 {
-      margin-top: 0;
+      font-size: 1.1rem;
       margin-bottom: 0.5rem;
     }
 
     .project-card p {
-      color: #ccc;
       font-size: 0.95rem;
+      color: #ccc;
       flex-grow: 1;
     }
 
     .visit-button {
-      margin-top: 0.5rem;
+      margin-top: 0.8rem;
       text-decoration: underline;
-      color: #fff;
+      color: white;
       font-weight: bold;
+      font-size: 0.9rem;
     }
 
-    /* MEMORIES */
-    .memory-slider-container {
-      position: relative;
-      overflow: hidden;
-      height: 400px;
-      border-radius: 6px;
-    }
-
-    .memory-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      transition: opacity 0.8s;
-      text-align: center;
-    }
-
-    .memory-slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
-
-    .memory-slide img {
-      max-height: 300px;
-      width: 100%;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-
-    .memory-slide h3 {
-      margin-top: 0.5rem;
-    }
-
-    /* FOOTER */
+    /* Footer */
     footer {
-      text-align: center;
-      color: #888;
       margin-top: 3rem;
-      border-top: 1px solid #333;
+      text-align: center;
+      border-top: 1px solid #444;
       padding-top: 1rem;
+      color: #aaa;
     }
 
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .skill-badge {
-        width: 100%;
-        justify-content: center;
-      }
+      .project-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
