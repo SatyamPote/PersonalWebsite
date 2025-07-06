@@ -57,3 +57,4 @@ def user_data(request):
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+

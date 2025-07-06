@@ -50,3 +50,8 @@ def user_data(request):
     }
 
     return JsonResponse(data)
+
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Backend is running ✅")
