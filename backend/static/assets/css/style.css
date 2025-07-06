@@ -1,4 +1,4 @@
-/* Reset & Font */
+/* ========== GLOBAL RESET & BASE ========== */
 body {
   margin: 0;
   padding: 0;
@@ -14,14 +14,7 @@ body {
   padding: 1rem;
 }
 
-.spline-3d {
-  width: 100%;
-  height: 400px;
-  display: block;
-  margin-bottom: 2rem;
-}
-
-/* Header */
+/* ========== PROFILE HEADER ========== */
 .header {
   text-align: center;
   padding: 2rem 1rem;
@@ -62,7 +55,7 @@ body {
   color: white;
 }
 
-/* Layout Grid */
+/* ========== GRID SECTIONS ========== */
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -87,7 +80,7 @@ h2 {
   margin-bottom: 1rem;
 }
 
-/* Skills */
+/* ========== SKILLS ========== */
 .skills-container {
   display: flex;
   flex-wrap: wrap;
@@ -105,10 +98,16 @@ h2 {
   font-weight: 600;
   border: 1px solid #444;
 }
-.skill-badge i { font-size: 1.5rem; }
-.skill-badge img { height: 24px; width: 24px; object-fit: contain; }
+.skill-badge i {
+  font-size: 1.5rem;
+}
+.skill-badge img {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
 
-/* Memories Slider */
+/* ========== MEMORIES SLIDER ========== */
 .memory-slider-container {
   overflow: hidden;
   position: relative;
@@ -152,35 +151,44 @@ h2 {
   font-style: italic;
 }
 
-/* Project Carousel */
-.project-carousel {
-  position: relative;
-  overflow: hidden;
-}
-.project-slide {
-  display: none;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+/* ========== PROJECT CAROUSEL ========== */
+.carousel-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   gap: 1rem;
+  padding: 1rem 0;
 }
-.project-slide.active {
-  display: grid;
-}
-.project-card {
+.carousel-card {
+  min-width: 300px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid #333;
   border-radius: 8px;
   padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }
-.project-card h3 {
+.carousel-card h3 {
   margin-top: 0;
 }
-.project-card p {
-  flex-grow: 1;
+.carousel-card p {
+  color: #ccc;
+}
+.visit-button {
+  margin-top: 1rem;
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: #fff;
+  color: #000;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.visit-button:hover {
+  background: #eee;
 }
 
-/* Footer */
+/* ========== FOOTER ========== */
 footer {
   text-align: center;
   border-top: 1px solid #444;
@@ -189,9 +197,16 @@ footer {
   margin-top: 2rem;
 }
 
-/* Responsive */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-  .title { font-size: 2rem; }
-  .spline-3d { height: 300px; }
-  .grid { flex-direction: column; }
+  .title {
+    font-size: 2rem;
+  }
+  .grid {
+    flex-direction: column;
+  }
+  .memory-slide img {
+    max-width: 100%;
+    height: auto;
+  }
 }
