@@ -126,20 +126,19 @@
       object-fit: contain;
     }
 
+    /* MEMORY SLIDE */
     .memory-slider-container {
-      overflow: hidden;
-      position: relative;
       width: 100%;
       min-height: 450px;
       border-radius: 8px;
       text-align: center;
+      margin-bottom: 2rem;
     }
 
     .memory-slide {
       display: none;
       opacity: 0;
       transition: opacity 1s ease-in-out;
-      position: relative;
     }
 
     .memory-slide.visible {
@@ -162,11 +161,12 @@
       margin: 10px 0 5px 0;
     }
 
-    .memory-slide .memory-date {
+    .memory-date {
       color: #555;
       font-style: italic;
     }
 
+    /* PROJECT GRID */
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -275,7 +275,7 @@
         <h2>Memories</h2>
         <div id="memories-slider-container" class="memory-slider-container">
           <div class="memory-slide" id="memory-slide">
-            <img src="https://via.placeholder.com/600x350" alt="Memory Image">
+            <img src="https://i.imgur.com/5Y5Y5Y5.jpg" alt="TiE Global Summit 2024" />
             <h3>TiE Global Summit 2024</h3>
             <p class="memory-date">December 2024</p>
           </div>
@@ -285,7 +285,7 @@
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- Backend loads the cards here -->
+          <!-- Your script.js will populate project cards here -->
         </div>
       </section>
     </main>
@@ -295,15 +295,16 @@
     </footer>
   </div>
 
-  <!-- JS -->
+  <!-- JavaScript -->
   <script>
-    // Show the memory image after 3 seconds
     window.addEventListener("DOMContentLoaded", () => {
+      // Show memory image after 3s
       setTimeout(() => {
         document.getElementById('memory-slide').classList.add('visible');
       }, 3000);
     });
   </script>
   <script src="/assets/js/script.js"></script>
+
 </body>
 </html>
