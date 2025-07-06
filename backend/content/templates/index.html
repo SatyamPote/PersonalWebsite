@@ -4,110 +4,103 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Satyam Portfolio</title>
-
-  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
-  <!-- Black & White CSS -->
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary-color: #000000;
-      --secondary-color: #222222;
-      --accent-color: #444444;
-      --text-primary: #000000;
-      --text-secondary: #555555;
-      --text-light: #888888;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f0f0f0;
-      --bg-card: #ffffff;
-      --border-color: #cccccc;
-      --shadow-sm: none;
-      --shadow-md: none;
-      --shadow-lg: none;
-      --shadow-xl: none;
-      --gradient-primary: none;
-      --gradient-accent: none;
-      --font-mono: 'JetBrains Mono', monospace;
-      --font-sans: 'Segoe UI', sans-serif;
+      --bg: #fff;
+      --fg: #000;
+      --muted: #444;
+      --border: #000;
+      --highlight: #000;
+      --font: 'JetBrains Mono', monospace;
     }
 
     body {
-      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
       line-height: 1.6;
-      color: var(--text-primary);
-      background: var(--bg-primary);
     }
 
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      min-height: 100vh;
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem 1rem;
     }
 
     .header {
       text-align: center;
-      padding: 3rem 1rem;
-      background: var(--bg-secondary);
-      color: var(--text-primary);
+      margin-bottom: 2rem;
     }
 
     .profile-photo {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      margin: 0 auto 2rem;
-      display: block;
-      border: 2px solid var(--border-color);
+      object-fit: cover;
+      border: 2px solid var(--fg);
+      box-shadow: 0 0 10px #0002;
+      margin-bottom: 1rem;
     }
 
     .title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: bold;
     }
 
     .subtitle {
-      font-size: 1.25rem;
-      color: var(--text-secondary);
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
     }
 
     .social-links {
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
     }
 
     .social-links a {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
-      color: #000000;
+      border: 1px solid var(--fg);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
       text-decoration: none;
-      font-size: 1.25rem;
+      color: var(--fg);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
     }
 
-    main {
-      margin-top: 3rem;
+    .social-links a:hover {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    section {
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: 1fr;
       gap: 2rem;
-      margin-bottom: 3rem;
     }
 
     @media (min-width: 768px) {
@@ -116,164 +109,138 @@
       }
     }
 
-    section {
-      background: var(--bg-card);
-      padding: 2rem;
-      border: 1px solid var(--border-color);
-    }
-
-    section h2 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      font-family: var(--font-mono);
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.5rem;
-    }
-
     .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
     }
 
     .skill-item {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      padding: 1rem;
+      flex: 1 0 100px;
+      border: 1px solid var(--border);
       text-align: center;
+      padding: 1rem;
+      border-radius: 6px;
+      background: #fff;
     }
 
     .project-grid {
       display: grid;
-      grid-template-columns: 1fr;
       gap: 2rem;
-    }
-
-    @media (min-width: 640px) {
-      .project-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      }
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
     .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-    }
-
-    .project-image {
-      width: 100%;
-      height: 200px;
-      background: #eee;
-      object-fit: cover;
-    }
-
-    .project-content {
-      padding: 1.5rem;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 6px;
+      background: #fff;
     }
 
     .project-title {
-      font-size: 1.25rem;
-      font-family: var(--font-mono);
-      font-weight: 600;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
     }
 
     .project-description {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      margin-top: 0.5rem;
-    }
-
-    .project-tech {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tech-tag {
-      font-size: 0.875rem;
-      background: var(--bg-secondary);
-      padding: 0.25rem 0.5rem;
-      border: 1px solid var(--border-color);
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
     }
 
     .project-link {
-      display: inline-block;
-      margin-top: 1rem;
-      color: #000;
+      font-weight: 600;
+      color: var(--fg);
       text-decoration: underline;
-    }
-
-    .memory-slider-container {
-      background: var(--bg-secondary);
-      min-height: 250px;
-      border: 1px solid var(--border-color);
+      font-size: 0.9rem;
     }
 
     footer {
       text-align: center;
-      padding: 2rem 1rem;
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-      border-top: 1px solid var(--border-color);
-      margin-top: 4rem;
-    }
-
-    .hidden {
-      opacity: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 2rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
     <header class="header">
-      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
-      <h1 id="full-name" class="title">Loading...</h1>
-      <p id="subtitle" class="subtitle">Please wait.</p>
-      <div id="social-links-container" class="social-links"></div>
+      <img src="profile.jpg" alt="Profile Photo" class="profile-photo">
+      <h1 class="title">Satyam Mahesh Pote</h1>
+      <p class="subtitle">DEVELOPER</p>
+      <div class="social-links">
+        <a href="#">Beacons</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">GitHub</a>
+      </div>
     </header>
 
     <main>
       <div class="grid">
         <section id="about">
           <h2>About Me</h2>
-          <p id="about-me-content">Loading...</p>
+          <p>Hello! I’m a developer focused on backend + automation + web. I love building clean tools and meaningful projects.</p>
         </section>
+
         <section id="details">
           <h2>Details</h2>
-          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
-          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
-          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
+          <p><strong>Location:</strong> India</p>
+          <p><strong>Languages:</strong> Python, JavaScript</p>
+          <p><strong>My Goals:</strong> Building useful web apps that solve real problems.</p>
         </section>
       </div>
 
       <section id="skills">
         <h2>Skills</h2>
-        <div id="skills-container" class="skills-container">
-          <p>Loading skills...</p>
+        <div class="skills-container">
+          <div class="skill-item">Python</div>
+          <div class="skill-item">JavaScript</div>
+          <div class="skill-item">Django</div>
+          <div class="skill-item">React</div>
+          <div class="skill-item">HTML</div>
+          <div class="skill-item">CSS</div>
         </div>
-      </section>
-
-      <section id="memories">
-        <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container"></div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
-        <div id="project-grid" class="project-grid"></div>
+        <div class="project-grid">
+          <div class="project-card">
+            <div class="project-title">Dynamic Personal Portfolio & Dashboard</div>
+            <div class="project-description">A Django + JS-powered personal website with admin panel and 3D UI.</div>
+            <a href="#" class="project-link">Visit</a>
+          </div>
+          <div class="project-card">
+            <div class="project-title">CRYPTOVERSE_CONJURERS Public</div>
+            <div class="project-description">Blockchain dashboard and deployment tools using Python + Solidity.</div>
+            <a href="#" class="project-link">Visit</a>
+          </div>
+          <div class="project-card">
+            <div class="project-title">LIFO-FIFO-Load-Balancing-Using-Flask-API</div>
+            <div class="project-description">Demonstrating REST concurrency and load-balancing algorithms.</div>
+            <a href="#" class="project-link">Visit</a>
+          </div>
+          <div class="project-card">
+            <div class="project-title">CodeStacks</div>
+            <div class="project-description">E-book library and reading tool for developers, open-source.</div>
+            <a href="#" class="project-link">Visit</a>
+          </div>
+          <div class="project-card">
+            <div class="project-title">CryptoPay</div>
+            <div class="project-description">A UI for crypto payments with QR code, wallet, and web integration.</div>
+            <a href="#" class="project-link">Visit</a>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer>
-      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
+      <p>Satyam Mahesh Pote. Built with passion.</p>
     </footer>
   </div>
-
-  <!-- Scripts -->
-  <script src="/assets/js/script.js"></script>
-
 </body>
 </html>
