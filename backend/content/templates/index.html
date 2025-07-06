@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +11,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+  <link rel="stylesheet" href="backend/static/assets/css/style.css" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
   <div class="container">
     <header class="header">
-      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
+      <img id="profile-photo" alt="Profile Photo" class="profile-photo" />
       <h1 id="full-name" class="title">Loading...</h1>
       <p id="subtitle" class="subtitle">Please wait.</p>
       <div id="social-links-container" class="social-links"></div>
@@ -52,7 +54,12 @@
 
       <section id="projects">
         <h2>My Projects</h2>
-        <div id="project-grid" class="project-grid"></div>
+        <div id="project-grid" class="project-grid">
+          <div class="project-card"></div>
+          <div class="project-card"></div>
+          <div class="project-card"></div>
+          <div class="project-card"></div>
+        </div>
       </section>
     </main>
 
@@ -60,9 +67,6 @@
       <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
   </div>
-
-  <!-- Scripts -->
-  <script src="/assets/js/script.js"></script>
 
 </body>
 </html>
