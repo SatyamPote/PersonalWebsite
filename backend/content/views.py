@@ -1,3 +1,5 @@
+# portfolio_api/views.py
+
 from django.http import JsonResponse, HttpResponse
 from .models import PersonalInfo
 
@@ -54,6 +56,5 @@ def user_data(request):
         }
 
         return JsonResponse(data)
-
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)

@@ -1,6 +1,9 @@
+# portfolio_api/urls.py
+
 from django.urls import path
-from . import views
+from .views import index, user_data
 
 urlpatterns = [
-    path('user-data/', views.user_data, name='user-data'),
+    path('', index, name='index'),
+    path('user-data/', user_data, name='user-data'),
 ]
