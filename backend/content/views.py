@@ -58,3 +58,8 @@ def user_data(request):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
+from django.http import JsonResponse
+from .models import PersonalInfo
+
+def user_data(request):
+    return JsonResponse({"message": "User data route is working"})

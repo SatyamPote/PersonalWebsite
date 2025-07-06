@@ -17,7 +17,8 @@ def user_data(request):
             "location": info.location,
             "languages_spoken": info.languages_spoken,
             "my_goals": info.my_goals,
-            "profile_photo_url": request.build_absolute_uri(info.profile_photo.url) if info.profile_photo else "",
+            "profile_photo_url": info.profile_photo_url or "",
+
         },
         "social_links": [
             {"name": link.name, "url": link.url}
