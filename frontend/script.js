@@ -1,3 +1,5 @@
+console.log("Script loaded");
+
 document.addEventListener('DOMContentLoaded', () => {
     const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
