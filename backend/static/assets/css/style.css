@@ -9,8 +9,8 @@
 body {
   font-family: 'JetBrains Mono', monospace;
   line-height: 1.6;
-  color: #333;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #000;
+  background: #fff;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -19,22 +19,22 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: #fff;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
+  border: 2px solid #000;
 }
 
 /* Header Styles */
 .header {
   text-align: center;
   padding: 40px 0;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #000;
   margin: -20px -20px 40px -20px;
   border-radius: 20px 20px 0 0;
-  color: white;
+  color: #fff;
   position: relative;
   overflow: hidden;
 }
@@ -46,38 +46,38 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(255,255,255,.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><rect width="100" height="20" fill="url(%23a)"/></svg>');
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
   animation: shimmer 3s ease-in-out infinite;
 }
 
 @keyframes shimmer {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
 }
 
 .profile-photo {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.3);
+  border: 4px solid #fff;
   margin-bottom: 20px;
   object-fit: cover;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   z-index: 2;
   content: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face');
+  filter: grayscale(100%);
 }
 
 .profile-photo:hover {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 2;
 }
@@ -100,7 +100,7 @@ body {
 }
 
 .social-links a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   font-size: 1.5rem;
   padding: 10px;
@@ -108,12 +108,14 @@ body {
   background: rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
   display: inline-block;
+  border: 2px solid #fff;
 }
 
 .social-links a:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #fff;
+  color: #000;
   transform: translateY(-3px) scale(1.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
 }
 
 /* Content Population via CSS */
@@ -180,13 +182,14 @@ body {
 
 /* Section Styles */
 section {
-  background: white;
+  background: #fff;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  border: 2px solid #000;
 }
 
 section::before {
@@ -196,7 +199,7 @@ section::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
   transition: left 0.5s ease;
 }
 
@@ -210,7 +213,7 @@ section:hover {
 }
 
 section h2 {
-  color: #4a5568;
+  color: #000;
   margin-bottom: 20px;
   font-size: 1.8rem;
   font-weight: 600;
@@ -225,7 +228,7 @@ section h2::after {
   left: 0;
   width: 50px;
   height: 3px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #000;
   border-radius: 2px;
 }
 
@@ -238,24 +241,6 @@ section h2::after {
 }
 
 /* Generate skills via CSS */
-#skills-container::after {
-  content: "";
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 20px;
-  width: 100%;
-}
-
-#skills-container::before {
-  content: "JavaScript React Node.js Python HTML5 CSS3 MongoDB Git";
-  display: none;
-}
-
-/* Individual skill items via pseudo-elements */
-#skills-container {
-  position: relative;
-}
-
 #skills-container > p {
   display: none;
 }
@@ -273,12 +258,19 @@ section h2::after {
 #skills-container::after {
   text-align: center;
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: #fff;
   border-radius: 12px;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  border: 2px solid #000;
   font-weight: 600;
-  color: #4a5568;
+  color: #000;
+}
+
+.skill-item:hover,
+#skills-container > div:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-5px);
 }
 
 /* Memory Slider */
@@ -287,7 +279,8 @@ section h2::after {
   height: 300px;
   border-radius: 15px;
   overflow: hidden;
-  background: #f8f9fa;
+  background: #000;
+  border: 2px solid #000;
 }
 
 .memory-slider {
@@ -313,23 +306,19 @@ section h2::after {
   background-position: center;
 }
 
-.memory-item:hover {
-  transform: scale(1.05);
-}
-
 .memory-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-  color: white;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: #fff;
   padding: 20px;
   text-align: center;
   font-weight: 600;
 }
 
-/* Create memory items via CSS */
+/* Create memory items via CSS with 4s timing */
 #memories-slider-container::after {
   content: "";
   display: flex;
@@ -340,6 +329,20 @@ section h2::after {
     url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop') 25% 0/25% 100% no-repeat,
     url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=300&fit=crop') 50% 0/25% 100% no-repeat,
     url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop') 75% 0/25% 100% no-repeat;
+  filter: grayscale(100%);
+}
+
+/* Memory slider with 4s change timing */
+@keyframes slideMemories {
+  0%, 20% { transform: translateX(0%); }
+  25%, 45% { transform: translateX(-25%); }
+  50%, 70% { transform: translateX(-50%); }
+  75%, 95% { transform: translateX(-75%); }
+  100% { transform: translateX(0%); }
+}
+
+#memories-slider-container::after {
+  animation: slideMemories 16s infinite; /* 4 images × 4s = 16s total */
 }
 
 /* Project Grid */
@@ -351,14 +354,16 @@ section h2::after {
 }
 
 .project-card {
-  background: white;
+  background: #fff;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   opacity: 0;
-  animation: fadeInProjects 20s ease-in-out infinite;
+  animation: fadeInProjects 20s ease-in-out infinite; /* 4 projects × 5s = 20s total */
   position: relative;
+  border: 2px solid #000;
+  min-height: 400px;
 }
 
 .project-card:nth-child(1) { animation-delay: 0s; }
@@ -375,205 +380,45 @@ section h2::after {
 .project-card:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: #000;
+  color: #fff;
 }
 
-.project-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.project-card:hover .project-image {
-  transform: scale(1.1);
-}
-
-.project-content {
-  padding: 25px;
-}
-
-.project-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 10px;
-}
-
-.project-description {
-  color: #718096;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.project-tag {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.project-links {
-  display: flex;
-  gap: 15px;
-}
-
-.project-link {
-  text-decoration: none;
-  color: #667eea;
-  font-weight: 600;
-  padding: 8px 16px;
-  border: 2px solid #667eea;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  text-align: center;
-  flex: 1;
-}
-
-.project-link:hover {
-  background: #667eea;
-  color: white;
-  transform: translateY(-2px);
-}
-
-/* Create projects via CSS */
-#project-grid::after {
-  content: "";
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  width: 100%;
-}
-
-/* Hide loading text in project grid */
-#project-grid > p {
-  display: none;
-}
-
-/* Generate project cards */
-#project-grid::before {
-  content: "E-Commerce Platform" "Task Management App" "Weather Dashboard" "Portfolio Website";
-  position: absolute;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  width: 100%;
-  opacity: 0;
-}
-
-/* Individual project cards */
-#project-grid {
-  position: relative;
-}
-
-#project-grid::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  background: 
-    /* Project 1 */
-    linear-gradient(white, white),
-    url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop'),
-    /* Project 2 */
-    linear-gradient(white, white),
-    url('https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop'),
-    /* Project 3 */
-    linear-gradient(white, white),
-    url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=250&fit=crop'),
-    /* Project 4 */
-    linear-gradient(white, white),
-    url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=250&fit=crop');
-  background-size: 
-    25% 70%, 25% 30%,
-    25% 70%, 25% 30%,
-    25% 70%, 25% 30%,
-    25% 70%, 25% 30%;
-  background-position:
-    0 30%, 0 0,
-    25% 30%, 25% 0,
-    50% 30%, 50% 0,
-    75% 30%, 75% 0;
-  background-repeat: no-repeat;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-}
-
-/* Create actual project structure */
-#project-grid .project-card:nth-child(1)::before {
-  content: "E-Commerce Platform";
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2d3748;
+/* Create project content via CSS */
+.project-card:nth-child(1)::before {
+  content: "E-Commerce Platform\A A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.\A \A React • Node.js • MongoDB\A \A 🔗 View Project";
+  white-space: pre-line;
   padding: 25px;
   display: block;
-}
-
-#project-grid .project-card:nth-child(1)::after {
-  content: "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.";
-  color: #718096;
+  font-size: 0.9rem;
   line-height: 1.6;
-  padding: 0 25px 25px;
+}
+
+.project-card:nth-child(2)::before {
+  content: "Task Management App\A A comprehensive task management application with real-time updates, team collaboration features, and progress tracking.\A \A Vue.js • Firebase • Socket.io\A \A 🔗 View Project";
+  white-space: pre-line;
+  padding: 25px;
   display: block;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
-/* Simplified project display */
-#project-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin-top: 20px;
+.project-card:nth-child(3)::before {
+  content: "Weather Dashboard\A An interactive weather dashboard with location-based forecasts, charts, and weather alerts.\A \A JavaScript • API • Chart.js\A \A 🔗 View Project";
+  white-space: pre-line;
+  padding: 25px;
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
-#project-grid::after {
-  content: "🛒 E-Commerce Platform React • Node.js • MongoDB 🔗 View Project | 📱 Task Management App Vue.js • Firebase • Socket.io 🔗 View Project | 🌤️ Weather Dashboard JavaScript • API • Chart.js 🔗 View Project | 💼 Portfolio Website HTML • CSS • JavaScript 🔗 View Project";
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  width: 100%;
-  font-size: 0;
-}
-
-#project-grid::after {
-  content: "";
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  width: 100%;
-}
-
-/* Simplified approach - create visible project cards */
-#project-grid .project-card {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  opacity: 0;
-  animation: fadeInProjects 20s ease-in-out infinite;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Create 4 project cards */
-#project-grid::before {
-  content: "E-Commerce Platform" "Task Management App" "Weather Dashboard" "Portfolio Website";
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  width: 100%;
+.project-card:nth-child(4)::before {
+  content: "Portfolio Website\A A responsive portfolio website showcasing projects, skills, and professional experience.\A \A HTML • CSS • JavaScript\A \A 🔗 View Project";
+  white-space: pre-line;
+  padding: 25px;
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 /* Footer */
@@ -581,8 +426,8 @@ footer {
   text-align: center;
   padding: 30px 0;
   margin-top: 40px;
-  border-top: 1px solid #e2e8f0;
-  color: #718096;
+  border-top: 2px solid #000;
+  color: #000;
   font-weight: 500;
 }
 
@@ -696,14 +541,6 @@ footer {
   .memory-slider-container {
     height: 200px;
   }
-  
-  .project-title {
-    font-size: 1.1rem;
-  }
-  
-  .project-description {
-    font-size: 0.9rem;
-  }
 }
 
 /* Smooth Scrolling */
@@ -717,17 +554,17 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #000;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: #333;
 }
 
 /* Accessibility */
@@ -741,6 +578,6 @@ html {
 
 /* Focus states for keyboard navigation */
 a:focus, button:focus {
-  outline: 2px solid #667eea;
+  outline: 2px solid #000;
   outline-offset: 2px;
 }
