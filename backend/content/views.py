@@ -31,7 +31,7 @@ def user_data(request):
                 {
                     "name": skill.name,
                     "icon_class": skill.icon_class,
-                    "image_url": skill.image.url if skill.image else ""  # or use URLField if changed
+                    "image_url": skill.image or ""
                 }
                 for skill in info.skills.all()
             ],
