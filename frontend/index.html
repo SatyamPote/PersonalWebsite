@@ -136,8 +136,15 @@
     }
 
     .memory-slide {
-      opacity: 1;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
       position: relative;
+    }
+
+    .memory-slide.visible {
+      display: block;
+      opacity: 1;
     }
 
     .memory-slide img {
@@ -160,7 +167,6 @@
       font-style: italic;
     }
 
-    /* 3x3 PROJECT GRID */
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -267,13 +273,19 @@
 
       <section id="memories">
         <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container"></div>
+        <div id="memories-slider-container" class="memory-slider-container">
+          <div class="memory-slide" id="memory-slide">
+            <img src="https://via.placeholder.com/600x350" alt="Memory Image">
+            <h3>TiE Global Summit 2024</h3>
+            <p class="memory-date">December 2024</p>
+          </div>
+        </div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- Backend will dynamically inject project cards here -->
+          <!-- Backend loads the cards here -->
         </div>
       </section>
     </main>
@@ -283,8 +295,15 @@
     </footer>
   </div>
 
-  <!-- Your dynamic loading script -->
+  <!-- JS -->
+  <script>
+    // Show the memory image after 3 seconds
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        document.getElementById('memory-slide').classList.add('visible');
+      }, 3000);
+    });
+  </script>
   <script src="/assets/js/script.js"></script>
-
 </body>
 </html>
