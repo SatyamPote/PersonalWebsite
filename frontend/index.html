@@ -12,12 +12,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
   <style>
+    /* ========== GLOBAL RESET & BASE ========== */
     body {
       margin: 0;
       padding: 0;
       font-family: 'JetBrains Mono', monospace;
-      background-color: #000;
-      color: #fff;
+      background-color: #fff;
+      color: #000;
       line-height: 1.6;
     }
 
@@ -27,6 +28,7 @@
       padding: 1rem;
     }
 
+    /* ========== PROFILE HEADER ========== */
     .header {
       text-align: center;
       padding: 2rem 1rem;
@@ -36,10 +38,11 @@
       font-size: 2.5rem;
       font-weight: 700;
       margin: 0.5rem 0;
+      color: #000;
     }
 
     .subtitle {
-      color: #ccc;
+      color: #555;
     }
 
     .profile-photo {
@@ -47,7 +50,7 @@
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid white;
+      border: 2px solid black;
       margin-bottom: 1rem;
     }
 
@@ -60,15 +63,16 @@
     }
 
     .social-links a {
-      color: #ccc;
+      color: #333;
       text-decoration: none;
       margin: 0 10px;
     }
 
     .social-links a:hover {
-      color: white;
+      color: #000;
     }
 
+    /* ========== GRID SECTIONS ========== */
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -78,23 +82,25 @@
 
     #about, #details {
       flex: 1 1 300px;
-      background: rgba(255, 255, 255, 0.05);
+      background: #f4f4f4;
       border-radius: 8px;
       padding: 1.5rem;
-      border: 1px solid #333;
+      border: 1px solid #ccc;
     }
 
     #details p strong {
-      color: #fff;
+      color: #000;
     }
 
     h2 {
       font-size: 1.5rem;
-      border-bottom: 2px solid white;
+      border-bottom: 2px solid #000;
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
+      color: #000;
     }
 
+    /* ========== SKILLS ========== */
     .skills-container {
       display: flex;
       flex-wrap: wrap;
@@ -103,15 +109,15 @@
     }
 
     .skill-badge {
-      background-color: #222;
-      color: #fff;
+      background-color: #eee;
+      color: #000;
       padding: 8px 15px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       gap: 10px;
       font-weight: 600;
-      border: 1px solid #444;
+      border: 1px solid #aaa;
     }
 
     .skill-badge i {
@@ -124,6 +130,7 @@
       object-fit: contain;
     }
 
+    /* ========== MEMORIES SLIDER ========== */
     .memory-slider-container {
       overflow: hidden;
       position: relative;
@@ -163,67 +170,83 @@
 
     .memory-slide h3 {
       font-size: 1.5rem;
-      color: #fff;
+      color: #000;
       margin: 10px 0 5px 0;
     }
 
     .memory-slide .memory-date {
-      color: #ccc;
+      color: #777;
       font-style: italic;
     }
 
-    /* NEW: 3x2 Project Grid */
+    /* ========== PROJECT GRID: 3x3 ========== */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
     .carousel-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #333;
+      background: #f7f7f7;
+      border: 1px solid #ccc;
       border-radius: 8px;
       padding: 1.5rem;
     }
 
     .carousel-card h3 {
       margin-top: 0;
+      color: #000;
     }
 
     .carousel-card p {
-      color: #ccc;
+      color: #555;
     }
 
     .visit-button {
       margin-top: 1rem;
       display: inline-block;
       padding: 0.4rem 1rem;
-      background: #fff;
-      color: #000;
+      background: #000;
+      color: #fff;
       border-radius: 5px;
       text-decoration: none;
       font-weight: bold;
     }
 
     .visit-button:hover {
-      background: #eee;
+      background: #fff;
+      color: #000;
+      border: 1px solid #000;
     }
 
     footer {
       text-align: center;
-      border-top: 1px solid #444;
+      border-top: 1px solid #aaa;
       padding: 1.5rem;
-      color: #aaa;
+      color: #777;
       margin-top: 2rem;
     }
 
-    @media (max-width: 768px) {
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 992px) {
+      .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
       .title {
         font-size: 2rem;
       }
+
       .grid {
         flex-direction: column;
       }
+
       .memory-slide img {
         max-width: 100%;
         height: auto;
@@ -270,7 +293,7 @@
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- JS will insert 6 .carousel-card elements here -->
+          <!-- Add up to 9 project cards here dynamically -->
         </div>
       </section>
     </main>
