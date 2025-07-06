@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
-
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
@@ -22,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             if (data.error) throw new Error(`API Error: ${data.error}`);
+            console.log("API data received:", data); // ✅ Debug line
             renderAll(data);
         })
         .catch(error => {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url) {
+        if (info.profile_photo_url && info.profile_photo_url.startsWith('http')) {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
         } else {
@@ -119,9 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let allPhotos = [];
+        const allPhotos = [];
         memories.forEach(memory => {
-            if (memory.photos && memory.photos.length > 0) {
+            if (memory.photos && Array.isArray(memory.photos)) {
                 memory.photos.forEach(photoUrl => {
                     if (photoUrl.startsWith('http')) {
                         allPhotos.push({
