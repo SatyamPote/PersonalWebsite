@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
   <style>
-    /* ========== GLOBAL RESET & BASE ========== */
     body {
       margin: 0;
       padding: 0;
@@ -28,7 +27,6 @@
       padding: 1rem;
     }
 
-    /* ========== PROFILE HEADER ========== */
     .header {
       text-align: center;
       padding: 2rem 1rem;
@@ -72,7 +70,6 @@
       color: #000;
     }
 
-    /* ========== GRID SECTIONS ========== */
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -100,7 +97,6 @@
       color: #000;
     }
 
-    /* ========== SKILLS ========== */
     .skills-container {
       display: flex;
       flex-wrap: wrap;
@@ -130,56 +126,41 @@
       object-fit: contain;
     }
 
-    /* ========== MEMORIES SLIDER ========== */
     .memory-slider-container {
       overflow: hidden;
       position: relative;
       width: 100%;
       min-height: 450px;
       border-radius: 8px;
-    }
-
-    .memory-slide {
-      min-width: 100%;
-      box-sizing: border-box;
-      transition: opacity 0.7s ease-in-out;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
     }
 
-    .memory-slide.active {
+    .memory-slide {
       opacity: 1;
-      z-index: 1;
+      position: relative;
     }
 
     .memory-slide img {
       width: 100%;
       max-width: 600px;
-      height: 350px;
+      height: auto;
       object-fit: cover;
       border-radius: 6px;
       margin-bottom: 15px;
     }
 
     .memory-slide h3 {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: #000;
       margin: 10px 0 5px 0;
     }
 
     .memory-slide .memory-date {
-      color: #777;
+      color: #555;
       font-style: italic;
     }
 
-    /* ========== PROJECT GRID: 3x3 ========== */
+    /* PROJECT GRID: 3x3 */
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -227,7 +208,6 @@
       margin-top: 2rem;
     }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-width: 992px) {
       .project-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -259,52 +239,108 @@
   <div class="container">
     <header class="header">
       <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
-      <h1 id="full-name" class="title">Loading...</h1>
-      <p id="subtitle" class="subtitle">Please wait.</p>
-      <div id="social-links-container" class="social-links"></div>
+      <h1 id="full-name" class="title">Satyam Portfolio</h1>
+      <p id="subtitle" class="subtitle">Developer | Designer | Dreamer</p>
+      <div id="social-links-container" class="social-links">
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
+      </div>
     </header>
 
     <main>
       <div class="grid">
         <section id="about">
           <h2>About Me</h2>
-          <p id="about-me-content">Loading...</p>
+          <p>Hi, I'm Satyam – a full-stack developer passionate about building efficient and beautiful digital solutions.</p>
         </section>
         <section id="details">
           <h2>Details</h2>
-          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
-          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
-          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
+          <p><strong>Location:</strong> India</p>
+          <p><strong>Languages:</strong> Python, JavaScript, HTML/CSS</p>
+          <p><strong>My Goals:</strong> Keep learning and building innovative software!</p>
         </section>
       </div>
 
       <section id="skills">
         <h2>Skills</h2>
         <div id="skills-container" class="skills-container">
-          <p>Loading skills...</p>
+          <div class="skill-badge"><i class="devicon-html5-plain"></i> HTML</div>
+          <div class="skill-badge"><i class="devicon-css3-plain"></i> CSS</div>
+          <div class="skill-badge"><i class="devicon-javascript-plain"></i> JavaScript</div>
+          <div class="skill-badge"><i class="devicon-python-plain"></i> Python</div>
+          <div class="skill-badge"><i class="devicon-django-plain"></i> Django</div>
         </div>
       </section>
 
       <section id="memories">
         <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container"></div>
+        <div id="memories-slider-container" class="memory-slider-container">
+          <div class="memory-slide">
+            <img src="https://via.placeholder.com/600x350" alt="Event Memory">
+            <h3>TiE Global Summit 2024</h3>
+            <p class="memory-date">December 2024</p>
+          </div>
+        </div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- Add up to 9 project cards here dynamically -->
+          <!-- Sample 9 project cards -->
+          <div class="carousel-card">
+            <h3>Portfolio Website</h3>
+            <p>Custom personal site to showcase projects, skills, and blog posts.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>CryptoPay</h3>
+            <p>Secure crypto payment gateway built with Node.js & MongoDB.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>WeatherApp</h3>
+            <p>JavaScript weather app with real-time data from OpenWeatherMap API.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>Task Manager</h3>
+            <p>CRUD app for daily task tracking with local storage support.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>Blog Engine</h3>
+            <p>Simple blogging engine using Django and SQLite.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>Quiz App</h3>
+            <p>Frontend quiz game using vanilla JS with score tracker.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>ChatBot UI</h3>
+            <p>Lightweight React chatbot interface ready for backend integration.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>Stock Tracker</h3>
+            <p>Live stock price visualizer with auto-refresh feature.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
+          <div class="carousel-card">
+            <h3>Resume Builder</h3>
+            <p>Web tool to generate styled resumes from user input.</p>
+            <a href="#" class="visit-button">Visit</a>
+          </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
+      <p><span id="footer-name">Satyam</span>. Built with passion.</p>
     </footer>
   </div>
-
-  <!-- Scripts -->
-  <script src="/assets/js/script.js"></script>
 
 </body>
 </html>
