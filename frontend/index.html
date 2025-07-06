@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,108 +9,60 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
 
   <div class="container">
     <header class="header">
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Profile Photo" class="profile-photo" />
-      <h1 class="title">Satyam Kumar</h1>
-      <p class="subtitle">Full Stack Developer & UI/UX Designer</p>
-      <div class="social-links">
-        <a href="mailto:satyam@example.com" title="Email">📧</a>
-        <a href="https://github.com/satyam" title="GitHub">🐙</a>
-        <a href="https://linkedin.com/in/satyam" title="LinkedIn">💼</a>
-        <a href="https://twitter.com/satyam" title="Twitter">🐦</a>
-      </div>
+      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
+      <h1 id="full-name" class="title">Loading...</h1>
+      <p id="subtitle" class="subtitle">Please wait.</p>
+      <div id="social-links-container" class="social-links"></div>
     </header>
 
     <main>
       <div class="grid">
         <section id="about">
           <h2>About Me</h2>
-          <p>I'm a passionate full-stack developer with expertise in modern web technologies. I love creating beautiful, functional websites and applications that provide excellent user experiences. With a strong background in both frontend and backend development, I enjoy tackling complex problems and turning ideas into reality.</p>
+          <p id="about-me-content">Loading...</p>
         </section>
         <section id="details">
           <h2>Details</h2>
-          <p><strong>Location:</strong> India</p>
-          <p><strong>Languages:</strong> Hindi, English</p>
-          <p><strong>My Goals:</strong> Building innovative web solutions</p>
+          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
+          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
+          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
         </section>
       </div>
 
       <section id="skills">
         <h2>Skills</h2>
-        <div class="skills-container">
-          <div class="skill-item">⚡ JavaScript</div>
-          <div class="skill-item">⚛️ React</div>
-          <div class="skill-item">🟢 Node.js</div>
-          <div class="skill-item">🐍 Python</div>
-          <div class="skill-item">🔥 HTML5</div>
-          <div class="skill-item">🎨 CSS3</div>
-          <div class="skill-item">🍃 MongoDB</div>
-          <div class="skill-item">📝 Git</div>
+        <div id="skills-container" class="skills-container">
+          <p>Loading skills...</p>
         </div>
       </section>
 
       <section id="memories">
         <h2>Memories</h2>
-        <div class="memory-slider-container">
-          <div class="memory-slider">
-            <div class="memory-item" style="background-image: url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=400&h=300&fit=crop');">
-              <div class="memory-overlay">Team Meeting</div>
-            </div>
-            <div class="memory-item" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop');">
-              <div class="memory-overlay">Code Review</div>
-            </div>
-            <div class="memory-item" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=300&fit=crop');">
-              <div class="memory-overlay">Project Launch</div>
-            </div>
-            <div class="memory-item" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop');">
-              <div class="memory-overlay">Team Building</div>
-            </div>
-          </div>
-        </div>
+        <div id="memories-slider-container" class="memory-slider-container"></div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
-        <div class="project-grid">
-          <div class="project-card">
-            <h3>E-Commerce Platform</h3>
-            <p>A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.</p>
-            <div class="tech-stack">React • Node.js • MongoDB</div>
-            <a href="#" class="project-link">🔗 View Project</a>
-          </div>
-          <div class="project-card">
-            <h3>Task Management App</h3>
-            <p>A comprehensive task management application with real-time updates, team collaboration features, and progress tracking.</p>
-            <div class="tech-stack">Vue.js • Firebase • Socket.io</div>
-            <a href="#" class="project-link">🔗 View Project</a>
-          </div>
-          <div class="project-card">
-            <h3>Weather Dashboard</h3>
-            <p>An interactive weather dashboard with location-based forecasts, charts, and weather alerts.</p>
-            <div class="tech-stack">JavaScript • API • Chart.js</div>
-            <a href="#" class="project-link">🔗 View Project</a>
-          </div>
-          <div class="project-card">
-            <h3>Portfolio Website</h3>
-            <p>A responsive portfolio website showcasing projects, skills, and professional experience.</p>
-            <div class="tech-stack">HTML • CSS • JavaScript</div>
-            <a href="#" class="project-link">🔗 View Project</a>
-          </div>
-        </div>
+        <div id="project-grid" class="project-grid"></div>
       </section>
     </main>
 
     <footer>
-      <p>Satyam Pote. Built with passion.</p>
+      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
   </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/script.js"></script>
 
 </body>
 </html>
