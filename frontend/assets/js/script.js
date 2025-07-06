@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ✅ Detect environment and set the correct API URL
-    const API_URL = location.hostname.includes('localhost') || location.hostname === "127.0.0.1"
-        ? "http://127.0.0.1:8000/api/user-data/"
-        : "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
+    const API_URL = location.hostname.includes("localhost") || location.hostname === "127.0.0.1"
+    ? "http://127.0.0.1:8000/api/user-data/"
+    : "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
+
 
     console.log("Using API:", API_URL);
 

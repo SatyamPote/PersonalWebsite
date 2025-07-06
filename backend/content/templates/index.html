@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
-  <!-- Custom Styles -->
-  <!-- ✅ CORRECTED PATH for CSS -->
-  <link rel="stylesheet" href="/static/assets/css/style.css" />
+  <!-- ✅ Correct Local Path -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
@@ -53,16 +53,12 @@
 
       <section id="memories">
         <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container">
-          <!-- Slides will be injected by JavaScript -->
-        </div>
+        <div id="memories-slider-container" class="memory-slider-container"></div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
-        <div id="project-grid" class="project-grid">
-          <!-- Projects will be injected by JavaScript -->
-        </div>
+        <div id="project-grid" class="project-grid"></div>
       </section>
     </main>
 
@@ -71,7 +67,12 @@
     </footer>
   </div>
 
-  <!-- ✅ CORRECTED PATH for JavaScript -->
-  <script src="/static/assets/js/script.js"></script>
+
+  <script src="assets/js/script.js"></script>
+
+<script>
+  console.log("index.html loaded ✅");
+</script>
+
 </body>
 </html>
