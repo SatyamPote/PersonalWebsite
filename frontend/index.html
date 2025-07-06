@@ -4,179 +4,232 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Satyam Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+
+  <!-- Black & White CSS -->
   <style>
-    /* Base Styles */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary-color: #000000;
+      --secondary-color: #222222;
+      --accent-color: #444444;
+      --text-primary: #000000;
+      --text-secondary: #555555;
+      --text-light: #888888;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f0f0f0;
+      --bg-card: #ffffff;
+      --border-color: #cccccc;
+      --shadow-sm: none;
+      --shadow-md: none;
+      --shadow-lg: none;
+      --shadow-xl: none;
+      --gradient-primary: none;
+      --gradient-accent: none;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Segoe UI', sans-serif;
+    }
+
     body {
-      font-family: 'JetBrains Mono', monospace;
-      background-color: #000;
-      color: #fff;
+      font-family: var(--font-sans);
       line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-primary);
     }
 
     .container {
       max-width: 1200px;
-      margin: auto;
-      padding: 2rem 1rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+      min-height: 100vh;
     }
 
-    /* Header */
     .header {
       text-align: center;
-      margin-bottom: 2rem;
+      padding: 3rem 1rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
     }
 
     .profile-photo {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #fff;
-      margin-bottom: 1rem;
+      margin: 0 auto 2rem;
+      display: block;
+      border: 2px solid var(--border-color);
     }
 
-    .hidden { display: none; }
+    .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-mono);
+    }
 
-    .title { font-size: 2rem; font-weight: 600; }
-    .subtitle { color: #aaa; margin-bottom: 1rem; }
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
 
     .social-links a {
-      color: #ccc;
-      margin: 0 8px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      color: #000000;
       text-decoration: none;
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
-    /* Grid Sections */
+    main {
+      margin-top: 3rem;
+    }
+
     .grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 2rem;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
 
-    #about, #details {
-      flex: 1 1 300px;
-      padding: 1rem;
-      border: 1px solid #444;
-      border-radius: 6px;
-      background-color: #111;
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
-    h2 {
-      font-size: 1.3rem;
-      border-bottom: 1px solid #fff;
+    section {
+      background: var(--bg-card);
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    section h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
       margin-bottom: 1rem;
-      padding-bottom: 0.3rem;
+      font-family: var(--font-mono);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
     }
 
-    /* Skills */
     .skills-container {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1rem;
     }
 
-    .skill-badge {
-      background: #111;
-      border: 1px solid #555;
-      padding: 10px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .skill-badge img, .skill-badge i {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
-
-    /* Memories */
-    .memory-slider-container {
-      position: relative;
-      height: 350px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-
-    .memory-slide {
-      position: absolute;
-      width: 100%;
-      opacity: 0;
-      transition: opacity 0.7s ease-in-out;
+    .skill-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
       text-align: center;
     }
 
-    .memory-slide.active { opacity: 1; z-index: 1; }
-
-    .memory-slide img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    .memory-slide h3 {
-      margin-top: 0.5rem;
-    }
-
-    /* Projects */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 640px) {
+      .project-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
     }
 
     .project-card {
-      background: #111;
-      border: 1px solid #555;
-      padding: 1rem;
-      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 200px;
+      background: #eee;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .project-description {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    .project-tech {
+      margin-top: 1rem;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
-    .project-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+    .tech-tag {
+      font-size: 0.875rem;
+      background: var(--bg-secondary);
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--border-color);
     }
 
-    .project-card p {
-      font-size: 0.95rem;
-      color: #ccc;
-      flex-grow: 1;
-    }
-
-    .visit-button {
-      margin-top: 0.8rem;
+    .project-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #000;
       text-decoration: underline;
-      color: white;
-      font-weight: bold;
-      font-size: 0.9rem;
     }
 
-    /* Footer */
+    .memory-slider-container {
+      background: var(--bg-secondary);
+      min-height: 250px;
+      border: 1px solid var(--border-color);
+    }
+
     footer {
-      margin-top: 3rem;
       text-align: center;
-      border-top: 1px solid #444;
-      padding-top: 1rem;
-      color: #aaa;
+      padding: 2rem 1rem;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 4rem;
     }
 
-    @media (max-width: 768px) {
-      .project-grid { grid-template-columns: 1fr; }
+    .hidden {
+      opacity: 0;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
     <header class="header">
-      <img id="profile-photo" class="profile-photo hidden" alt="Profile Photo">
+      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
       <h1 id="full-name" class="title">Loading...</h1>
       <p id="subtitle" class="subtitle">Please wait.</p>
       <div id="social-links-container" class="social-links"></div>
@@ -198,7 +251,9 @@
 
       <section id="skills">
         <h2>Skills</h2>
-        <div id="skills-container" class="skills-container"></div>
+        <div id="skills-container" class="skills-container">
+          <p>Loading skills...</p>
+        </div>
       </section>
 
       <section id="memories">
@@ -217,6 +272,8 @@
     </footer>
   </div>
 
+  <!-- Scripts -->
   <script src="/assets/js/script.js"></script>
+
 </body>
 </html>
