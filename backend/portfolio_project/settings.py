@@ -118,12 +118,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ✅ CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # Use only for development
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://satyampote.tech",
+    "https://www.satyampote.tech"
+]
 
-# ✅ OR restrict specific allowed origins (uncomment if disabling above)
-# CORS_ALLOWED_ORIGINS = [
-#     "http://127.0.0.1:5500",
-#     "http://localhost:5500",
-#     "https://satyampote.tech",
-#     "https://personal-dashboard-backend-dxrt.onrender.com",
-# ]

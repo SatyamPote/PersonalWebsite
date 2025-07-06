@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
+
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
     const subtitleEl = document.getElementById('subtitle');
