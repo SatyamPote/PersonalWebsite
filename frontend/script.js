@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/user-data/";
-
+    const API_URL = "https://personal-dashboard-backend-dxrt.onrender.com/api/user-data/";
 
     const profilePhotoEl = document.getElementById('profile-photo');
     const fullNameEl = document.getElementById('full-name');
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         myGoalsEl.textContent = info.my_goals;
         footerNameEl.textContent = info.full_name;
 
-        if (info.profile_photo_url && info.profile_photo_url.startsWith('http')) {
+        if (info.profile_photo_url) {
             profilePhotoEl.src = info.profile_photo_url;
             profilePhotoEl.classList.remove('hidden');
         } else {

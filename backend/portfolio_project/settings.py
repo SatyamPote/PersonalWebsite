@@ -8,7 +8,7 @@ SECRET_KEY = '253-l6vqf+mq4uhinb5pj^aq4(&*se@gxsbb@hlu6yc0h2^v3c'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*'
+    '*',
     '127.0.0.1',
     'localhost',
     'satyampote.tech',
@@ -16,6 +16,7 @@ ALLOWED_HOSTS = [
     'personal-dashboard-backend-dxrt.onrender.com',
     'satyam-portfolio-backend.onrender.com'
 ]
+
 
 # ✅ Installed apps
 INSTALLED_APPS = [
@@ -25,11 +26,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'content',
+
+    # Third-party apps
     'corsheaders',
     'rest_framework',
-    'portfolio_project',
+    'portfolio_api',
+    # Your apps
+    'content',  # ✅ Make sure this is a Django app (has models.py/apps.py/etc.)
+    # Don't include 'portfolio_project' or 'backend.api' unless they are actual apps
 ]
+
 
 
 REST_FRAMEWORK = {

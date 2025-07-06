@@ -5,7 +5,7 @@ from django.urls import path, include
 from django.http import JsonResponse
 
 def home_view(request):
-    return JsonResponse({"message": "API is running"})
+    return JsonResponse({"message": "api is running"})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
