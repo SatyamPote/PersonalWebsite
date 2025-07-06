@@ -10,420 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
-  <link rel="icon" href="data:,">
-
-  <!-- Embedded CSS -->
-  <style>
-    /* FULL CSS (no changes, just embedded) */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary-color: #0ea5e9;
-      --secondary-color: #8b5cf6;
-      --accent-color: #f59e0b;
-      --text-primary: #1f2937;
-      --text-secondary: #6b7280;
-      --text-light: #9ca3af;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f9fafb;
-      --bg-card: #ffffff;
-      --border-color: #e5e7eb;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      --gradient-accent: linear-gradient(135deg, var(--accent-color), #ef4444);
-      --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
-      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    body {
-      font-family: var(--font-sans);
-      line-height: 1.6;
-      color: var(--text-primary);
-      background: var(--bg-primary);
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      min-height: 100vh;
-    }
-
-    .header {
-      text-align: center;
-      padding: 4rem 0 2rem;
-      position: relative;
-      background: var(--gradient-primary);
-      margin: 0 -1rem 4rem;
-      color: white;
-      overflow: hidden;
-    }
-
-    .header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-      animation: float 20s ease-in-out infinite;
-    }
-
-    .profile-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 2rem;
-      display: block;
-      border: 4px solid rgba(255, 255, 255, 0.2);
-      box-shadow: var(--shadow-xl);
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 2;
-    }
-
-    .profile-photo:hover {
-      transform: scale(1.05);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .profile-photo.hidden {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-
-    .title {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      font-family: var(--font-mono);
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .subtitle {
-      font-size: 1.25rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      text-decoration: none;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .social-links a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    section {
-      background: var(--bg-card);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-    }
-
-    section:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    section h2 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: var(--text-primary);
-      font-family: var(--font-mono);
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-
-    section h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 50px;
-      height: 3px;
-      background: var(--gradient-primary);
-      border-radius: 2px;
-    }
-
-    #skills {
-      margin-bottom: 4rem;
-    }
-
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-    }
-
-    .skill-item {
-      background: var(--bg-secondary);
-      padding: 1rem;
-      border-radius: 8px;
-      text-align: center;
-      transition: all 0.3s ease;
-      border: 1px solid var(--border-color);
-    }
-
-    .skill-item:hover {
-      background: var(--gradient-primary);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    .skill-item i {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-
-    #projects {
-      margin-bottom: 4rem;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .project-card {
-      background: var(--bg-card);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .project-card.animate-in {
-      opacity: 1;
-      transform: translateY(0);
-      animation: slideInUp 0.6s ease-out forwards;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .project-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: var(--gradient-primary);
-    }
-
-    .project-content {
-      padding: 1.5rem;
-    }
-
-    .project-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      font-family: var(--font-mono);
-    }
-
-    .project-description {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .tech-tag {
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.875rem;
-      border: 1px solid var(--border-color);
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .project-link {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    .project-link:hover {
-      color: var(--secondary-color);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 0;
-      border-top: 1px solid var(--border-color);
-      color: var(--text-secondary);
-      margin-top: 4rem;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --text-primary: #ffffff;
-        --text-secondary: #d1d5db;
-        --bg-primary: #111827;
-        --bg-secondary: #1f2937;
-        --bg-card: #1f2937;
-        --border-color: #374151;
-      }
-
-      .header {
-        background: linear-gradient(135deg, #1e40af, #7c3aed);
-      }
-
-      .skill-item,
-      .tech-tag {
-        background: var(--bg-primary);
-        color: var(--text-secondary);
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <header class="header">
-      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
-      <h1 id="full-name" class="title">Loading...</h1>
-      <p id="subtitle" class="subtitle">Please wait.</p>
-      <div id="social-links-container" class="social-links"></div>
-    </header>
-
-    <main>
-      <div class="grid">
-        <section id="about">
-          <h2>About Me</h2>
-          <p id="about-me-content">Loading...</p>
-        </section>
-        <section id="details">
-          <h2>Details</h2>
-          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
-          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
-          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
-        </section>
-      </div>
-
-      <section id="skills">
-        <h2>Skills</h2>
-        <div id="skills-container" class="skills-container">
-          <p>Loading skills...</p>
-        </div>
-      </section>
-
-      <section id="memories">
-        <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container"></div>
-      </section>
-
-      <section id="projects">
-        <h2>My Projects</h2>
-        <div id="project-grid" class="project-grid"></div>
-      </section>
-    </main>
-
-    <footer>
-      <p><span id="footer-name">Lo<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Satyam Portfolio</title>
-
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
-  <link rel="icon" href="data:,">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --primary-color: #0ea5e9;
@@ -587,7 +176,6 @@
       padding-top: 1rem;
     }
 
-    /* Responsive */
     @media (max-width: 1024px) {
       .project-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -600,6 +188,29 @@
       }
       .project-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: #ffffff;
+        --text-secondary: #d1d5db;
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --bg-card: #1f2937;
+        --border-color: #374151;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1e40af, #7c3aed);
+      }
+
+      .skill-item {
+        background: var(--bg-primary);
+      }
+
+      .project-card {
+        background: var(--bg-card);
       }
     }
   </style>
@@ -686,15 +297,6 @@
       <p>© Satyam Portfolio. Built with passion.</p>
     </footer>
   </div>
-
-</body>
-</html>
-ading...</span>. Built with passion.</p>
-    </footer>
-  </div>
-
-  <!-- Scripts -->
-  <script src="assets/js/script.js"></script>
 
 </body>
 </html>

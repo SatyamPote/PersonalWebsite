@@ -10,14 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
-  <link rel="icon" href="data:,">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --primary-color: #0ea5e9;
@@ -181,7 +176,6 @@
       padding-top: 1rem;
     }
 
-    /* Responsive */
     @media (max-width: 1024px) {
       .project-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -194,6 +188,29 @@
       }
       .project-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: #ffffff;
+        --text-secondary: #d1d5db;
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --bg-card: #1f2937;
+        --border-color: #374151;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1e40af, #7c3aed);
+      }
+
+      .skill-item {
+        background: var(--bg-primary);
+      }
+
+      .project-card {
+        background: var(--bg-card);
       }
     }
   </style>
