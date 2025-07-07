@@ -151,11 +151,13 @@
       display: flex;
       width: 500%;
       height: 100%;
-      animation: slideShow 20s infinite;
+      animation: slideShow 25s infinite;
+      transition: transform 1s ease-in-out;
     }
 
     .memory-slide {
-      width: 20%;
+      width: 100%;
+      flex-shrink: 0;
       height: 100%;
       position: relative;
       display: flex;
@@ -197,15 +199,15 @@
     }
 
     @keyframes slideShow {
-      0% { transform: translateX(0%); }
-      20% { transform: translateX(0%); }
-      25% { transform: translateX(-20%); }
-      45% { transform: translateX(-20%); }
-      50% { transform: translateX(-40%); }
-      70% { transform: translateX(-40%); }
-      75% { transform: translateX(-60%); }
-      95% { transform: translateX(-60%); }
-      100% { transform: translateX(-80%); }
+      0%   { transform: translateX(0%); }
+      20%  { transform: translateX(0%); }
+      25%  { transform: translateX(-100%); }
+      45%  { transform: translateX(-100%); }
+      50%  { transform: translateX(-200%); }
+      70%  { transform: translateX(-200%); }
+      75%  { transform: translateX(-300%); }
+      95%  { transform: translateX(-300%); }
+      100% { transform: translateX(-400%); }
     }
 
     .project-grid {
@@ -259,10 +261,6 @@
     }
 
     @media (max-width: 992px) {
-      .project-grid {
-        flex-direction: row;
-      }
-
       .carousel-card {
         flex: 1 1 calc(50% - 0.75rem);
       }
@@ -273,10 +271,6 @@
     }
 
     @media (max-width: 600px) {
-      .project-grid {
-        flex-direction: column;
-      }
-
       .carousel-card {
         flex: 1 1 100%;
       }
@@ -329,39 +323,4 @@
           <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
           <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
         </section>
-      </div>
-
-      <section id="skills">
-        <h2>Skills</h2>
-        <div id="skills-container" class="skills-container">
-          <p>Loading skills...</p>
-        </div>
-      </section>
-
-      <!-- Replaced Memories Section -->
-      <section id="memories">
-        <h2>Memories</h2>
-        <div class="memory-slider-container">
-          <div class="memory-slides" id="memories-slider-container">
-            <!-- Backend will dynamically inject memory slides here -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Replaced Projects Section -->
-      <section id="projects">
-        <h2>My Projects</h2>
-        <div id="project-grid" class="project-grid">
-          <!-- Backend will dynamically inject project cards here -->
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
-    </footer>
-  </div>
-
-  <script src="/assets/js/script.js"></script>
-</body>
-</html>
+      </div
