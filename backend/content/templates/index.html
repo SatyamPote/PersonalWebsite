@@ -259,49 +259,8 @@
       color: #777;
       margin-top: 2rem;
     }
-
-    @media (max-width: 992px) {
-      .carousel-card {
-        flex: 1 1 calc(50% - 0.75rem);
-      }
-
-      .memory-slider-container {
-        height: 60vh;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .carousel-card {
-        flex: 1 1 100%;
-      }
-
-      .title {
-        font-size: 2rem;
-      }
-
-      .grid {
-        flex-direction: column;
-      }
-
-      .memory-slider-container {
-        height: 350px;
-      }
-
-      .memory-slide .memory-overlay {
-        padding: 1rem;
-      }
-
-      .memory-slide h3 {
-        font-size: 1.5rem;
-      }
-
-      .memory-slide img {
-        height: 200px;
-      }
-    }
   </style>
 </head>
-
 <body>
   <div class="container">
     <header class="header">
@@ -312,15 +271,48 @@
     </header>
 
     <main>
-      <div class="grid">
-        <section id="about">
-          <h2>About Me</h2>
-          <p id="about-me-content">Loading...</p>
-        </section>
-        <section id="details">
-          <h2>Details</h2>
-          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
-          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
-          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
-        </section>
-      </div
+      <section id="memories">
+        <h2>Memories</h2>
+        <div class="memory-slider-container">
+          <div class="memory-slides" id="memories-slider-container">
+            <div class="memory-slide">
+              <img src="img1.jpg" alt="Memory 1" />
+              <div class="memory-overlay">
+                <h3>Trip to Goa</h3>
+                <p class="memory-date">Jan 2024</p>
+              </div>
+            </div>
+            <div class="memory-slide">
+              <img src="img2.jpg" alt="Memory 2" />
+              <div class="memory-overlay">
+                <h3>Hackathon Day</h3>
+                <p class="memory-date">Feb 2024</p>
+              </div>
+            </div>
+            <div class="memory-slide">
+              <img src="img3.jpg" alt="Memory 3" />
+              <div class="memory-overlay">
+                <h3>Graduation</h3>
+                <p class="memory-date">Mar 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2>My Projects</h2>
+        <div id="project-grid" class="project-grid">
+          <!-- Project cards go here -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
+    </footer>
+  </div>
+
+  <script src="/assets/js/script.js"></script>
+</body>
+</html>
