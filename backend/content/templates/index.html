@@ -12,226 +12,127 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'JetBrains Mono', monospace;
-      background-color: #fff;
-      color: #000;
-      line-height: 1.6;
-    }
+    /* ===== GENERAL ===== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'JetBrains Mono', monospace;
+  background-color: #fff;
+  color: #000;
+  line-height: 1.6;
+}
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 1rem;
-    }
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+}
 
-    .header {
-      text-align: center;
-      padding: 2rem 1rem;
-    }
+h1, h2, h3 {
+  color: #000;
+  margin-bottom: 1rem;
+}
 
-    .title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin: 0.5rem 0;
-      color: #000;
-    }
+/* ===== MEMORY SLIDER ===== */
+.memory-slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
 
-    .subtitle {
-      color: #555;
-    }
+.memory-slide img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
 
-    .profile-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid black;
-      margin-bottom: 1rem;
-    }
+.memory-slide h3 {
+  font-size: 1.3rem;
+  margin: 0.5rem 0;
+  color: #222;
+}
 
-    .hidden {
-      display: none;
-    }
+.memory-date {
+  font-size: 0.95rem;
+  color: #666;
+  font-style: italic;
+}
 
-    .social-links {
-      margin-top: 1rem;
-    }
+/* ===== PROJECT GRID ===== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
 
-    .social-links a {
-      color: #333;
-      text-decoration: none;
-      margin: 0 10px;
-    }
+.carousel-card {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
 
-    .social-links a:hover {
-      color: #000;
-    }
+.carousel-card:hover {
+  transform: translateY(-5px);
+}
 
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
+.carousel-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #111;
+}
 
-    #about, #details {
-      flex: 1 1 300px;
-      background: #f4f4f4;
-      border-radius: 8px;
-      padding: 1.5rem;
-      border: 1px solid #ccc;
-    }
+.carousel-card p {
+  color: #555;
+  font-size: 0.95rem;
+}
 
-    #details p strong {
-      color: #000;
-    }
+.visit-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-    h2 {
-      font-size: 1.5rem;
-      border-bottom: 2px solid #000;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-      color: #000;
-    }
+.visit-button:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
 
-    .skills-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 992px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-    .skill-badge {
-      background-color: #eee;
-      color: #000;
-      padding: 8px 15px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      border: 1px solid #aaa;
-    }
+@media (max-width: 600px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .skill-badge i {
-      font-size: 1.5rem;
-    }
+  .memory-slide h3 {
+    font-size: 1.1rem;
+  }
 
-    .skill-badge img {
-      height: 24px;
-      width: 24px;
-      object-fit: contain;
-    }
+  .memory-date {
+    font-size: 0.9rem;
+  }
+}
 
-    .memory-slider-container {
-      overflow: hidden;
-      position: relative;
-      width: 100%;
-      min-height: 450px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .memory-slide {
-      opacity: 1;
-      position: relative;
-    }
-
-    .memory-slide img {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-
-    .memory-slide h3 {
-      font-size: 1.2rem;
-      color: #000;
-      margin: 10px 0 5px 0;
-    }
-
-    .memory-slide .memory-date {
-      color: #555;
-      font-style: italic;
-    }
-
-    /* 3x3 PROJECT GRID */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .carousel-card {
-      background: #f7f7f7;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 1.5rem;
-    }
-
-    .carousel-card h3 {
-      margin-top: 0;
-      color: #000;
-    }
-
-    .carousel-card p {
-      color: #555;
-    }
-
-    .visit-button {
-      margin-top: 1rem;
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      background: #000;
-      color: #fff;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .visit-button:hover {
-      background: #fff;
-      color: #000;
-      border: 1px solid #000;
-    }
-
-    footer {
-      text-align: center;
-      border-top: 1px solid #aaa;
-      padding: 1.5rem;
-      color: #777;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 992px) {
-      .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .title {
-        font-size: 2rem;
-      }
-
-      .grid {
-        flex-direction: column;
-      }
-
-      .memory-slide img {
-        max-width: 100%;
-        height: auto;
-      }
-    }
   </style>
 </head>
 <body>
