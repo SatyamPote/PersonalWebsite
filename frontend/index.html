@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Satyam Portfolio</title>
 
-  <!-- Fonts -->
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
   <style>
     body {
@@ -49,6 +50,10 @@
       object-fit: cover;
       border: 2px solid black;
       margin-bottom: 1rem;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .social-links {
@@ -111,38 +116,28 @@
       border: 1px solid #aaa;
     }
 
+    .skill-badge i {
+      font-size: 1.5rem;
+    }
+
+    .skill-badge img {
+      height: 24px;
+      width: 24px;
+      object-fit: contain;
+    }
+
     .memory-slider-container {
+      overflow: hidden;
       position: relative;
       width: 100%;
-      height: 400px;
-      overflow: hidden;
-      border: 2px solid #000;
+      min-height: 450px;
       border-radius: 8px;
-      background: #f9f9f9;
+      text-align: center;
     }
 
     .memory-slide {
-      position: absolute;
-      width: 100%;
-      opacity: 0;
-      animation: fadeSlide 15s infinite;
-      text-align: center;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-
-    .memory-slide:nth-child(1) { animation-delay: 0s; }
-    .memory-slide:nth-child(2) { animation-delay: 3s; }
-    .memory-slide:nth-child(3) { animation-delay: 6s; }
-    .memory-slide:nth-child(4) { animation-delay: 9s; }
-    .memory-slide:nth-child(5) { animation-delay: 12s; }
-
-    @keyframes fadeSlide {
-      0% { opacity: 0; }
-      6.66% { opacity: 1; }
-      26.66% { opacity: 1; }
-      33.33% { opacity: 0; }
-      100% { opacity: 0; }
+      opacity: 1;
+      position: relative;
     }
 
     .memory-slide img {
@@ -160,32 +155,32 @@
       margin: 10px 0 5px 0;
     }
 
-    .memory-date {
+    .memory-slide .memory-date {
       color: #555;
       font-style: italic;
     }
 
+    /* 3x3 PROJECT GRID */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
-      background: #eee;
-      padding: 1rem;
-      border-radius: 12px;
-      border: 2px solid #000;
     }
 
     .carousel-card {
-      background: #fff;
-      border: 2px solid #000;
-      padding: 1rem;
+      background: #f7f7f7;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      box-shadow: 2px 2px 0 #000;
-      transition: transform 0.3s;
+      padding: 1.5rem;
     }
 
-    .carousel-card:hover {
-      transform: scale(1.02);
+    .carousel-card h3 {
+      margin-top: 0;
+      color: #000;
+    }
+
+    .carousel-card p {
+      color: #555;
     }
 
     .visit-button {
@@ -213,9 +208,19 @@
       margin-top: 2rem;
     }
 
-    @media (max-width: 768px) {
-      .memory-slider-container {
-        height: auto;
+    @media (max-width: 992px) {
+      .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .title {
+        font-size: 2rem;
       }
 
       .grid {
@@ -255,20 +260,20 @@
 
       <section id="skills">
         <h2>Skills</h2>
-        <div id="skills-container" class="skills-container"></div>
+        <div id="skills-container" class="skills-container">
+          <p>Loading skills...</p>
+        </div>
       </section>
 
       <section id="memories">
         <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container">
-          <!-- Backend should inject .memory-slide items here -->
-        </div>
+        <div id="memories-slider-container" class="memory-slider-container"></div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- Backend should inject .carousel-card items here -->
+          <!-- Backend will dynamically inject project cards here -->
         </div>
       </section>
     </main>
@@ -277,6 +282,9 @@
       <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
   </div>
+
+  <!-- Your dynamic loading script -->
+  <script src="/assets/js/script.js"></script>
 
 </body>
 </html>
