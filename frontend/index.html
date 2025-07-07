@@ -36,6 +36,7 @@
       font-size: 2.5rem;
       font-weight: 700;
       margin: 0.5rem 0;
+      color: #000;
     }
 
     .subtitle {
@@ -93,6 +94,7 @@
       border-bottom: 2px solid #000;
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
+      color: #000;
     }
 
     .skills-container {
@@ -124,41 +126,41 @@
       object-fit: contain;
     }
 
-    /* ========== MEMORY SLIDE ========== */
     .memory-slider-container {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      min-height: 450px;
+      border-radius: 8px;
       text-align: center;
-      margin: 2rem 0;
     }
 
     .memory-slide {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .memory-slide.visible {
       opacity: 1;
-      visibility: visible;
+      position: relative;
     }
 
     .memory-slide img {
-      max-width: 100%;
-      width: 600px;
+      width: 100%;
+      max-width: 600px;
       height: auto;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 15px;
     }
 
     .memory-slide h3 {
-      margin: 10px 0 5px;
+      font-size: 1.2rem;
+      color: #000;
+      margin: 10px 0 5px 0;
     }
 
-    .memory-date {
+    .memory-slide .memory-date {
       color: #555;
       font-style: italic;
     }
 
-    /* ========== PROJECTS ========== */
+    /* 3x3 PROJECT GRID */
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -166,14 +168,15 @@
     }
 
     .carousel-card {
-      background: #f9f9f9;
+      background: #f7f7f7;
       border: 1px solid #ccc;
-      padding: 1rem;
-      border-radius: 10px;
+      border-radius: 8px;
+      padding: 1.5rem;
     }
 
     .carousel-card h3 {
-      margin: 0 0 0.5rem;
+      margin-top: 0;
+      color: #000;
     }
 
     .carousel-card p {
@@ -181,13 +184,13 @@
     }
 
     .visit-button {
-      display: inline-block;
       margin-top: 1rem;
-      padding: 0.5rem 1rem;
+      display: inline-block;
+      padding: 0.4rem 1rem;
       background: #000;
       color: #fff;
-      text-decoration: none;
       border-radius: 5px;
+      text-decoration: none;
       font-weight: bold;
     }
 
@@ -199,9 +202,9 @@
 
     footer {
       text-align: center;
-      padding: 2rem 1rem;
-      color: #888;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid #aaa;
+      padding: 1.5rem;
+      color: #777;
       margin-top: 2rem;
     }
 
@@ -225,7 +228,7 @@
       }
 
       .memory-slide img {
-        width: 100%;
+        max-width: 100%;
         height: auto;
       }
     }
@@ -264,19 +267,13 @@
 
       <section id="memories">
         <h2>Memories</h2>
-        <div class="memory-slider-container">
-          <div class="memory-slide" id="memory-slide">
-            <img src="https://via.placeholder.com/600x350.png?text=TiE+Global+Summit+2024" alt="Memory" />
-            <h3>TiE Global Summit 2024</h3>
-            <p class="memory-date">December 2024</p>
-          </div>
-        </div>
+        <div id="memories-slider-container" class="memory-slider-container"></div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
-          <!-- Project cards loaded by backend JS -->
+          <!-- Backend will dynamically inject project cards here -->
         </div>
       </section>
     </main>
@@ -286,16 +283,8 @@
     </footer>
   </div>
 
-  <!-- Memory slide JS -->
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        document.getElementById("memory-slide").classList.add("visible");
-      }, 3000);
-    });
-  </script>
-
-  <!-- Your backend logic -->
+  <!-- Your dynamic loading script -->
   <script src="/assets/js/script.js"></script>
+
 </body>
 </html>
