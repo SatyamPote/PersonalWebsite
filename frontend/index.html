@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,12 +139,12 @@
     .memory-slider-container {
       position: relative;
       width: 100%;
-      max-width: 600px;
-      height: 400px;
+      max-width: 100vw;
+      height: 80vh;
       margin: 0 auto;
       overflow: hidden;
       border-radius: 8px;
-      background: #f0f0f0;
+      background: #000;
     }
 
     .memory-slides {
@@ -159,33 +158,42 @@
       width: 20%;
       height: 100%;
       position: relative;
-      text-align: center;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 1rem;
-      box-sizing: border-box;
     }
 
     .memory-slide img {
       width: 100%;
-      max-width: 500px;
-      height: 250px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 15px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .memory-slide .memory-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 2rem;
+      z-index: 2;
     }
 
     .memory-slide h3 {
-      font-size: 1.2rem;
-      color: #000;
-      margin: 10px 0 5px 0;
+      font-size: 2rem;
+      color: white;
+      margin: 0 0 10px 0;
+      font-weight: 700;
     }
 
     .memory-slide .memory-date {
-      color: #555;
+      color: rgba(255, 255, 255, 0.8);
       font-style: italic;
+      font-size: 1.1rem;
     }
 
     @keyframes slideShow {
@@ -201,9 +209,10 @@
     }
 
     .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       gap: 1.5rem;
+      justify-content: space-between;
     }
 
     .carousel-card {
@@ -211,6 +220,8 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 1.5rem;
+      flex: 1 1 calc(33.333% - 1rem);
+      min-width: 300px;
     }
 
     .carousel-card h3 {
@@ -249,13 +260,25 @@
 
     @media (max-width: 992px) {
       .project-grid {
-        grid-template-columns: repeat(2, 1fr);
+        flex-direction: row;
+      }
+
+      .carousel-card {
+        flex: 1 1 calc(50% - 0.75rem);
+      }
+
+      .memory-slider-container {
+        height: 60vh;
       }
     }
 
     @media (max-width: 600px) {
       .project-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+
+      .carousel-card {
+        flex: 1 1 100%;
       }
 
       .title {
@@ -270,6 +293,14 @@
         height: 350px;
       }
 
+      .memory-slide .memory-overlay {
+        padding: 1rem;
+      }
+
+      .memory-slide h3 {
+        font-size: 1.5rem;
+      }
+
       .memory-slide img {
         height: 200px;
       }
@@ -280,11 +311,7 @@
 <body>
   <div class="container">
     <header class="header">
-      <img 
-        id="profile-photo" 
-        alt="Profile Photo" 
-        class="profile-photo hidden" 
-      />
+      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
       <h1 id="full-name" class="title">Loading...</h1>
       <p id="subtitle" class="subtitle">Please wait.</p>
       <div id="social-links-container" class="social-links"></div>
@@ -311,6 +338,7 @@
         </div>
       </section>
 
+      <!-- Replaced Memories Section -->
       <section id="memories">
         <h2>Memories</h2>
         <div class="memory-slider-container">
@@ -320,6 +348,7 @@
         </div>
       </section>
 
+      <!-- Replaced Projects Section -->
       <section id="projects">
         <h2>My Projects</h2>
         <div id="project-grid" class="project-grid">
@@ -333,7 +362,6 @@
     </footer>
   </div>
 
-  <!-- Your dynamic loading script -->
   <script src="/assets/js/script.js"></script>
 </body>
 </html>
