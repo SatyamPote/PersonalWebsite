@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Satyam Portfolio</title>
 
-  <!-- Fonts & Icons -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -49,10 +49,6 @@
       object-fit: cover;
       border: 2px solid black;
       margin-bottom: 1rem;
-    }
-
-    .hidden {
-      display: none;
     }
 
     .social-links {
@@ -237,95 +233,48 @@
 
   <div class="container">
     <header class="header">
-      <img src="your-photo.jpg" alt="Profile Photo" class="profile-photo" />
-      <h1 class="title">Satyam Kumar</h1>
-      <p class="subtitle">Frontend Developer</p>
-      <div class="social-links">
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-      </div>
+      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
+      <h1 id="full-name" class="title">Loading...</h1>
+      <p id="subtitle" class="subtitle">Please wait.</p>
+      <div id="social-links-container" class="social-links"></div>
     </header>
 
     <main>
       <div class="grid">
         <section id="about">
           <h2>About Me</h2>
-          <p>I am passionate about coding, design, and building web interfaces.</p>
+          <p id="about-me-content">Loading...</p>
         </section>
         <section id="details">
           <h2>Details</h2>
-          <p><strong>Location:</strong> India</p>
-          <p><strong>Languages:</strong> Hindi, English</p>
-          <p><strong>My Goals:</strong> Master Web Development & UI Design</p>
+          <p><strong>Location:</strong> <span id="location">Loading...</span></p>
+          <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
+          <p><strong>My Goals:</strong> <span id="my-goals">Loading...</span></p>
         </section>
       </div>
 
       <section id="skills">
         <h2>Skills</h2>
-        <div class="skills-container">
-          <div class="skill-badge">HTML</div>
-          <div class="skill-badge">CSS</div>
-          <div class="skill-badge">JavaScript</div>
-          <div class="skill-badge">React</div>
-        </div>
+        <div id="skills-container" class="skills-container"></div>
       </section>
 
       <section id="memories">
         <h2>Memories</h2>
-        <div class="memory-slider-container">
-          <div class="memory-slide">
-            <img src="img1.jpg" alt="Memory 1" />
-            <h3>Graduation Day</h3>
-            <p class="memory-date">March 2022</p>
-          </div>
-          <div class="memory-slide">
-            <img src="img2.jpg" alt="Memory 2" />
-            <h3>First Internship</h3>
-            <p class="memory-date">July 2022</p>
-          </div>
-          <div class="memory-slide">
-            <img src="img3.jpg" alt="Memory 3" />
-            <h3>Hackathon Win</h3>
-            <p class="memory-date">Nov 2022</p>
-          </div>
-          <div class="memory-slide">
-            <img src="img4.jpg" alt="Memory 4" />
-            <h3>Team Retreat</h3>
-            <p class="memory-date">Jan 2023</p>
-          </div>
-          <div class="memory-slide">
-            <img src="img5.jpg" alt="Memory 5" />
-            <h3>React Certification</h3>
-            <p class="memory-date">May 2023</p>
-          </div>
+        <div id="memories-slider-container" class="memory-slider-container">
+          <!-- Backend should inject .memory-slide items here -->
         </div>
       </section>
 
       <section id="projects">
         <h2>My Projects</h2>
-        <div class="project-grid">
-          <div class="carousel-card">
-            <h3>Portfolio Website</h3>
-            <p>Responsive personal site made with HTML, CSS, JS.</p>
-            <a class="visit-button" href="#">Visit</a>
-          </div>
-          <div class="carousel-card">
-            <h3>Weather App</h3>
-            <p>Fetches real-time weather using OpenWeather API.</p>
-            <a class="visit-button" href="#">Visit</a>
-          </div>
-          <div class="carousel-card">
-            <h3>ToDo Manager</h3>
-            <p>Task manager with localStorage support.</p>
-            <a class="visit-button" href="#">Visit</a>
-          </div>
-          <!-- Add more projects here -->
+        <div id="project-grid" class="project-grid">
+          <!-- Backend should inject .carousel-card items here -->
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Satyam Kumar. Built with passion.</p>
+      <p><span id="footer-name">Loading...</span>. Built with passion.</p>
     </footer>
   </div>
 
