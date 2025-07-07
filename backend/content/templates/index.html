@@ -1,11 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Satyam Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>image-reveal-blitz</title>
+  <meta name="description" content="Lovable Generated Project" />
+  <meta name="author" content="Lovable" />
 
-  <!-- Fonts & Icons -->
+  <meta property="og:title" content="image-reveal-blitz" />
+  <meta property="og:description" content="Lovable Generated Project" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lovable_dev" />
+  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -127,23 +138,40 @@
     }
 
     .memory-slider-container {
-      overflow: hidden;
       position: relative;
       width: 100%;
-      min-height: 450px;
+      max-width: 600px;
+      height: 400px;
+      margin: 0 auto;
+      overflow: hidden;
       border-radius: 8px;
-      text-align: center;
+      background: #f0f0f0;
+    }
+
+    .memory-slides {
+      display: flex;
+      width: 500%;
+      height: 100%;
+      animation: slideShow 20s infinite;
     }
 
     .memory-slide {
-      opacity: 1;
+      width: 20%;
+      height: 100%;
       position: relative;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      box-sizing: border-box;
     }
 
     .memory-slide img {
       width: 100%;
-      max-width: 600px;
-      height: auto;
+      max-width: 500px;
+      height: 250px;
       object-fit: cover;
       border-radius: 6px;
       margin-bottom: 15px;
@@ -160,7 +188,18 @@
       font-style: italic;
     }
 
-    /* 3x3 PROJECT GRID */
+    @keyframes slideShow {
+      0% { transform: translateX(0%); }
+      20% { transform: translateX(0%); }
+      25% { transform: translateX(-20%); }
+      45% { transform: translateX(-20%); }
+      50% { transform: translateX(-40%); }
+      70% { transform: translateX(-40%); }
+      75% { transform: translateX(-60%); }
+      95% { transform: translateX(-60%); }
+      100% { transform: translateX(-80%); }
+    }
+
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -227,18 +266,25 @@
         flex-direction: column;
       }
 
+      .memory-slider-container {
+        height: 350px;
+      }
+
       .memory-slide img {
-        max-width: 100%;
-        height: auto;
+        height: 200px;
       }
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="container">
     <header class="header">
-      <img id="profile-photo" alt="Profile Photo" class="profile-photo hidden" />
+      <img 
+        id="profile-photo" 
+        alt="Profile Photo" 
+        class="profile-photo hidden" 
+      />
       <h1 id="full-name" class="title">Loading...</h1>
       <p id="subtitle" class="subtitle">Please wait.</p>
       <div id="social-links-container" class="social-links"></div>
@@ -267,7 +313,11 @@
 
       <section id="memories">
         <h2>Memories</h2>
-        <div id="memories-slider-container" class="memory-slider-container"></div>
+        <div class="memory-slider-container">
+          <div class="memory-slides" id="memories-slider-container">
+            <!-- Backend will dynamically inject memory slides here -->
+          </div>
+        </div>
       </section>
 
       <section id="projects">
@@ -285,6 +335,5 @@
 
   <!-- Your dynamic loading script -->
   <script src="/assets/js/script.js"></script>
-
 </body>
 </html>
